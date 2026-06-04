@@ -54,6 +54,7 @@ class RuntimePaths:
     outputs_dir: Path
     visuals_dir: Path
     vos_dir: Path
+    matplotlib_cache_dir: Path
     logs_dir: Path
 
 
@@ -67,6 +68,7 @@ def paths_from_config(settings: AppConfig) -> RuntimePaths:
         outputs_dir=settings.resolved_output_folder(),
         visuals_dir=data_dir / "visuals",
         vos_dir=data_dir / "VOS",
+        matplotlib_cache_dir=data_dir / "cache" / "matplotlib",
         logs_dir=settings.resolved_logs_folder(),
     )
 
@@ -133,7 +135,7 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
     env["SCALING_MODE"] = request.scaling_mode if request.scaling_mode in SCALING_MODES else "medium"
     env["DANSBIB_RIS_RAW_DIR"] = str(runtime.raw_dir)
     env["DANSBIB_OUTPUT_DIR"] = str(runtime.outputs_dir)
-    env.setdefault("MPLCONFIGDIR", str(runtime.visuals_dir / ".mplconfig"))
+    env["MPLCONFIGDIR"] = str(runtime.matplotlib_cache_dir)
 
     _log(log_callback, log_path, f"DansBib root: {runtime.root}")
     _log(log_callback, log_path, f"Python executable: {command[0]}")
@@ -212,7 +214,7 @@ def run_visualizations(core_dataset: str | None, query: str, skip_rxnorm: bool, 
         command.append("--skip-rxnorm")
 
     env = _base_env()
-    env.setdefault("MPLCONFIGDIR", str(runtime.visuals_dir / ".mplconfig"))
+    env["MPLCONFIGDIR"] = str(runtime.matplotlib_cache_dir)
     _log(log_callback, log_path, f"Running visualization command: {_format_command(command)}")
     _run_streamed(command, runtime, env=env, log_path=log_path, log_callback=log_callback)
     return {"output_files": [str(path) for path in [*_recent_files(runtime.visuals_dir, started_at), log_path]]}
@@ -255,7 +257,7 @@ def _preflight(settings: AppConfig, runtime: RuntimePaths, log_path: Path, log_c
         raise FileNotFoundError(f"DansBib pipeline entrypoint not found: {main_path}")
     if not settings.resolved_pipeline_python():
         _log(log_callback, log_path, "DansBib venv python not found; using the current Python interpreter. Missing packages may cause import errors.")
-    for folder in (runtime.raw_dir, runtime.outputs_dir, runtime.visuals_dir, runtime.vos_dir, runtime.logs_dir):
+    for folder in (runtime.raw_dir, runtime.outputs_dir, runtime.visuals_dir, runtime.vos_dir, runtime.matplotlib_cache_dir, runtime.logs_dir):
         folder.mkdir(parents=True, exist_ok=True)
 
 

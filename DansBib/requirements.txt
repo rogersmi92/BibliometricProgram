@@ -1,10 +1,18 @@
-pandas==3.0.2
-pycountry==24.6.1
-pybliometrics==4.4.1
-Requests==2.33.1
+# Authoritative DansBib pipeline dependencies.
+
+pandas>=2.2
+requests>=2.31
+urllib3>=2
+pycountry>=24.6
+pybliometrics>=4.4
 matplotlib>=3.8
 seaborn>=0.13
 plotly>=5.24
 kaleido>=1.0
 networkx>=3.3
+numpy>=1.26
 rapidfuzz>=3.9
+tqdm>=4.66
+adjustText>=1.3
+pyshp>=2.3
+geopandas>=0.14

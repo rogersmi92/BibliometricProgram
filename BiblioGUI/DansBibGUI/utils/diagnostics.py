@@ -15,12 +15,19 @@ REQUIRED_PIPELINE_PACKAGES = (
 )
 
 OPTIONAL_PIPELINE_PACKAGES = (
+    "adjustText",
+    "geopandas",
+    "kaleido",
     "matplotlib",
     "networkx",
+    "numpy",
     "plotly",
+    "shapefile",
     "seaborn",
     "pycountry",
     "rapidfuzz",
+    "tqdm",
+    "urllib3",
 )
 
 

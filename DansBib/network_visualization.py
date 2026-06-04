@@ -24,17 +24,17 @@ import networkx as nx
 import pandas as pd
 import plotly.graph_objects as go
 
+from utils.runtime_paths import configure_matplotlib_cache
+
 
 ROOT = Path(__file__).resolve().parent
+configure_matplotlib_cache(ROOT)
 VISUALS_DIR = ROOT / "data" / "visuals"
 DEFAULT_PNG = VISUALS_DIR / "network.png"
 EXPORT_ONLY_PNG = True
 VOS_DIR = ROOT / "data" / "VOS"
 OUTPUTS_DIR = ROOT / "data" / "outputs"
 DEFAULT_AUTO_TOP_N = 300
-_MPLCONFIGDIR = VISUALS_DIR / ".mplconfig"
-_MPLCONFIGDIR.mkdir(parents=True, exist_ok=True)
-os.environ.setdefault("MPLCONFIGDIR", str(_MPLCONFIGDIR))
 
 TYPE_COLORS = {
     "drug": "#2563eb",

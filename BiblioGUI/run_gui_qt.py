@@ -9,7 +9,12 @@ def main() -> int:
     os.environ.setdefault("QT_MAC_WANTS_LAYER", "1")
     print("Starting DansBib Qt GUI...", flush=True)
     try:
-        from DansBibGUI.qt_gui import main as qt_main
+        try:
+            from DansBibGUI.qt_gui import main as qt_main
+        except ModuleNotFoundError as exc:
+            if exc.name != "DansBibGUI":
+                raise
+            from BiblioGUI.DansBibGUI.qt_gui import main as qt_main
     except ModuleNotFoundError as exc:
         if exc.name == "PySide6":
             print(

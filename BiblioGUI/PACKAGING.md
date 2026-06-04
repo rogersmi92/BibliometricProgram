@@ -8,7 +8,7 @@ Start with **PyInstaller** for the first staff-facing Windows build.
 
 Reasons:
 
-- works well for a Tkinter desktop app
+- works well for a Qt/PySide6 desktop app
 - can produce a single executable or an app folder
 - simple enough for internal deployment
 - lets DansBib remain external and user-configurable while the pipeline is still evolving
@@ -36,7 +36,7 @@ Useful as a PyInstaller GUI wrapper. It is convenient for experimentation, but t
 GUI-only:
 
 - Python 3.10+
-- Tkinter, normally included with Python
+- PySide6, installed from `requirements-gui.txt`
 
 Pipeline dependencies are owned by DansBib and should be installed from the DansBib requirements file. Common packages include:
 
@@ -74,7 +74,7 @@ The GUI stores a configurable output folder, but current DansBib pipeline code p
 ## Packaging Day Checklist
 
 - Build on Windows, not only macOS.
-- Confirm Tkinter is included in the target Python distribution.
+- Confirm PySide6 is bundled and the Qt platform plugins are included.
 - Confirm the GUI starts without a terminal window.
 - Confirm first-run setup can select the DansBib folder.
 - Confirm Dry Run works without network access.

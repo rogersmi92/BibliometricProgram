@@ -1,0 +1,2 @@
+-r BiblioGUI/requirements-gui.txt
+-r DansBib/requirements.txt

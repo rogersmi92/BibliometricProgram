@@ -1,6 +1,16 @@
 # DansBib GUI
 
-DansBib GUI is a staff-facing desktop launcher for the DansBib bibliometric workflow. It helps users choose a search query, select data sources, include RIS files, run the pipeline, review logs, and open generated outputs without using a terminal.
+DansBib GUI is a Qt-based, staff-facing desktop launcher for the DansBib bibliometric workflow. It helps users choose a search query, select data sources, include RIS files, run the pipeline, review logs, and open generated outputs without using a terminal.
+
+## Installing Dependencies
+
+From the repository root, install both the Qt GUI and DansBib pipeline dependencies:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+For separate environments, install GUI dependencies from `BiblioGUI/requirements-gui.txt` and pipeline dependencies from `DansBib/requirements.txt`. `DansBib/requirements.txt` is the authoritative pipeline dependency list.
 
 ## Launching The App
 
@@ -9,6 +19,14 @@ From the `BiblioGUI` folder:
 ```bash
 python run_gui.py
 ```
+
+From the repository root:
+
+```bash
+python launch_gui.py
+```
+
+Both launchers start the Qt GUI implemented in `DansBibGUI/qt_gui.py`.
 
 On first launch, the setup window asks for:
 
@@ -66,13 +84,13 @@ The GUI shows a plain-English error. Full technical details are saved in the run
 ### Folder Structure
 
 - `run_gui.py`: main launcher
-- `DansBibGUI/gui.py`: Tkinter interface and user workflow
-- `DansBibGUI/config.py`: static labels and UI defaults kept for compatibility
+- `run_gui_qt.py`: Qt launcher with dependency checks
+- `DansBibGUI/qt_gui.py`: active Qt interface and user workflow
 - `DansBibGUI/utils/app_config.py`: saved JSON settings and default paths
 - `DansBibGUI/utils/diagnostics.py`: environment and package checks
 - `DansBibGUI/utils/file_utils.py`: cross-platform file/folder helpers
 - `DansBibGUI/utils/pipeline_runner.py`: subprocess bridge to DansBib
-- `DansBibGUI/utils/query_builder.py`: legacy query-preview helper, not used by the active GUI
+- `DansBibGUI/utils/query_builder.py`: guided Boolean query builder used by the active GUI
 
 ### How The GUI Calls DansBib
 

@@ -26,9 +26,10 @@ from pathlib import Path
 from typing import Callable, Iterable
 from urllib.parse import quote_plus
 
-_MPLCONFIGDIR = Path(__file__).resolve().parent / "data" / "visuals" / ".mplconfig"
-_MPLCONFIGDIR.mkdir(parents=True, exist_ok=True)
-os.environ.setdefault("MPLCONFIGDIR", str(_MPLCONFIGDIR))
+from utils.runtime_paths import configure_matplotlib_cache
+
+ROOT = Path(__file__).resolve().parent
+configure_matplotlib_cache(ROOT)
 
 try:
     from rapidfuzz import fuzz, process
@@ -56,7 +57,6 @@ except ImportError as exc:  # pragma: no cover - user-facing startup guard
     ) from exc
 
 
-ROOT = Path(__file__).resolve().parent
 OUTPUTS_DIR = ROOT / "data" / "outputs"
 VOS_DIR = ROOT / "data" / "VOS"
 VISUALS_DIR = ROOT / "data" / "visuals"
