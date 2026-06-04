@@ -1,0 +1,54 @@
+# Mac junk
+.DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+DansBib/venv/
+.env
+.venv/
+
+# Test/cache folders
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pycache_local/
+
+# Matplotlib/user cache
+.mplconfig/
+
+# Large/generated data outputs
+DansBib/data/outputs/
+DansBib/data/processed/
+DansBib/data/visuals/
+DansBib/data/cache/
+DansBib/data/VOS/
+
+# Optional: raw search exports can be large/private
+# Uncomment this if you do NOT want raw RIS files on GitHub
+# DansBib/data/raw/
+
+# Logs
+*.log
+
+# Too large for normal GitHub push
+DansBib/data/reference/Maps/50m_raster/NE1_50M_SR_W/NE1_50M_SR_W.tif
+DansBib/data/reference/demographics/mesh/desc2026.xml
+
+# Too large for GitHub normal push
+DansBib/data/reference/Maps/50m_raster/NE1_50M_SR_W/NE1_50M_SR_W.tif
+DansBib/data/reference/demographics/mesh/desc2026.xml
+
+# Large local/reference files too big for normal GitHub
+*.tif
+*.tiff
+DansBib/data/reference/**/*.xml
+
+# Large local/reference files too big for normal GitHub
+*.tif
+*.tiff
+DansBib/data/reference/**/*.xml

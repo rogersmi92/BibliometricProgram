@@ -1,0 +1,28 @@
+dialysis
+hemodialysis
+plasmapheresis
+plasma exchange
+therapeutic plasma exchange
+transplantation
+kidney transplant
+renal biopsy
+biopsy
+genetic testing
+sequencing
+whole exome sequencing
+next generation sequencing
+polymerase chain reaction
+imaging
+mri
+ct
+ultrasound
+echocardiography
+intubation
+ventilation
+catheterization
+infusion
+injection
+surgery
+transplant
+screening
+diagnostic testing

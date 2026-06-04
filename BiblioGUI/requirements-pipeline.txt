@@ -1,0 +1,12 @@
+# Install these in the DansBib pipeline environment.
+# Keep this aligned with ../DansBib/requirements.txt when packaging.
+
+pandas
+requests
+matplotlib
+networkx
+plotly
+seaborn
+pycountry
+rapidfuzz
+tqdm

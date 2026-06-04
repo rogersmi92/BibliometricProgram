@@ -1,0 +1,1570 @@
+{
+  "abatacept": {
+    "name": "1 ml abatacept 125 mg ml prefilled syringe orencia",
+    "resolved": true,
+    "rxcui": "1145932",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "abiraterone": {
+    "name": "abiraterone acetate 250 mg oral tablet zytiga",
+    "resolved": true,
+    "rxcui": "1100079",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "acetaminophen": {
+    "name": "100 24 pack excedrin pm triple action caplets and excedrin extra strength pain reliever",
+    "resolved": true,
+    "rxcui": "2047428",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "acetylcholine": {
+    "name": "acetylcholine chloride 10 mg ml ophthalmic solution miochol",
+    "resolved": true,
+    "rxcui": "876553",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "acetylcysteine": {
+    "name": "30 ml acetylcysteine 200 mg ml injection acetadote",
+    "resolved": true,
+    "rxcui": "582119",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "adalimumab": {
+    "name": "6 pack humira pediatric crohn s disease starter package",
+    "resolved": true,
+    "rxcui": "1594352",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "adrenalin": {
+    "name": "epinephrine 1 mg ml injectable solution adrenalin",
+    "resolved": true,
+    "rxcui": "1490057",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "adrenaline": {
+    "name": "20 ml epinephrine 0 005 mg ml lidocaine hydrochloride 20 mg ml injection xylocaine with epinephrine",
+    "resolved": true,
+    "rxcui": "1010692",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "alcohol": {
+    "name": "chlorhexidine gluconate 10 mg ml ethanol 0 61 ml ml topical lotion avagard",
+    "resolved": true,
+    "rxcui": "1090000",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "alfacalcidol": {
+    "name": "alfacalcidol 0 001 mg oral capsule",
+    "resolved": true,
+    "rxcui": "141992",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "aliskiren": {
+    "name": "aliskiren 150 mg hydrochlorothiazide 12 5 mg oral tablet tekturna hct",
+    "resolved": true,
+    "rxcui": "1011712",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "allopurinol": {
+    "name": "allopurinol 100 mg oral tablet zyloprim",
+    "resolved": true,
+    "rxcui": "213995",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "alprostadil": {
+    "name": "alprostadil 0 02 mg injection caverject",
+    "resolved": true,
+    "rxcui": "103956",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "alteplase": {
+    "name": "alteplase 100 mg injection activase",
+    "resolved": true,
+    "rxcui": "1804802",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "amikacin": {
+    "name": "amikacin liposomal 70 3 mg ml inhalation suspension arikayce",
+    "resolved": true,
+    "rxcui": "2059189",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "aminophylline": {
+    "name": "20 ml aminophylline 25 mg ml injection",
+    "resolved": true,
+    "rxcui": "1724666",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "amlodipine": {
+    "name": "amlodipine 5 mg hydrochlorothiazide 12 5 mg olmesartan medoxomil 40 mg oral tablet tribenzor",
+    "resolved": true,
+    "rxcui": "1000000",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ammonia": {
+    "name": "ammonia 150 mg ml nasal inhalant snap labs",
+    "resolved": true,
+    "rxcui": "2728560",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "amoxicillin": {
+    "name": "4 2 2 pack omeclamox",
+    "resolved": true,
+    "rxcui": "1291987",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "amphetamine": {
+    "name": "amphetamine aspartate 1 875 mg amphetamine sulfate 1 875 mg dextroamphetamine saccharate 1 875 mg dextroamphetamine sulfate 1 875 mg oral tablet adderall",
+    "resolved": true,
+    "rxcui": "1009147",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ampicillin": {
+    "name": "ampicillin 250 mg ml injectable suspension polyflex",
+    "resolved": true,
+    "rxcui": "1044196",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "anakinra": {
+    "name": "0 67 ml anakinra 149 mg ml prefilled syringe kineret",
+    "resolved": true,
+    "rxcui": "727714",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "anastrozole": {
+    "name": "anastrozole 1 mg oral tablet arimidex",
+    "resolved": true,
+    "rxcui": "151124",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "aprotinin": {
+    "name": "aprotinin 1 4 mg ml injectable solution",
+    "resolved": true,
+    "rxcui": "246020",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "aspirin": {
+    "name": "100 24 pack excedrin pm triple action caplets and excedrin extra strength pain reliever",
+    "resolved": true,
+    "rxcui": "2047428",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "avacopan": {
+    "name": "avacopan 10 mg oral capsule tavneos",
+    "resolved": true,
+    "rxcui": "2572111",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "azacitidine": {
+    "name": "azacitidine 200 mg oral tablet onureg",
+    "resolved": true,
+    "rxcui": "2396770",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "azacytidine": {
+    "name": "azacitidine 200 mg oral tablet onureg",
+    "resolved": true,
+    "rxcui": "2396770",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "azithromycin": {
+    "name": "6 pack z pak",
+    "resolved": true,
+    "rxcui": "750149",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "belatacept": {
+    "name": "belatacept 250 mg injection nulojix",
+    "resolved": true,
+    "rxcui": "1112980",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "belimumab": {
+    "name": "belimumab 120 mg injection benlysta",
+    "resolved": true,
+    "rxcui": "1656398",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "berotralstat": {
+    "name": "berotralstat 150 mg oral capsule orladeyo",
+    "resolved": true,
+    "rxcui": "2467571",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "betaine": {
+    "name": "betaine 1000 mg powder for oral solution cystadane",
+    "resolved": true,
+    "rxcui": "404539",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "bevacizumab": {
+    "name": "4 ml bevacizumab 25 mg ml injection avastin",
+    "resolved": true,
+    "rxcui": "1657068",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "bortezomib": {
+    "name": "1 4 ml bortezomib 2 5 mg ml injection boruzu",
+    "resolved": true,
+    "rxcui": "2693996",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "buprenorphine": {
+    "name": "buprenorphine 2 mg naloxone 0 5 mg sublingual film suboxone",
+    "resolved": true,
+    "rxcui": "1010603",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "bupropion": {
+    "name": "24 hr bupropion hydrochloride 450 mg extended release oral tablet forfivo",
+    "resolved": true,
+    "rxcui": "1232591",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "busulfan": {
+    "name": "busulfan 2 mg oral tablet myleran",
+    "resolved": true,
+    "rxcui": "105551",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "caffeine": {
+    "name": "100 24 pack excedrin pm triple action caplets and excedrin extra strength pain reliever",
+    "resolved": true,
+    "rxcui": "2047428",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "caplacizumab": {
+    "name": "caplacizumab yhdp 11 mg injection cablivi",
+    "resolved": true,
+    "rxcui": "2110618",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "captopril": {
+    "name": "captopril 25 mg hydrochlorothiazide 12 5 mg oral tablet",
+    "resolved": true,
+    "rxcui": "104370",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "carboplatin": {
+    "name": "carboplatin 10 mg ml injectable solution kyxata",
+    "resolved": true,
+    "rxcui": "2721602",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "carfilzomib": {
+    "name": "carfilzomib 30 mg injection kyprolis",
+    "resolved": true,
+    "rxcui": "1806937",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "carnitine": {
+    "name": "6 o palmitoylascorbic acid 12 mg alpha tocopherol acetate 75 unt levocarnitine 250 mg ubidecarenone 30 mg oral capsule carni q gel forte",
+    "resolved": true,
+    "rxcui": "1088447",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cefazolin": {
+    "name": "cefazolin 1000 mg injection",
+    "resolved": true,
+    "rxcui": "1665050",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "cefepime": {
+    "name": "cefepime 2000 mg enmetazobactam 500 mg injection exblifep",
+    "resolved": true,
+    "rxcui": "2675995",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cefotaxime": {
+    "name": "cefotaxime 200 mg ml injectable solution claforan",
+    "resolved": true,
+    "rxcui": "105174",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ceftolozane": {
+    "name": "ceftolozane 1000 mg tazobactam 500 mg injection zerbaxa",
+    "resolved": true,
+    "rxcui": "1597620",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ceftriaxone": {
+    "name": "ceftriaxone 500 mg injection",
+    "resolved": true,
+    "rxcui": "1665005",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "celecoxib": {
+    "name": "amlodipine 2 5 mg celecoxib 200 mg oral tablet consensi",
+    "resolved": true,
+    "rxcui": "2049593",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "chlorothiazide": {
+    "name": "chlorothiazide 50 mg ml oral suspension diuril",
+    "resolved": true,
+    "rxcui": "213439",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "chlorpromazine": {
+    "name": "1 ml chlorpromazine hydrochloride 25 mg ml injection",
+    "resolved": true,
+    "rxcui": "1730076",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "cholecalciferol": {
+    "name": "30 10 pack citranatal b calm kit",
+    "resolved": true,
+    "rxcui": "1100471",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "cinryze": {
+    "name": "c1 esterase inhibitor 500 unt injection cinryze",
+    "resolved": true,
+    "rxcui": "809871",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cisplatin": {
+    "name": "cisplatin 50 mg injection",
+    "resolved": true,
+    "rxcui": "1736854",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "clarithromycin": {
+    "name": "4 2 2 pack omeclamox",
+    "resolved": true,
+    "rxcui": "1291987",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "clemastine": {
+    "name": "clemastine fumarate 1 34 mg oral tablet dayhist 1",
+    "resolved": true,
+    "rxcui": "1095725",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "clofazimine": {
+    "name": "clofazimine 50 mg oral capsule",
+    "resolved": true,
+    "rxcui": "197521",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "clopidogrel": {
+    "name": "clopidogrel 75 mg oral tablet plavix",
+    "resolved": true,
+    "rxcui": "213169",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cobalamin": {
+    "name": "6 24 pack irospan 24 6 kit",
+    "resolved": true,
+    "rxcui": "1102207",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "cocaine": {
+    "name": "cocaine hydrochloride 40 mg ml nasal solution goprelto",
+    "resolved": true,
+    "rxcui": "1995293",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "colistin": {
+    "name": "colistin 75 mg ml injectable solution coly mycin m",
+    "resolved": true,
+    "rxcui": "1117525",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "creatine": {
+    "name": "creatine 1000 mg chewable tablet",
+    "resolved": true,
+    "rxcui": "2722959",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "cyclophosphamide": {
+    "name": "cyclophosphamide 500 mg ml injectable solution frindovyx",
+    "resolved": true,
+    "rxcui": "2703032",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cyclosporin": {
+    "name": "cyclosporine 0 002 mg mg ophthalmic ointment optimmune",
+    "resolved": true,
+    "rxcui": "1093178",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cyclosporine": {
+    "name": "cyclosporine 0 002 mg mg ophthalmic ointment optimmune",
+    "resolved": true,
+    "rxcui": "1093178",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cysteine": {
+    "name": "alanine 7 1 mg ml arginine 9 5 mg ml cysteine 0 16 mg ml glycine 14 mg ml histidine 2 8 mg ml isoleucine 6 9 mg ml leucine 9 1 mg ml lysine 7 3 mg ml methionine 5 3 mg ml phenylalanine 5 6 mg ml phosphoric acid 1 2 mg ml proline 11 2 mg ml serine 5 9 mg ml sodium bisulfite 1 mg ml threonine 4 mg ml tryptophan 1 5 mg ml valine 6 6 mg ml injectable solution freamine iii 10",
+    "resolved": true,
+    "rxcui": "1014431",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "cytarabine": {
+    "name": "cytarabine liposome 100 mg daunorubicin liposomal 44 mg injection vyxeos",
+    "resolved": true,
+    "rxcui": "1942748",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "dabrafenib": {
+    "name": "dabrafenib 50 mg oral capsule tafinlar",
+    "resolved": true,
+    "rxcui": "1425228",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "danazol": {
+    "name": "danazol 100 mg oral capsule",
+    "resolved": true,
+    "rxcui": "197554",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "danicopan": {
+    "name": "84 84 pack voydeya 150 mg dose card",
+    "resolved": true,
+    "rxcui": "2678969",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "decitabine": {
+    "name": "5 pack inqovi 5 tablet pack",
+    "resolved": true,
+    "rxcui": "2384465",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "defibrotide": {
+    "name": "2 5 ml defibrotide sodium 80 mg ml injection defitelio",
+    "resolved": true,
+    "rxcui": "1746532",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "dexamethasone": {
+    "name": "49 pack taperdex 12 day taper",
+    "resolved": true,
+    "rxcui": "1998481",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "dexmedetomidine": {
+    "name": "dexmedetomidine hydrochloride 0 1 mg ml injectable solution dexdomitor",
+    "resolved": true,
+    "rxcui": "1535226",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "diazoxide": {
+    "name": "diazoxide 50 mg ml oral suspension proglycem",
+    "resolved": true,
+    "rxcui": "207634",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "diphenhydramine": {
+    "name": "100 24 pack excedrin pm triple action caplets and excedrin extra strength pain reliever",
+    "resolved": true,
+    "rxcui": "2047428",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "docetaxel": {
+    "name": "1 1 pack beizray 80 mg kit",
+    "resolved": true,
+    "rxcui": "2723664",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "dopamine": {
+    "name": "5 ml dopamine hydrochloride 160 mg ml injection",
+    "resolved": true,
+    "rxcui": "1114874",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "doxorubicin": {
+    "name": "25 ml doxorubicin hydrochloride liposome 2 mg ml injection doxil",
+    "resolved": true,
+    "rxcui": "1790128",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "doxorubicine": {
+    "name": "25 ml doxorubicin hydrochloride liposome 2 mg ml injection doxil",
+    "resolved": true,
+    "rxcui": "1790128",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "doxycycline": {
+    "name": "42 pack lymepak",
+    "resolved": true,
+    "rxcui": "2099769",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "durvalumab": {
+    "name": "2 4 ml durvalumab 50 mg ml injection imfinzi",
+    "resolved": true,
+    "rxcui": "1919512",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ecallantide": {
+    "name": "1 ml ecallantide 10 mg ml injection kalbitor",
+    "resolved": true,
+    "rxcui": "884702",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "eculizumab": {
+    "name": "30 ml eculizumab aagh 10 mg ml injection epysqli",
+    "resolved": true,
+    "rxcui": "2706345",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "emicizumab": {
+    "name": "1 ml emicizumab kxwh 30 mg ml injection hemlibra",
+    "resolved": true,
+    "rxcui": "1989804",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "emtricitabine": {
+    "name": "emtricitabine 200 mg rilpivirine 25 mg tenofovir disoproxil fumarate 300 mg oral tablet complera",
+    "resolved": true,
+    "rxcui": "1147337",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "enalapril": {
+    "name": "enalapril maleate 1 mg ml oral solution epaned",
+    "resolved": true,
+    "rxcui": "1435630",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "enalaprilat": {
+    "name": "1 ml enalaprilat 1 25 mg ml injection",
+    "resolved": true,
+    "rxcui": "1729200",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "enoxaparin": {
+    "name": "0 3 ml enoxaparin sodium 100 mg ml prefilled syringe lovenox",
+    "resolved": true,
+    "rxcui": "854232",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "epinephrine": {
+    "name": "20 ml epinephrine 0 005 mg ml lidocaine hydrochloride 20 mg ml injection xylocaine with epinephrine",
+    "resolved": true,
+    "rxcui": "1010692",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "erythropoietin": {
+    "name": "1 ml epoetin alfa 10000 unt ml injection epogen",
+    "resolved": true,
+    "rxcui": "1721685",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "etanercept": {
+    "name": "1 ml etanercept 50 mg ml auto injector enbrel",
+    "resolved": true,
+    "rxcui": "1653225",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "etoposide": {
+    "name": "etoposide 20 mg ml injectable solution toposar",
+    "resolved": true,
+    "rxcui": "206831",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "everolimus": {
+    "name": "everolimus 7 5 mg oral tablet afinitor",
+    "resolved": true,
+    "rxcui": "1119402",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "exemestane": {
+    "name": "exemestane 25 mg oral tablet aromasin",
+    "resolved": true,
+    "rxcui": "261317",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "fentanyl": {
+    "name": "fentanyl 0 1 mg sublingual tablet abstral",
+    "resolved": true,
+    "rxcui": "1053651",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "fibrinogen": {
+    "name": "fibrinogen human 337 mg thrombin human 123 unt medicated patch tachosil",
+    "resolved": true,
+    "rxcui": "1001593",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "finasteride": {
+    "name": "finasteride 5 mg oral tablet proscar",
+    "resolved": true,
+    "rxcui": "201961",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "fludarabine": {
+    "name": "fludarabine phosphate 50 mg injection",
+    "resolved": true,
+    "rxcui": "1740864",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "fluorescein": {
+    "name": "fluorescein sodium 2 5 mg ml proparacaine hydrochloride 5 mg ml ophthalmic solution fluoracaine",
+    "resolved": true,
+    "rxcui": "1247453",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "fluorouracil": {
+    "name": "fluorouracil 40 mg ml topical cream tolak",
+    "resolved": true,
+    "rxcui": "1669873",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "formaldehyde": {
+    "name": "formaldehyde 100 mg ml topical solution formadon",
+    "resolved": true,
+    "rxcui": "205686",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "furosemide": {
+    "name": "furosemide 50 mg ml injectable solution disal",
+    "resolved": true,
+    "rxcui": "1112201",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "gallium": {
+    "name": "gallium nitrate 25 mg ml injectable solution ganite",
+    "resolved": true,
+    "rxcui": "210238",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "gelatin": {
+    "name": "gelatin 585 mg oral capsule",
+    "resolved": true,
+    "rxcui": "1791615",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "gemcitabine": {
+    "name": "120 ml gemcitabine 10 mg ml injection infugem",
+    "resolved": true,
+    "rxcui": "2058863",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "gentamicin": {
+    "name": "betamethasone 0 284 mg ml gentamicin 0 57 mg ml topical spray gentaved",
+    "resolved": true,
+    "rxcui": "1426861",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "glibenclamide": {
+    "name": "glyburide 1 5 mg oral tablet glynase",
+    "resolved": true,
+    "rxcui": "881407",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "glucose": {
+    "name": "glucose 0 4 mg mg oral gel glutose",
+    "resolved": true,
+    "rxcui": "1038787",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "glycopyrrolate": {
+    "name": "glycopyrrolate 2 mg oral tablet robinul",
+    "resolved": true,
+    "rxcui": "102166",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "haloperidol": {
+    "name": "1 ml haloperidol decanoate 100 mg ml injection haldol",
+    "resolved": true,
+    "rxcui": "1719847",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "heparin": {
+    "name": "3 ml heparin sodium porcine 1000 unt ml taurolidine 13 5 mg ml injection defencath",
+    "resolved": true,
+    "rxcui": "2670468",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "heroin": {
+    "name": "heroin 10 mg oral tablet",
+    "resolved": true,
+    "rxcui": "250473",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "histamine": {
+    "name": "histamine dihydrochloride 0 28 mg ml menthol 45 7 mg ml topical cream activon arthritis",
+    "resolved": true,
+    "rxcui": "1148636",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "hydrocortisone": {
+    "name": "1 1 pack scalacort dk",
+    "resolved": true,
+    "rxcui": "833507",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "hydroxocobalamin": {
+    "name": "hydroxocobalamin 5000 mg injection cyanokit",
+    "resolved": true,
+    "rxcui": "700499",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "hydroxycobalamin": {
+    "name": "hydroxocobalamin 5000 mg injection cyanokit",
+    "resolved": true,
+    "rxcui": "700499",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "hydroxyurea": {
+    "name": "hydroxyurea 500 mg oral capsule hydrea",
+    "resolved": true,
+    "rxcui": "105602",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "hydroxyzine": {
+    "name": "hydroxyzine pamoate 25 mg oral capsule vistaril",
+    "resolved": true,
+    "rxcui": "995255",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ibuprofen": {
+    "name": "famotidine 26 6 mg ibuprofen 800 mg oral tablet duexis",
+    "resolved": true,
+    "rxcui": "1100070",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "icatibant": {
+    "name": "3 ml icatibant 10 mg ml prefilled syringe firazyr",
+    "resolved": true,
+    "rxcui": "1148145",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "idelalisib": {
+    "name": "idelalisib 100 mg oral tablet zydelig",
+    "resolved": true,
+    "rxcui": "1544471",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "imatinib": {
+    "name": "imatinib 80 mg ml oral solution imkeldi",
+    "resolved": true,
+    "rxcui": "2699837",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "imiquimod": {
+    "name": "imiquimod 25 mg ml topical cream zyclara",
+    "resolved": true,
+    "rxcui": "1248442",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "indomethacin": {
+    "name": "indomethacin 20 mg oral capsule tivorbex",
+    "resolved": true,
+    "rxcui": "1491527",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "infliximab": {
+    "name": "infliximab dyyb 100 mg injection inflectra",
+    "resolved": true,
+    "rxcui": "1790546",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "insulin": {
+    "name": "90 90 pack afrezza titration pack",
+    "resolved": true,
+    "rxcui": "1798388",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "iodine": {
+    "name": "iodine 10 mg ml topical solution dairyland brand controlled iodine teat dip",
+    "resolved": true,
+    "rxcui": "1001567",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "iptacopan": {
+    "name": "iptacopan 200 mg oral capsule fabhalta",
+    "resolved": true,
+    "rxcui": "2671080",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "isoniazid": {
+    "name": "isoniazid 10 mg ml oral solution",
+    "resolved": true,
+    "rxcui": "105292",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "isosorbide": {
+    "name": "isosorbide 450 mg ml oral solution",
+    "resolved": true,
+    "rxcui": "311190",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "ivermectin": {
+    "name": "ivermectin 0 136 mg pyrantel 114 mg chewable tablet heartgard plus",
+    "resolved": true,
+    "rxcui": "1006637",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ketamine": {
+    "name": "ketamine 100 mg ml injectable solution ketaset",
+    "resolved": true,
+    "rxcui": "1087926",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "lactate": {
+    "name": "1 1 pack ultravate x ointment",
+    "resolved": true,
+    "rxcui": "1301696",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "levamisole": {
+    "name": "doramectin 5 mg ml levamisole hydrochloride 150 mg ml injectable solution valcor",
+    "resolved": true,
+    "rxcui": "2611791",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "lisinopril": {
+    "name": "lisinopril 2 5 mg oral tablet zestril",
+    "resolved": true,
+    "rxcui": "104375",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "liver": {
+    "name": "liver derivative complex 25 5 mg ml injectable solution nexavir",
+    "resolved": true,
+    "rxcui": "880859",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "lorazepam": {
+    "name": "lorazepam 1 mg oral tablet ativan",
+    "resolved": true,
+    "rxcui": "104719",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "losartan": {
+    "name": "losartan potassium 10 mg ml oral suspension arbli",
+    "resolved": true,
+    "rxcui": "2709046",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "mannitol": {
+    "name": "250 ml mannitol 200 mg ml injection osmitrol",
+    "resolved": true,
+    "rxcui": "1791404",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "matrix": {
+    "name": "altrenogest 2 2 mg ml oral solution matrix",
+    "resolved": true,
+    "rxcui": "1667648",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "melphalan": {
+    "name": "melphalan 2 mg oral tablet alkeran",
+    "resolved": true,
+    "rxcui": "105562",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "mercaptopurine": {
+    "name": "mercaptopurine 20 mg ml oral suspension purixan",
+    "resolved": true,
+    "rxcui": "1536490",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "meropenem": {
+    "name": "meropenem 1000 mg vaborbactam 1000 mg injection vabomere",
+    "resolved": true,
+    "rxcui": "1946651",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "metformin": {
+    "name": "24 hr metformin hydrochloride 1000 mg saxagliptin 2 5 mg extended release oral tablet kombiglyze",
+    "resolved": true,
+    "rxcui": "1043567",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "methionine": {
+    "name": "alanine 7 1 mg ml arginine 9 5 mg ml cysteine 0 16 mg ml glycine 14 mg ml histidine 2 8 mg ml isoleucine 6 9 mg ml leucine 9 1 mg ml lysine 7 3 mg ml methionine 5 3 mg ml phenylalanine 5 6 mg ml phosphoric acid 1 2 mg ml proline 11 2 mg ml serine 5 9 mg ml sodium bisulfite 1 mg ml threonine 4 mg ml tryptophan 1 5 mg ml valine 6 6 mg ml injectable solution freamine iii 10",
+    "resolved": true,
+    "rxcui": "1014431",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "methylprednisolone": {
+    "name": "21 pack medrol dosepak",
+    "resolved": true,
+    "rxcui": "834023",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "milrinone": {
+    "name": "100 ml milrinone lactate 0 2 mg ml injection",
+    "resolved": true,
+    "rxcui": "1791840",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "mitomycin": {
+    "name": "mitomycin 0 2 mg ml ophthalmic solution mitosol",
+    "resolved": true,
+    "rxcui": "1244558",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "mitotane": {
+    "name": "mitotane 500 mg oral tablet lysodren",
+    "resolved": true,
+    "rxcui": "207373",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "montelukast": {
+    "name": "montelukast 10 mg oral tablet singulair",
+    "resolved": true,
+    "rxcui": "153892",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "morphine": {
+    "name": "20 ml morphine sulfate 10 mg ml injection infumorph",
+    "resolved": true,
+    "rxcui": "1731999",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "naloxone": {
+    "name": "buprenorphine 2 mg naloxone 0 5 mg sublingual film suboxone",
+    "resolved": true,
+    "rxcui": "1010603",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "narsoplimab": {
+    "name": "2 ml narsoplimab wuug 185 mg ml injection yartemlea",
+    "resolved": true,
+    "rxcui": "2732305",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "netilmicin": {
+    "name": "netilmicin 100 mg ml injectable solution",
+    "resolved": true,
+    "rxcui": "239207",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "nicotine": {
+    "name": "14 14 28 pack",
+    "resolved": true,
+    "rxcui": "892244",
+    "source": "rxnorm",
+    "tty": "GPCK"
+  },
+  "nifedipine": {
+    "name": "osmotic 24 hr nifedipine 30 mg extended release oral tablet procardia",
+    "resolved": true,
+    "rxcui": "207772",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "niraparib": {
+    "name": "niraparib 100 mg oral capsule zejula",
+    "resolved": true,
+    "rxcui": "1918242",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "nivolumab": {
+    "name": "4 ml nivolumab 10 mg ml injection opdivo",
+    "resolved": true,
+    "rxcui": "1657192",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "octreotide": {
+    "name": "1 ml octreotide 0 05 mg ml injection sandostatin",
+    "resolved": true,
+    "rxcui": "207194",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "olaparib": {
+    "name": "olaparib 100 mg oral tablet lynparza",
+    "resolved": true,
+    "rxcui": "1942485",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "oxygen": {
+    "name": "helium 79 6 oxygen 20 4 gas for inhalation",
+    "resolved": true,
+    "rxcui": "1373011",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "oxytetracycline": {
+    "name": "oxytetracycline 300 mg ml injectable solution noromycin",
+    "resolved": true,
+    "rxcui": "1013702",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "paclitaxel": {
+    "name": "paclitaxel 100 mg injection abraxane",
+    "resolved": true,
+    "rxcui": "583218",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "palbociclib": {
+    "name": "palbociclib 100 mg oral capsule ibrance",
+    "resolved": true,
+    "rxcui": "1601386",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "palifermin": {
+    "name": "palifermin 5 16 mg injection kepivance",
+    "resolved": true,
+    "rxcui": "2643436",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "paracetamol": {
+    "name": "100 24 pack excedrin pm triple action caplets and excedrin extra strength pain reliever",
+    "resolved": true,
+    "rxcui": "2047428",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "pegcetacoplan": {
+    "name": "20 ml pegcetacoplan 54 mg ml injection empaveli",
+    "resolved": true,
+    "rxcui": "2557391",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "pembrolizumab": {
+    "name": "4 ml pembrolizumab 25 mg ml injection keytruda",
+    "resolved": true,
+    "rxcui": "1657751",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "pentoxifylline": {
+    "name": "pentoxifylline 400 mg extended release oral tablet",
+    "resolved": true,
+    "rxcui": "312301",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "perform": {
+    "name": "menthol 0 031 mg mg topical gel perform",
+    "resolved": true,
+    "rxcui": "1043228",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "phenobarbital": {
+    "name": "atropine sulfate 0 00388 mg ml hyoscyamine sulfate 0 0207 mg ml phenobarbital 3 24 mg ml scopolamine hydrobromide 0 0013 mg ml oral solution donnatal",
+    "resolved": true,
+    "rxcui": "1046924",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "pilocarpine": {
+    "name": "pilocarpine hydrochloride 10 mg ml ophthalmic solution pilocar",
+    "resolved": true,
+    "rxcui": "1000660",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "piperacillin": {
+    "name": "piperacillin 2000 mg tazobactam 250 mg injection zosyn",
+    "resolved": true,
+    "rxcui": "1659134",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "plasminogen": {
+    "name": "plasminogen human tvmh 68 8 mg injection ryplazim",
+    "resolved": true,
+    "rxcui": "2557210",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "potassium": {
+    "name": "potassium 80 mg oral tablet",
+    "resolved": true,
+    "rxcui": "259128",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "prednisolone": {
+    "name": "48 pack millipred dp 12 day",
+    "resolved": true,
+    "rxcui": "1005831",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "prednisone": {
+    "name": "48 pack",
+    "resolved": true,
+    "rxcui": "763179",
+    "source": "rxnorm",
+    "tty": "GPCK"
+  },
+  "propylthiouracil": {
+    "name": "propylthiouracil 50 mg oral tablet",
+    "resolved": true,
+    "rxcui": "198175",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "protease": {
+    "name": "amylase 15000 unt lipase 3000 unt protease 9500 unt delayed release oral capsule creon",
+    "resolved": true,
+    "rxcui": "1113046",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "prothrombin": {
+    "name": "coagulation factor ix human 1 unt coagulation factor x human 1 unt factor vii human 1 unt protein c human 1 unt protein s human 1 unt prothrombin human 1 unt injection kcentra",
+    "resolved": true,
+    "rxcui": "1484963",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "quercetin": {
+    "name": "quercetin 50 mg oral tablet",
+    "resolved": true,
+    "rxcui": "199367",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "quetiapine": {
+    "name": "1 11 3 pack seroquel xr 14 day sample kit",
+    "resolved": true,
+    "rxcui": "1648647",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "quinapril": {
+    "name": "quinapril 5 mg oral tablet accupril",
+    "resolved": true,
+    "rxcui": "207891",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "quinine": {
+    "name": "quinine sulfate 324 mg oral capsule qualaquin",
+    "resolved": true,
+    "rxcui": "997012",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "rabbit": {
+    "name": "rabbit allergenic extract 50 mg ml injectable solution",
+    "resolved": true,
+    "rxcui": "967004",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "ramipril": {
+    "name": "ramipril 2 5 mg oral capsule altace",
+    "resolved": true,
+    "rxcui": "104384",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ranitidine": {
+    "name": "ranitidine 25 mg ml injectable solution zantac",
+    "resolved": true,
+    "rxcui": "104084",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "rapamycin": {
+    "name": "sirolimus 100 mg injection fyarro",
+    "resolved": true,
+    "rxcui": "2586868",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "ravulizumab": {
+    "name": "30 ml ravulizumab cwvz 10 mg ml injection ultomiris",
+    "resolved": true,
+    "rxcui": "2107325",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "react": {
+    "name": "levonorgestrel 1 5 mg oral tablet react",
+    "resolved": true,
+    "rxcui": "1788864",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "revolution": {
+    "name": "selamectin 120 mg ml topical solution revolution",
+    "resolved": true,
+    "rxcui": "1044276",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "rifapentine": {
+    "name": "rifapentine 150 mg oral tablet priftin",
+    "resolved": true,
+    "rxcui": "261101",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "rituximab": {
+    "name": "10 ml rituximab 10 mg ml injection rituxan",
+    "resolved": true,
+    "rxcui": "1657864",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "sacubitril": {
+    "name": "sacubitril 24 mg valsartan 26 mg oral tablet entresto",
+    "resolved": true,
+    "rxcui": "1656346",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "sebetralstat": {
+    "name": "sebetralstat 300 mg oral tablet ekterly",
+    "resolved": true,
+    "rxcui": "2717955",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "serine": {
+    "name": "alanine 7 1 mg ml arginine 9 5 mg ml cysteine 0 16 mg ml glycine 14 mg ml histidine 2 8 mg ml isoleucine 6 9 mg ml leucine 9 1 mg ml lysine 7 3 mg ml methionine 5 3 mg ml phenylalanine 5 6 mg ml phosphoric acid 1 2 mg ml proline 11 2 mg ml serine 5 9 mg ml sodium bisulfite 1 mg ml threonine 4 mg ml tryptophan 1 5 mg ml valine 6 6 mg ml injectable solution freamine iii 10",
+    "resolved": true,
+    "rxcui": "1014431",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "silica": {
+    "name": "silicon dioxide 0 025 mg mg tricalcium phosphate 0 19 mg mg toothpaste",
+    "resolved": true,
+    "rxcui": "1374795",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "sirolimus": {
+    "name": "sirolimus 100 mg injection fyarro",
+    "resolved": true,
+    "rxcui": "2586868",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "starch": {
+    "name": "starch 0 81 mg mg zinc oxide 0 15 mg mg topical powder caldesene",
+    "resolved": true,
+    "rxcui": "1039057",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "sustain": {
+    "name": "72 hr sulfamethazine 32100 mg extended release oral tablet sustain",
+    "resolved": true,
+    "rxcui": "1101616",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tacrolimus": {
+    "name": "tacrolimus 1 mg oral capsule prograf",
+    "resolved": true,
+    "rxcui": "108513",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tamoxifen": {
+    "name": "tamoxifen 2 mg ml oral solution soltamox",
+    "resolved": true,
+    "rxcui": "644304",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tandem": {
+    "name": "ferrous fumarate 162 mg polysaccharide iron complex 115 mg oral capsule tandem",
+    "resolved": true,
+    "rxcui": "795770",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tazobactam": {
+    "name": "ceftolozane 1000 mg tazobactam 500 mg injection zerbaxa",
+    "resolved": true,
+    "rxcui": "1597620",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "temozolomide": {
+    "name": "temozolomide 5 mg oral capsule temodar",
+    "resolved": true,
+    "rxcui": "261288",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tenecteplase": {
+    "name": "tenecteplase 25 mg injection tnkase",
+    "resolved": true,
+    "rxcui": "2711699",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "theophylline": {
+    "name": "theophylline 5 33 mg ml oral solution elixophyllin",
+    "resolved": true,
+    "rxcui": "756226",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "thymoglobulin": {
+    "name": "rabbit anti human t lymphocyte globulin 25 mg injection thymoglobulin",
+    "resolved": true,
+    "rxcui": "107050",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "thyroid": {
+    "name": "thyroid 16 25 mg oral tablet westhroid",
+    "resolved": true,
+    "rxcui": "1087008",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tobacco": {
+    "name": "tobacco leaf allergenic extract 1 mg ml injectable solution",
+    "resolved": true,
+    "rxcui": "2102049",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "tocilizumab": {
+    "name": "0 9 ml tocilizumab 180 mg ml prefilled syringe actemra",
+    "resolved": true,
+    "rxcui": "1441530",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "today": {
+    "name": "10 ml cephapirin 20 mg ml prefilled syringe today",
+    "resolved": true,
+    "rxcui": "896750",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "trametinib": {
+    "name": "trametinib 0 5 mg oral tablet mekinist",
+    "resolved": true,
+    "rxcui": "1425110",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tremelimumab": {
+    "name": "15 ml tremelimumab actl 20 mg ml injection imjudo",
+    "resolved": true,
+    "rxcui": "2619323",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "tyrosine": {
+    "name": "alanine 8 8 mg ml arginine 4 89 mg ml calcium chloride 0 004 meq ml dibasic potassium phosphate 2 61 mg ml glucose 100 mg ml glycine 4 38 mg ml histidine 2 04 mg ml isoleucine 2 55 mg ml leucine 3 11 mg ml lysine 2 47 mg ml magnesium chloride 0 01 meq ml methionine 1 7 mg ml phenylalanine 2 38 mg ml proline 2 89 mg ml serine 2 13 mg ml sodium acetate trihydrate 2 97 mg ml sodium chloride 0 013 meq ml threonine 1 79 mg ml tryptophan 0 77 mg ml tyrosine 0 17 mg ml valine 2 47 mg ml injectable solution clinimix e 4 25 10",
+    "resolved": true,
+    "rxcui": "1090639",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "valsartan": {
+    "name": "sacubitril 24 mg valsartan 26 mg oral tablet entresto",
+    "resolved": true,
+    "rxcui": "1656346",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "vancomycin": {
+    "name": "vancomycin 25 mg ml oral solution firvanq",
+    "resolved": true,
+    "rxcui": "2000133",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "varenicline": {
+    "name": "56 pack chantix continuing months of therapy",
+    "resolved": true,
+    "rxcui": "795735",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "venetoclax": {
+    "name": "14 21 7 pack venclexta starting pack",
+    "resolved": true,
+    "rxcui": "1747580",
+    "source": "rxnorm",
+    "tty": "BPCK"
+  },
+  "water": {
+    "name": "water 983 mg ml ophthalmic irrigation solution pur wash",
+    "resolved": true,
+    "rxcui": "1424605",
+    "source": "rxnorm",
+    "tty": "SBD"
+  },
+  "yeast": {
+    "name": "candida albicans allergenic extract 0 5 mg ml neurospora intermedia allergenic extract 0 5 mg ml injectable solution",
+    "resolved": true,
+    "rxcui": "2101517",
+    "source": "rxnorm",
+    "tty": "SCD"
+  },
+  "zilucoplan": {
+    "name": "0 416 ml zilucoplan 40 mg ml prefilled syringe zilbrysq",
+    "resolved": true,
+    "rxcui": "2672502",
+    "source": "rxnorm",
+    "tty": "SBD"
+  }
+}

@@ -1,0 +1,1377 @@
+term,canonical_name,geo_type,map_level,country,admin1_name,latitude,longitude,source
+Mazar-e Sharif,Mazar-i-Sharif,place,point,Afghanistan,Balkh,36.699994,67.100028,natural_earth_populated_places
+Mazar-i-Sharif,Mazar-i-Sharif,place,point,Afghanistan,Balkh,36.699994,67.100028,natural_earth_populated_places
+Herat,Herat,place,point,Afghanistan,Hirat,34.330009,62.169993,natural_earth_populated_places
+Kabul,Kabul,place,point,Afghanistan,Kabul,34.518636,69.181314,natural_earth_populated_places
+Kandahar,Kandahar,place,point,Afghanistan,Kandahar,31.61002,65.694946,natural_earth_populated_places
+Mariehamn,Mariehamn,place,point,Aland,Finström,60.096996,19.949005,natural_earth_populated_places
+Tirana,Tirana,place,point,Albania,Durrës,41.327541,19.818883,natural_earth_populated_places
+Algiers,Algiers,place,point,Algeria,Alger,36.765011,3.048607,natural_earth_populated_places
+Annaba,Annaba,place,point,Algeria,Annaba,36.920006,7.759981,natural_earth_populated_places
+Constantine,Constantine,place,point,Algeria,Constantine,36.359989,6.599948,natural_earth_populated_places
+Ghardaia,Ghardaia,place,point,Algeria,Ghardaaa,32.489992,3.669998,natural_earth_populated_places
+Oran,Oran,place,point,Algeria,Oran,35.711948,-0.621919,natural_earth_populated_places
+Tamanrasset,Tamanrasset,place,point,Algeria,Tamanghasset,22.785003,5.522805,natural_earth_populated_places
+Pago Pago,Pago Pago,place,point,American Samoa,,-14.276611,-170.706645,natural_earth_populated_places
+Andorra,Andorra,place,point,Andorra,,42.500001,1.516486,natural_earth_populated_places
+Benguela,Benguela,place,point,Angola,Benguela,-12.578265,13.407233,natural_earth_populated_places
+Menongue,Menongue,place,point,Angola,Cuando Cubango,-14.666613,17.699994,natural_earth_populated_places
+Huambo,Huambo,place,point,Angola,Huambo,-12.74804,15.758064,natural_earth_populated_places
+Lubango,Lubango,place,point,Angola,Huíla,-14.910009,13.490019,natural_earth_populated_places
+Luanda,Luanda,place,point,Angola,Luanda,-8.83634,13.232481,natural_earth_populated_places
+Malanje,Malanje,place,point,Angola,Malanje,-9.54,16.340026,natural_earth_populated_places
+Moçâmedes,Moçâmedes,place,point,Angola,Namibe,-15.190043,12.160022,natural_earth_populated_places
+Namibe,Moçâmedes,place,point,Angola,Namibe,-15.190043,12.160022,natural_earth_populated_places
+Aboa Station,Aboa Station,place,point,Antarctica,,-75.049594,-13.416711,natural_earth_populated_places
+AmundseniScott South Pole Station,Amundsen–Scott South Pole Station,place,point,Antarctica,,-90.0,176.994452,natural_earth_populated_places
+Amundsen–Scott South Pole Station,Amundsen–Scott South Pole Station,place,point,Antarctica,,-90.0,176.994452,natural_earth_populated_places
+Artigas Base,Artigas Base,place,point,Antarctica,,-62.173887,-58.863864,natural_earth_populated_places
+Base Presidente Montalva,Base Presidente Montalva,place,point,Antarctica,,-62.182744,-58.907652,natural_earth_populated_places
+Belgrano II Base,Belgrano II Base,place,point,Antarctica,,-77.866321,-34.616683,natural_earth_populated_places
+Capitan Arturo Prat Station,Capitan Arturo Prat Station,place,point,Antarctica,,-62.499507,-59.683319,natural_earth_populated_places
+Carlini Base,Carlini Base,place,point,Antarctica,,-62.224144,-58.650476,natural_earth_populated_places
+Casey Station,Casey Station,place,point,Antarctica,,-66.286086,110.536214,natural_earth_populated_places
+Concordia Research Station,Concordia Research Station,place,point,Antarctica,,-74.666309,124.167036,natural_earth_populated_places
+Davis Station,Davis Station,place,point,Antarctica,,-68.777674,78.140735,natural_earth_populated_places
+Dumont d'Urville Station,Dumont d'Urville Station,place,point,Antarctica,,-66.775051,139.963684,natural_earth_populated_places
+Elephant Island,Elephant Island,place,point,Antarctica,,-61.999589,-57.999985,natural_earth_populated_places
+Escudero Base,Escudero Base,place,point,Antarctica,,-62.194963,-58.952666,natural_earth_populated_places
+Esperanza Base,Esperanza Base,place,point,Antarctica,,-63.375329,-57.025902,natural_earth_populated_places
+Esperanza Station,Esperanza Base,place,point,Antarctica,,-63.375329,-57.025902,natural_earth_populated_places
+Gen. O'Higgins Base,Gen. O'Higgins Base,place,point,Antarctica,,-63.328418,-57.889594,natural_earth_populated_places
+Great Wall Station,Great Wall Station,place,point,Antarctica,,-62.21632,-58.966696,natural_earth_populated_places
+Halley Station,Halley Station,place,point,Antarctica,,-76.092263,-26.474157,natural_earth_populated_places
+King Sejong Station,King Sejong Station,place,point,Antarctica,,-62.224853,-58.771599,natural_earth_populated_places
+Maitri Station,Maitri Station,place,point,Antarctica,,-70.78218,11.730458,natural_earth_populated_places
+Marambio Base,Marambio Base,place,point,Antarctica,,-64.232889,-56.650015,natural_earth_populated_places
+Mawson Station,Mawson Station,place,point,Antarctica,,-67.61452,62.875001,natural_earth_populated_places
+McMurdo Station,McMurdo Station,place,point,Antarctica,,-77.732282,166.869416,natural_earth_populated_places
+Mirny Station,Mirny Station,place,point,Antarctica,,-66.57553,93.006289,natural_earth_populated_places
+Neumayer Station III,Neumayer Station III,place,point,Antarctica,,-70.890397,-7.838438,natural_earth_populated_places
+Novolazarevskaya Station,Novolazarevskaya Station,place,point,Antarctica,,-71.301235,-11.850213,natural_earth_populated_places
+Orcadas Station,Orcadas Station,place,point,Antarctica,,-60.732896,-44.733301,natural_earth_populated_places
+Palmer Station,Palmer Station,place,point,Antarctica,,-64.762413,-64.046876,natural_earth_populated_places
+Peter I Island,Peter I Island,place,point,Antarctica,,-68.795161,-90.584203,natural_earth_populated_places
+Rothera Station,Rothera Station,place,point,Antarctica,,-67.564776,-68.123541,natural_earth_populated_places
+San Martin Base,San Martín Base,place,point,Antarctica,,-68.116322,-67.099998,natural_earth_populated_places
+San Martín Base,San Martín Base,place,point,Antarctica,,-68.116322,-67.099998,natural_earth_populated_places
+Scott Base,Scott Base,place,point,Antarctica,,-77.846938,166.749102,natural_earth_populated_places
+Showa Station,Showa Station,place,point,Antarctica,,-69.030393,39.746083,natural_earth_populated_places
+Signy Research Station,Signy Research Station,place,point,Antarctica,,-60.631308,-45.600703,natural_earth_populated_places
+Sobral Base,Sobral Base,place,point,Antarctica,,-81.179085,-40.501532,natural_earth_populated_places
+Svea Station,Svea Station,place,point,Antarctica,,-74.582904,-11.21669,natural_earth_populated_places
+Troll Station,Troll Station,place,point,Antarctica,,-72.01629,2.533323,natural_earth_populated_places
+Vostok,Vostok Station,place,point,Antarctica,,-78.466284,106.800034,natural_earth_populated_places
+Vostok Station,Vostok Station,place,point,Antarctica,,-78.466284,106.800034,natural_earth_populated_places
+Wasa Station,Wasa Station,place,point,Antarctica,,-73.049612,-13.416711,natural_earth_populated_places
+Zhongshan Station,Zhongshan Station,place,point,Antarctica,,-69.434063,76.339298,natural_earth_populated_places
+Zucchelli Station,Zucchelli Station,place,point,Antarctica,,-74.619193,164.219027,natural_earth_populated_places
+Saint John's,Saint John's,place,point,Antigua and Barbuda,,17.118037,-61.850034,natural_earth_populated_places
+Comodoro Rivadavia,Comodoro Rivadavia,place,point,Argentina,Chubut,-45.870031,-67.499999,natural_earth_populated_places
+Rawson,Rawson,place,point,Argentina,Chubut,-43.300007,-65.099991,natural_earth_populated_places
+Bahia Blanca,Bahía Blanca,place,point,Argentina,Ciudad de Buenos Aires,-38.740027,-62.265021,natural_earth_populated_places
+Bahía Blanca,Bahía Blanca,place,point,Argentina,Ciudad de Buenos Aires,-38.740027,-62.265021,natural_earth_populated_places
+Buenos Aires,Buenos Aires,place,point,Argentina,Ciudad de Buenos Aires,-34.600556,-58.399477,natural_earth_populated_places
+Mar del Plata,Mar del Plata,place,point,Argentina,Ciudad de Buenos Aires,-38.00002,-57.579984,natural_earth_populated_places
+Cordoba,Córdoba,place,point,Argentina,Córdoba,-31.398012,-64.18424,natural_earth_populated_places
+Córdoba,Córdoba,place,point,Argentina,Córdoba,-31.398012,-64.18424,natural_earth_populated_places
+Formosa,Formosa,place,point,Argentina,Formosa,-26.172835,-58.182816,natural_earth_populated_places
+Santa Rosa,Santa Rosa,place,point,Argentina,La Pampa,-36.620001,-64.299988,natural_earth_populated_places
+Mendoza,Mendoza,place,point,Argentina,Mendoza,-32.881384,-68.818557,natural_earth_populated_places
+Posadas,Posadas,place,point,Argentina,Misiones,-27.357832,-55.885107,natural_earth_populated_places
+Neuquen,Neuquén,place,point,Argentina,Neuquén,-38.95004,-68.059991,natural_earth_populated_places
+Neuquén,Neuquén,place,point,Argentina,Neuquén,-38.95004,-68.059991,natural_earth_populated_places
+Bariloche,Bariloche,place,point,Argentina,Río Negro,-41.149957,-71.3,natural_earth_populated_places
+San Carlos de Bariloche,Bariloche,place,point,Argentina,Río Negro,-41.149957,-71.3,natural_earth_populated_places
+Salta,Salta,place,point,Argentina,Salta,-24.783359,-65.416638,natural_earth_populated_places
+San Juan,San Juan,place,point,Argentina,San Juan,-31.550026,-68.519988,natural_earth_populated_places
+El Calafate,El Calafate,place,point,Argentina,Santa Cruz,-50.333324,-72.300016,natural_earth_populated_places
+Puerto Deseado,Puerto Deseado,place,point,Argentina,Santa Cruz,-47.75002,-65.899968,natural_earth_populated_places
+Rio Gallegos,Río Gallegos,place,point,Argentina,Santa Cruz,-51.633297,-69.216587,natural_earth_populated_places
+Río Gallegos,Río Gallegos,place,point,Argentina,Santa Cruz,-51.633297,-69.216587,natural_earth_populated_places
+Rosario,Rosario,place,point,Argentina,Santa Fe,-32.949184,-60.668254,natural_earth_populated_places
+Santa Fe,Santa Fe,place,point,Argentina,Santa Fe,-31.623872,-60.690001,natural_earth_populated_places
+Tucuman,Tucumán,place,point,Argentina,Tucumán,-26.814054,-65.21857,natural_earth_populated_places
+Tucumán,Tucumán,place,point,Argentina,Tucumán,-26.814054,-65.21857,natural_earth_populated_places
+Yerevan,Yerevan,place,point,Armenia,Erevan,40.183097,44.511606,natural_earth_populated_places
+Oranjestad,Oranjestad,place,point,Aruba,,12.530384,-70.028992,natural_earth_populated_places
+Canberra,Canberra,place,point,Australia,Australian Capital Territory,-35.283029,149.129026,natural_earth_populated_places
+Armidale,Armidale,place,point,Australia,New South Wales,-30.512312,151.667476,natural_earth_populated_places
+Broken Hill,Broken Hill,place,point,Australia,New South Wales,-31.94995,141.433114,natural_earth_populated_places
+Dubbo,Dubbo,place,point,Australia,New South Wales,-32.259957,148.597327,natural_earth_populated_places
+Griffith,Griffith,place,point,Australia,New South Wales,-34.290014,146.040016,natural_earth_populated_places
+Newcastle,Newcastle,place,point,Australia,New South Wales,-32.845348,151.815012,natural_earth_populated_places
+Orange,Orange,place,point,Australia,New South Wales,-33.279998,149.099984,natural_earth_populated_places
+Sydney,Sydney,place,point,Australia,New South Wales,-33.918065,151.183234,natural_earth_populated_places
+Alice Springs,Alice Springs,place,point,Australia,Northern Territory,-23.700997,133.880035,natural_earth_populated_places
+Darwin,Darwin,place,point,Australia,Northern Territory,-12.425354,130.850039,natural_earth_populated_places
+Katherine,Katherine,place,point,Australia,Northern Territory,-14.466625,132.266593,natural_earth_populated_places
+Brisbane,Brisbane,place,point,Australia,Queensland,-27.453085,153.033147,natural_earth_populated_places
+Cairns,Cairns,place,point,Australia,Queensland,-16.88784,145.763331,natural_earth_populated_places
+Gold Coast,Gold Coast,place,point,Australia,Queensland,-28.081504,153.448246,natural_earth_populated_places
+Mount Isa,Mount Isa,place,point,Australia,Queensland,-20.723866,139.490028,natural_earth_populated_places
+Rockhampton,Rockhampton,place,point,Australia,Queensland,-23.363911,150.520001,natural_earth_populated_places
+Townsville,Townsville,place,point,Australia,Queensland,-19.24995,146.769997,natural_earth_populated_places
+Windorah,Windorah,place,point,Australia,Queensland,-25.433242,142.650197,natural_earth_populated_places
+Adelaide,Adelaide,place,point,Australia,South Australia,-34.933042,138.598059,natural_earth_populated_places
+Port Lincoln,Port Lincoln,place,point,Australia,South Australia,-34.733243,135.86658,natural_earth_populated_places
+Whyalla,Whyalla,place,point,Australia,South Australia,-33.025027,137.561412,natural_earth_populated_places
+Devonport,Devonport,place,point,Australia,Tasmania,-41.192668,146.331102,natural_earth_populated_places
+Hobart,Hobart,place,point,Australia,Tasmania,-42.850009,147.29503,natural_earth_populated_places
+Bendigo,Bendigo,place,point,Australia,Victoria,-36.759993,144.28002,natural_earth_populated_places
+Melbourne,Melbourne,place,point,Australia,Victoria,-37.818086,144.97307,natural_earth_populated_places
+Portland,Portland,place,point,Australia,Victoria,-38.34,141.590003,natural_earth_populated_places
+Wangaratta,Wangaratta,place,point,Australia,Victoria,-36.360017,146.3,natural_earth_populated_places
+Albany,Albany,place,point,Australia,Western Australia,-35.016947,117.891605,natural_earth_populated_places
+Broome,Broome,place,point,Australia,Western Australia,-17.961771,122.230768,natural_earth_populated_places
+Busselton,Busselton,place,point,Australia,Western Australia,-33.65641,115.348659,natural_earth_populated_places
+Geraldton,Geraldton,place,point,Australia,Western Australia,-28.76663,114.599971,natural_earth_populated_places
+Kalgoorlie,Kalgoorlie,place,point,Australia,Western Australia,-30.735399,121.460018,natural_earth_populated_places
+Karratha,Karratha,place,point,Australia,Western Australia,-20.730377,116.870013,natural_earth_populated_places
+Mandurah,Mandurah,place,point,Australia,Western Australia,-32.523483,115.747057,natural_earth_populated_places
+Perth,Perth,place,point,Australia,Western Australia,-31.953069,115.838053,natural_earth_populated_places
+Port Hedland,Port Hedland,place,point,Australia,Western Australia,-20.310402,118.606032,natural_earth_populated_places
+Vienna,Vienna,place,point,Austria,Wien,48.201961,16.364693,natural_earth_populated_places
+Baku,Baku,place,point,Azerbaijan,Baki,40.397218,49.860271,natural_earth_populated_places
+Manama,Manama,place,point,Bahrain,,26.236136,50.583052,natural_earth_populated_places
+Chattogram,Chattogram,place,point,Bangladesh,Chittagong,22.331938,91.798022,natural_earth_populated_places
+Dhaka,Dhaka,place,point,Bangladesh,Dhaka,23.725006,90.406634,natural_earth_populated_places
+Khulna,Khulna,place,point,Bangladesh,Khulna,22.841933,89.558055,natural_earth_populated_places
+Rajshahi,Rajshahi,place,point,Bangladesh,Rajshahi,24.37693,88.603074,natural_earth_populated_places
+Bridgetown,Bridgetown,place,point,Barbados,Saint Michael,13.102003,-59.616527,natural_earth_populated_places
+Brest,Brest,place,point,Belarus,Brest,52.099984,23.69999,natural_earth_populated_places
+Minsk,Minsk,place,point,Belarus,Minsk,53.901923,27.564681,natural_earth_populated_places
+Brussels,Brussels,place,point,Belgium,Brussels,50.835263,4.331371,natural_earth_populated_places
+Belmopan,Belmopan,place,point,Belize,Cayo,17.252034,-88.767073,natural_earth_populated_places
+Parakou,Parakou,place,point,Benin,Borgou,9.34001,2.620036,natural_earth_populated_places
+Cotonou,Cotonou,place,point,Benin,Ouémé,6.401954,2.518045,natural_earth_populated_places
+Porto-Novo,Porto-Novo,place,point,Benin,Ouémé,6.483311,2.616626,natural_earth_populated_places
+Hamilton,Hamilton,place,point,Bermuda,,32.29419,-64.783937,natural_earth_populated_places
+Thimphu,Thimphu,place,point,Bhutan,Thimphu,27.472986,89.639014,natural_earth_populated_places
+Sucre,Sucre,place,point,Bolivia,Chuquisaca,-19.040971,-65.259516,natural_earth_populated_places
+Riberalta,Riberalta,place,point,Bolivia,El Beni,-10.983013,-66.100007,natural_earth_populated_places
+Trinidad,Trinidad,place,point,Bolivia,El Beni,-14.833372,-64.899977,natural_earth_populated_places
+La Paz,La Paz,place,point,Bolivia,La Paz,-16.496028,-68.151931,natural_earth_populated_places
+Santa Cruz,Santa Cruz,place,point,Bolivia,Santa Cruz,-17.751972,-63.227942,natural_earth_populated_places
+Tarija,Tarija,place,point,Bolivia,Tarija,-21.516685,-64.749986,natural_earth_populated_places
+Sarajevo,Sarajevo,place,point,Bosnia and Herzegovina,Sarajevo,43.850022,18.383002,natural_earth_populated_places
+Banja Luka,Banja Luka,place,point,Bosnia and Herzegovina,Serbian Republic,44.780405,17.179974,natural_earth_populated_places
+Francistown,Francistown,place,point,Botswana,Central,-21.17004,27.500016,natural_earth_populated_places
+Mahalapye,Mahalapye,place,point,Botswana,Central,-23.1,26.820006,natural_earth_populated_places
+Serowe,Serowe,place,point,Botswana,Central,-22.390017,26.710039,natural_earth_populated_places
+Gaborone,Gaborone,place,point,Botswana,South-East,-24.646314,25.911948,natural_earth_populated_places
+Cruzeiro do Sul,Cruzeiro do Sul,place,point,Brazil,Acre,-7.629988,-72.669968,natural_earth_populated_places
+Rio Branco,Rio Branco,place,point,Brazil,Acre,-9.966589,-67.800007,natural_earth_populated_places
+Maceio,Maceió,place,point,Brazil,Alagoas,-9.61805,-35.73192,natural_earth_populated_places
+Maceió,Maceió,place,point,Brazil,Alagoas,-9.61805,-35.73192,natural_earth_populated_places
+Macapa,Macapá,place,point,Brazil,Amapá,0.033007,-51.050021,natural_earth_populated_places
+Macapá,Macapá,place,point,Brazil,Amapá,0.033007,-51.050021,natural_earth_populated_places
+Manaus,Manaus,place,point,Brazil,Amazonas,-3.098086,-60.001963,natural_earth_populated_places
+Barreiras,Barreiras,place,point,Brazil,Bahia,-12.139997,-45.000003,natural_earth_populated_places
+Feira de Santana,Feira de Santana,place,point,Brazil,Bahia,-12.250016,-38.970009,natural_earth_populated_places
+Salvador,Salvador,place,point,Brazil,Bahia,-12.968026,-38.481933,natural_earth_populated_places
+Vitoria da Conquista,Vitória da Conquista,place,point,Brazil,Bahia,-14.850012,-40.839998,natural_earth_populated_places
+Vitória da Conquista,Vitória da Conquista,place,point,Brazil,Bahia,-14.850012,-40.839998,natural_earth_populated_places
+Fortaleza,Fortaleza,place,point,Brazil,Ceará,-3.748072,-38.581927,natural_earth_populated_places
+Brasilia,Brasília,place,point,Brazil,Distrito Federal,-15.781394,-47.917998,natural_earth_populated_places
+Brasília,Brasília,place,point,Brazil,Distrito Federal,-15.781394,-47.917998,natural_earth_populated_places
+Vila Velha,Vila Velha,place,point,Brazil,Espírito Santo,-20.367608,-40.317989,natural_earth_populated_places
+Goiania,Goiânia,place,point,Brazil,Goiás,-16.718081,-49.301971,natural_earth_populated_places
+Goiânia,Goiânia,place,point,Brazil,Goiás,-16.718081,-49.301971,natural_earth_populated_places
+Caxias,Caxias,place,point,Brazil,Maranh,-4.833001,-43.350026,natural_earth_populated_places
+Sao Luis,São Luís,place,point,Brazil,Maranhão,-2.514039,-44.267937,natural_earth_populated_places
+São Luís,São Luís,place,point,Brazil,Maranhão,-2.514039,-44.267937,natural_earth_populated_places
+Alta Floresta,Alta Floresta,place,point,Brazil,Mato Grosso,-9.90003,-55.909983,natural_earth_populated_places
+Colider,Colíder,place,point,Brazil,Mato Grosso,-10.817287,-55.45058,natural_earth_populated_places
+Colíder,Colíder,place,point,Brazil,Mato Grosso,-10.817287,-55.45058,natural_earth_populated_places
+Cuiaba,Cuiabá,place,point,Brazil,Mato Grosso,-15.567661,-56.086931,natural_earth_populated_places
+Cuiabá,Cuiabá,place,point,Brazil,Mato Grosso,-15.567661,-56.086931,natural_earth_populated_places
+Campo Grande,Campo Grande,place,point,Brazil,Mato Grosso do Sul,-20.448086,-54.618571,natural_earth_populated_places
+Corumba,Corumbá,place,point,Brazil,Mato Grosso do Sul,-19.016011,-57.650006,natural_earth_populated_places
+Corumbá,Corumbá,place,point,Brazil,Mato Grosso do Sul,-19.016011,-57.650006,natural_earth_populated_places
+Belo Horizonte,Belo Horizonte,place,point,Brazil,Minas Gerais,-19.91308,-43.91695,natural_earth_populated_places
+Montes Claros,Montes Claros,place,point,Brazil,Minas Gerais,-16.720027,-43.860021,natural_earth_populated_places
+Uberlandia,Uberlândia,place,point,Brazil,Minas Gerais,-18.899998,-48.279984,natural_earth_populated_places
+Uberlândia,Uberlândia,place,point,Brazil,Minas Gerais,-18.899998,-48.279984,natural_earth_populated_places
+Curitiba,Curitiba,place,point,Brazil,Paraná,-25.418067,-49.321944,natural_earth_populated_places
+Ponta Grossa,Ponta Grossa,place,point,Brazil,Paraná,-25.090007,-50.16005,natural_earth_populated_places
+Belem,Belém,place,point,Brazil,Pará,-1.448057,-48.481969,natural_earth_populated_places
+Belém,Belém,place,point,Brazil,Pará,-1.448057,-48.481969,natural_earth_populated_places
+Maraba,Marabá,place,point,Brazil,Pará,-5.349972,-49.115979,natural_earth_populated_places
+Marabá,Marabá,place,point,Brazil,Pará,-5.349972,-49.115979,natural_earth_populated_places
+Santarem,Santarém,place,point,Brazil,Pará,-2.433251,-54.699979,natural_earth_populated_places
+Santarém,Santarém,place,point,Brazil,Pará,-2.433251,-54.699979,natural_earth_populated_places
+Petrolina,Petrolina,place,point,Brazil,Pernambuco,-9.38001,-40.509967,natural_earth_populated_places
+Recife,Recife,place,point,Brazil,Pernambuco,-8.0737,-34.917551,natural_earth_populated_places
+Teresina,Teresina,place,point,Brazil,Piauí,-5.093055,-42.781955,natural_earth_populated_places
+Natal,Natal,place,point,Brazil,Rio Grande do Norte,-5.778077,-35.24195,natural_earth_populated_places
+Caxias do Sul,Caxias do Sul,place,point,Brazil,Rio Grande do Sul,-29.17999,-51.17004,natural_earth_populated_places
+Pelotas,Pelotas,place,point,Brazil,Rio Grande do Sul,-31.750014,-52.330021,natural_earth_populated_places
+Porto Alegre,Porto Alegre,place,point,Brazil,Rio Grande do Sul,-30.048069,-51.201958,natural_earth_populated_places
+Rio de Janeiro,Rio de Janeiro,place,point,Brazil,Rio de Janeiro,-22.923077,-43.226967,natural_earth_populated_places
+Ji-Parana,Ji-Paraná,place,point,Brazil,Rondinia,-10.833307,-61.967003,natural_earth_populated_places
+Ji-Paraná,Ji-Paraná,place,point,Brazil,Rondinia,-10.833307,-61.967003,natural_earth_populated_places
+Porto Velho,Porto Velho,place,point,Brazil,Rondônia,-8.750023,-63.900012,natural_earth_populated_places
+Vilhena,Vilhena,place,point,Brazil,Rondônia,-12.716602,-60.1166,natural_earth_populated_places
+Boa Vista,Boa Vista,place,point,Brazil,Roraima,2.816093,-60.665998,natural_earth_populated_places
+Florianopolis,Florianópolis,place,point,Brazil,Santa Catarina,-27.578039,-48.521966,natural_earth_populated_places
+Florianópolis,Florianópolis,place,point,Brazil,Santa Catarina,-27.578039,-48.521966,natural_earth_populated_places
+Campinas,Campinas,place,point,Brazil,São Paulo,-22.898066,-47.101976,natural_earth_populated_places
+Ribeirao Preto,Ribeirão Preto,place,point,Brazil,São Paulo,-21.17004,-47.829985,natural_earth_populated_places
+Ribeirão Preto,Ribeirão Preto,place,point,Brazil,São Paulo,-21.17004,-47.829985,natural_earth_populated_places
+Sao Paulo,São Paulo,place,point,Brazil,São Paulo,-23.556734,-46.626966,natural_earth_populated_places
+Sorocaba,Sorocaba,place,point,Brazil,São Paulo,-23.490002,-47.469981,natural_earth_populated_places
+São Paulo,São Paulo,place,point,Brazil,São Paulo,-23.556734,-46.626966,natural_earth_populated_places
+Alvorada,Alvorada,place,point,Brazil,Tocantins,-12.470002,-49.082002,natural_earth_populated_places
+Bandar Seri Begawan,Bandar Seri Begawan,place,point,Brunei,Brunei and Muara,4.883331,114.933284,natural_earth_populated_places
+Sofia,Sofia,place,point,Bulgaria,Grad Sofiya,42.685295,23.314708,natural_earth_populated_places
+Bobo Dioulasso,Bobo Dioulasso,place,point,Burkina Faso,Houet,11.179975,-4.289981,natural_earth_populated_places
+Ouagadougou,Ouagadougou,place,point,Burkina Faso,Kadiogo,12.372262,-1.52667,natural_earth_populated_places
+Bujumbura,Bujumbura,place,point,Burundi,Bujumbura Mairie,-3.376087,29.360006,natural_earth_populated_places
+Battambang,Battambang,place,point,Cambodia,Batdâmbâng,13.100013,103.200047,natural_earth_populated_places
+Phnom Penh,Phnom Penh,place,point,Cambodia,Phnom Penh,11.551976,104.914689,natural_earth_populated_places
+Siem Reap,Siem Reap,place,point,Cambodia,Siemréab,13.366638,103.850033,natural_earth_populated_places
+Yaounde,Yaoundé,place,point,Cameroon,Centre,3.868647,11.514705,natural_earth_populated_places
+Yaoundé,Yaoundé,place,point,Cameroon,Centre,3.868647,11.514705,natural_earth_populated_places
+Maroua,Maroua,place,point,Cameroon,Extrême-Nord,10.595566,14.324696,natural_earth_populated_places
+Douala,Douala,place,point,Cameroon,Littoral,4.062356,9.708045,natural_earth_populated_places
+Garoua,Garoua,place,point,Cameroon,Nord,9.300012,13.390025,natural_earth_populated_places
+Bamenda,Bamenda,place,point,Cameroon,Nord-Ouest,5.959984,10.150016,natural_earth_populated_places
+Ebolowa,Ebolowa,place,point,Cameroon,Sud,2.900016,11.150007,natural_earth_populated_places
+Calgary,Calgary,place,point,Canada,Alberta,51.084938,-114.081944,natural_earth_populated_places
+Edmonton,Edmonton,place,point,Canada,Alberta,53.551971,-113.501928,natural_earth_populated_places
+Fort McMurray,Fort McMurray,place,point,Canada,Alberta,56.733319,-111.383315,natural_earth_populated_places
+Fort Smith,Fort Smith,place,point,Canada,Alberta,60.000019,-111.883336,natural_earth_populated_places
+Peace River,Peace River,place,point,Canada,Alberta,56.233323,-117.283291,natural_earth_populated_places
+Fort St. John,Fort St. John,place,point,Canada,British Columbia,56.249989,-120.833281,natural_earth_populated_places
+Prince Rupert,Prince Rupert,place,point,Canada,British Columbia,54.31667,-130.329988,natural_earth_populated_places
+Vancouver,Vancouver,place,point,Canada,British Columbia,49.275362,-123.12359,natural_earth_populated_places
+Victoria,Victoria,place,point,Canada,British Columbia,48.433283,-123.350001,natural_earth_populated_places
+Brandon,Brandon,place,point,Canada,Manitoba,49.833275,-99.949982,natural_earth_populated_places
+Churchill,Churchill,place,point,Canada,Manitoba,58.765985,-94.165994,natural_earth_populated_places
+Thompson,Thompson,place,point,Canada,Manitoba,55.749942,-97.866621,natural_earth_populated_places
+Winnipeg,Winnipeg,place,point,Canada,Manitoba,49.882988,-97.165992,natural_earth_populated_places
+Labrador City,Labrador City,place,point,Canada,Newfoundland and Labrador,52.941431,-66.915875,natural_earth_populated_places
+Nain,Nain,place,point,Canada,Newfoundland and Labrador,56.547352,-61.686045,natural_earth_populated_places
+St. John's,St. John's,place,point,Canada,Newfoundland and Labrador,47.584988,-52.681007,natural_earth_populated_places
+Fort Good Hope,Fort Good Hope,place,point,Canada,Northwest Territories,66.266613,-128.633322,natural_earth_populated_places
+Yellowknife,Yellowknife,place,point,Canada,Northwest Territories,62.442014,-114.396981,natural_earth_populated_places
+Halifax,Halifax,place,point,Canada,Nova Scotia,44.650025,-63.600005,natural_earth_populated_places
+Sydney,Sydney,place,point,Canada,Nova Scotia,46.066115,-60.179981,natural_earth_populated_places
+Arctic Bay,Arctic Bay,place,point,Canada,Nunavut,73.033306,-85.166621,natural_earth_populated_places
+Arviat,Arviat,place,point,Canada,Nunavut,61.108592,-94.058607,natural_earth_populated_places
+Cambridge Bay,Cambridge Bay,place,point,Canada,Nunavut,69.116956,-105.033315,natural_earth_populated_places
+Chesterfield Inlet,Chesterfield Inlet,place,point,Canada,Nunavut,63.33829,-90.700082,natural_earth_populated_places
+Igloolik,Igloolik,place,point,Canada,Nunavut,69.256535,-81.793592,natural_earth_populated_places
+Iqaluit,Iqaluit,place,point,Canada,Nunavut,63.750459,-68.500192,natural_earth_populated_places
+Kugluktuk,Kugluktuk,place,point,Canada,Nunavut,67.798663,-115.12535,natural_earth_populated_places
+Naujaat,Naujaat,place,point,Canada,Nunavut,66.529467,-86.282935,natural_earth_populated_places
+Repulse Bay,Naujaat,place,point,Canada,Nunavut,66.529467,-86.282935,natural_earth_populated_places
+Resolute,Resolute,place,point,Canada,Nunavut,74.683334,-94.900006,natural_earth_populated_places
+Taloyoak,Taloyoak,place,point,Canada,Nunavut,69.533313,-93.53332,natural_earth_populated_places
+Fort Severn,Fort Severn,place,point,Canada,Ontario,55.983339,-87.649984,natural_earth_populated_places
+North Bay,North Bay,place,point,Canada,Ontario,46.300002,-79.449993,natural_earth_populated_places
+Ottawa,Ottawa,place,point,Canada,Ontario,45.418643,-75.701961,natural_earth_populated_places
+Thunder Bay,Thunder Bay,place,point,Canada,Ontario,48.44615,-89.274975,natural_earth_populated_places
+Timmins,Timmins,place,point,Canada,Ontario,48.466588,-81.333315,natural_earth_populated_places
+Toronto,Toronto,place,point,Canada,Ontario,43.701926,-79.421967,natural_earth_populated_places
+Charlottetown,Charlottetown,place,point,Canada,Prince Edward Island,46.249282,-63.131325,natural_earth_populated_places
+Kuujjuaq,Kuujjuaq,place,point,Canada,Québec,58.100005,-68.399996,natural_earth_populated_places
+Kuujjuarapik,Kuujjuarapik,place,point,Canada,Québec,55.281495,-77.765832,natural_earth_populated_places
+Montreal,Montréal,place,point,Canada,Québec,45.501945,-73.585243,natural_earth_populated_places
+Montréal,Montréal,place,point,Canada,Québec,45.501945,-73.585243,natural_earth_populated_places
+Quebec,Québec,place,point,Canada,Québec,46.839969,-71.24561,natural_earth_populated_places
+Québec,Québec,place,point,Canada,Québec,46.839969,-71.24561,natural_earth_populated_places
+Regina,Regina,place,point,Canada,Saskatchewan,50.450033,-104.61701,natural_earth_populated_places
+Saskatoon,Saskatoon,place,point,Canada,Saskatchewan,52.170031,-106.669985,natural_earth_populated_places
+Dawson City,Dawson City,place,point,Canada,Yukon,64.066644,-139.416669,natural_earth_populated_places
+Whitehorse,Whitehorse,place,point,Canada,Yukon,60.716719,-135.049984,natural_earth_populated_places
+Praia,Praia,place,point,Cape Verde,,14.916698,-23.516689,natural_earth_populated_places
+George Town,George Town,place,point,Cayman Islands,,19.280437,-81.329982,natural_earth_populated_places
+N'Délé,N'Délé,place,point,Central African Republic,Bamingui-Bangoran,8.409137,20.653044,natural_earth_populated_places
+Ndele,N'Délé,place,point,Central African Republic,Bamingui-Bangoran,8.409137,20.653044,natural_earth_populated_places
+Bangui,Bangui,place,point,Central African Republic,Bangui,4.366644,18.558288,natural_earth_populated_places
+Obo,Obo,place,point,Central African Republic,Haut-Mbomou,5.399992,26.500026,natural_earth_populated_places
+Bambari,Bambari,place,point,Central African Republic,Ouaka,5.76196,20.667203,natural_earth_populated_places
+N'Djamena,N'Djamena,place,point,Chad,Hadjer-Lamis,12.115042,15.047203,natural_earth_populated_places
+Ndjamena,N'Djamena,place,point,Chad,Hadjer-Lamis,12.115042,15.047203,natural_earth_populated_places
+Moundou,Moundou,place,point,Chad,Logone Oriental,8.549981,16.090015,natural_earth_populated_places
+Abeche,Abéché,place,point,Chad,Ouaddaï,13.839994,20.829984,natural_earth_populated_places
+Abéché,Abéché,place,point,Chad,Ouaddaï,13.839994,20.829984,natural_earth_populated_places
+Coihaique,Coihaique,place,point,Chile,Aisén del General Carlos Ibáñez del Campo,-45.569998,-72.070004,natural_earth_populated_places
+Antofagasta,Antofagasta,place,point,Chile,Antofagasta,-23.649992,-70.400003,natural_earth_populated_places
+Arica,Arica,place,point,Chile,Arica y Parinacota,-18.500022,-70.289984,natural_earth_populated_places
+Copiapo,Copiapó,place,point,Chile,Atacama,-27.359998,-70.339981,natural_earth_populated_places
+Copiapó,Copiapó,place,point,Chile,Atacama,-27.359998,-70.339981,natural_earth_populated_places
+Concepcion,Concepción,place,point,Chile,Bío-Bío,-36.830014,-73.050022,natural_earth_populated_places
+Concepción,Concepción,place,point,Chile,Bío-Bío,-36.830014,-73.050022,natural_earth_populated_places
+Los Angeles,Los Angeles,place,point,Chile,Bío-Bío,-37.460002,-72.359987,natural_earth_populated_places
+La Serena,La Serena,place,point,Chile,Coquimbo,-29.899998,-71.249977,natural_earth_populated_places
+Puerto Montt,Puerto Montt,place,point,Chile,Los Lagos,-41.469989,-72.929978,natural_earth_populated_places
+Valdivia,Valdivia,place,point,Chile,Los Ríos,-39.795001,-73.245023,natural_earth_populated_places
+Punta Arenas,Punta Arenas,place,point,Chile,Magallanes y Antártica Chilena,-53.164986,-70.939996,natural_earth_populated_places
+Santiago,Santiago,place,point,Chile,Región Metropolitana de Santiago,-33.448068,-70.668987,natural_earth_populated_places
+Iquique,Iquique,place,point,Chile,Tarapacá,-20.249993,-70.129968,natural_earth_populated_places
+Valparaiso,Valparaíso,place,point,Chile,Valparaíso,-33.045819,-71.62296,natural_earth_populated_places
+Valparaíso,Valparaíso,place,point,Chile,Valparaíso,-33.045819,-71.62296,natural_earth_populated_places
+Hefei,Hefei,place,point,China,Anhui,31.851977,117.278068,natural_earth_populated_places
+Huainan,Huainan,place,point,China,Anhui,32.63193,116.978035,natural_earth_populated_places
+Suzhou,Suzhou,place,point,China,Anhui,33.638057,116.976943,natural_earth_populated_places
+Beijing,Beijing,place,point,China,Beijing,39.930838,116.38634,natural_earth_populated_places
+Chongqing,Chongqing,place,point,China,Chongqing,29.566923,106.593036,natural_earth_populated_places
+Fuzhou,Fuzhou,place,point,China,Fujian,26.081942,119.2981,natural_earth_populated_places
+Quanzhou,Quanzhou,place,point,China,Fujian,24.901962,118.578041,natural_earth_populated_places
+Xiamen,Xiamen,place,point,China,Fujian,24.451938,118.078071,natural_earth_populated_places
+Dulan,Dulan,place,point,China,Gansu,36.16659,98.266601,natural_earth_populated_places
+Dunhuang,Dunhuang,place,point,China,Gansu,40.142678,94.662015,natural_earth_populated_places
+Golmud,Golmud,place,point,China,Gansu,36.416626,94.883345,natural_earth_populated_places
+Jiayuguan,Jiayuguan,place,point,China,Gansu,39.82001,98.299984,natural_earth_populated_places
+Lanzhou,Lanzhou,place,point,China,Gansu,36.057974,103.790054,natural_earth_populated_places
+Tianshui,Tianshui,place,point,China,Gansu,34.601964,105.918038,natural_earth_populated_places
+Wuwei,Wuwei,place,point,China,Gansu,37.928007,102.641011,natural_earth_populated_places
+Xining,Xining,place,point,China,Gansu,36.621945,101.768059,natural_earth_populated_places
+Zhangye,Zhangye,place,point,China,Gansu,38.929987,100.450034,natural_earth_populated_places
+Dongguan,Dongguan,place,point,China,Guangdong,23.050835,113.742776,natural_earth_populated_places
+Guangzhou,Guangzhou,place,point,China,Guangdong,23.146927,113.323064,natural_earth_populated_places
+Shantou,Shantou,place,point,China,Guangdong,23.371952,116.66808,natural_earth_populated_places
+Shaoguan,Shaoguan,place,point,China,Guangdong,24.799971,113.579982,natural_earth_populated_places
+Shenzhen,Shenzhen,place,point,China,Guangdong,22.554316,114.120177,natural_earth_populated_places
+Zhanjiang,Zhanjiang,place,point,China,Guangdong,21.20193,110.378076,natural_earth_populated_places
+Bose,Bose,place,point,China,Guangxi,23.899716,106.613327,natural_earth_populated_places
+Guilin,Guilin,place,point,China,Guangxi,25.281939,110.278082,natural_earth_populated_places
+Nanning,Nanning,place,point,China,Guangxi,22.821934,108.318099,natural_earth_populated_places
+Wuzhou,Wuzhou,place,point,China,Guangxi,23.480026,111.320016,natural_earth_populated_places
+Yulin,Yulin,place,point,China,Guangxi,22.63192,110.148064,natural_earth_populated_places
+Guiyang,Guiyang,place,point,China,Guizhou,26.581989,106.718093,natural_earth_populated_places
+Liupanshui,Liupanshui,place,point,China,Guizhou,26.596381,104.831386,natural_earth_populated_places
+Handan,Handan,place,point,China,Hebei,36.581921,114.478033,natural_earth_populated_places
+Shijiazhuang,Shijiazhuang,place,point,China,Hebei,38.051961,114.478033,natural_earth_populated_places
+Bei'an,Bei'an,place,point,China,Heilongjiang,48.239005,126.482037,natural_earth_populated_places
+Beian,Bei'an,place,point,China,Heilongjiang,48.239005,126.482037,natural_earth_populated_places
+Daqing,Daqing,place,point,China,Heilongjiang,46.581905,124.998062,natural_earth_populated_places
+Harbin,Harbin,place,point,China,Heilongjiang,45.75193,126.648039,natural_earth_populated_places
+Jiamusi,Jiamusi,place,point,China,Heilongjiang,46.831967,130.348072,natural_earth_populated_places
+Jixi,Jixi,place,point,China,Heilongjiang,45.301906,130.968085,natural_earth_populated_places
+Qiqihar,Qiqihar,place,point,China,Heilongjiang,47.346923,123.988046,natural_earth_populated_places
+Nanyang,Nanyang,place,point,China,Henan,33.002346,112.528074,natural_earth_populated_places
+Zhengzhou,Zhengzhou,place,point,China,Henan,34.756942,113.663147,natural_earth_populated_places
+Wuhan,Wuhan,place,point,China,Hubei,30.581977,114.268071,natural_earth_populated_places
+Changsha,Changsha,place,point,China,Hunan,28.201916,112.968047,natural_earth_populated_places
+Hengyang,Hengyang,place,point,China,Hunan,26.881971,112.58807,natural_earth_populated_places
+Yueyang,Yueyang,place,point,China,Hunan,29.381999,113.098065,natural_earth_populated_places
+Huaiyin,Huaiyin,place,point,China,Jiangsu,33.581949,119.028039,natural_earth_populated_places
+Nanjing,Nanjing,place,point,China,Jiangsu,32.051965,118.778029,natural_earth_populated_places
+Suzhou,Suzhou,place,point,China,Jiangsu,31.302424,120.618071,natural_earth_populated_places
+Wuxi,Wuxi,place,point,China,Jiangsu,31.581942,120.298039,natural_earth_populated_places
+Xuzhou,Xuzhou,place,point,China,Jiangsu,34.281958,117.178074,natural_earth_populated_places
+Nanchang,Nanchang,place,point,China,Jiangxi,28.681938,115.87805,natural_earth_populated_places
+Pingxiang,Pingxiang,place,point,China,Jiangxi,27.621951,113.848097,natural_earth_populated_places
+Changchun,Changchun,place,point,China,Jilin,43.866954,125.338042,natural_earth_populated_places
+Jilin,Jilin,place,point,China,Jilin,43.851917,126.548097,natural_earth_populated_places
+Anshan,Anshan,place,point,China,Liaoning,41.116967,122.938085,natural_earth_populated_places
+Dalian,Dalian,place,point,China,Liaoning,38.924784,121.627885,natural_earth_populated_places
+Jinxi,Jinxi,place,point,China,Liaoning,40.752287,120.828033,natural_earth_populated_places
+Shenyeng,Shenyeng,place,point,China,Liaoning,41.806925,123.448028,natural_earth_populated_places
+Baotou,Baotou,place,point,China,Nei Mongol,40.654153,109.820074,natural_earth_populated_places
+Chifeng,Chifeng,place,point,China,Nei Mongol,42.271961,118.948044,natural_earth_populated_places
+Hailar,Hailar,place,point,China,Nei Mongol,49.19998,119.700022,natural_earth_populated_places
+Hohhot,Hohhot,place,point,China,Nei Mongol,40.821921,111.65805,natural_earth_populated_places
+Tongliao,Tongliao,place,point,China,Nei Mongol,43.621905,122.268048,natural_earth_populated_places
+Ulan Hot,Ulan Hot,place,point,China,Nei Mongol,46.080016,122.080031,natural_earth_populated_places
+Ulanhot,Ulan Hot,place,point,China,Nei Mongol,46.080016,122.080031,natural_earth_populated_places
+Shizuishan,Shizuishan,place,point,China,Ningxia Hui,39.233276,106.769028,natural_earth_populated_places
+Yinchuan,Yinchuan,place,point,China,Ningxia Hui,38.46992,106.271092,natural_earth_populated_places
+Ankang,Ankang,place,point,China,Shaanxi,32.679981,109.020002,natural_earth_populated_places
+Xian,Xian,place,point,China,Shaanxi,34.276971,108.89305,natural_earth_populated_places
+Yulin,Yulin,place,point,China,Shaanxi,38.283308,109.733291,natural_earth_populated_places
+Jinan,Jinan,place,point,China,Shandong,36.676928,116.993073,natural_earth_populated_places
+Linyi,Linyi,place,point,China,Shandong,35.081935,118.32803,natural_earth_populated_places
+Qingdao,Qingdao,place,point,China,Shandong,36.091925,120.328063,natural_earth_populated_places
+Yantai,Yantai,place,point,China,Shandong,37.532354,121.398075,natural_earth_populated_places
+Zaozhuang,Zaozhuang,place,point,China,Shandong,34.881947,117.568077,natural_earth_populated_places
+Zibo,Zibo,place,point,China,Shandong,36.801934,118.048047,natural_earth_populated_places
+Shanghai,Shanghai,place,point,China,Shanghai,31.218398,121.434559,natural_earth_populated_places
+Houma,Houma,place,point,China,Shanxi,35.619982,111.209997,natural_earth_populated_places
+Taiyuan,Taiyuan,place,point,China,Shanxi,37.876958,112.543112,natural_earth_populated_places
+Chengdu,Chengdu,place,point,China,Sichuan,30.671946,104.068074,natural_earth_populated_places
+Mianyang,Mianyang,place,point,China,Sichuan,31.471923,104.768031,natural_earth_populated_places
+Nanchong,Nanchong,place,point,China,Sichuan,30.782378,106.128051,natural_earth_populated_places
+Neijiang,Neijiang,place,point,China,Sichuan,29.582323,105.048066,natural_earth_populated_places
+Xichang,Xichang,place,point,China,Sichuan,27.880015,102.299998,natural_earth_populated_places
+Tianjin,Tianjin,place,point,China,Tianjin,39.131972,117.198073,natural_earth_populated_places
+Altay,Altay,place,point,China,Xinjiang Uygur,47.866599,88.116626,natural_earth_populated_places
+Hami,Hami,place,point,China,Xinjiang Uygur,42.826984,93.515005,natural_earth_populated_places
+Hotan,Hotan,place,point,China,Xinjiang Uygur,37.099711,79.926945,natural_earth_populated_places
+Kashgar,Kashgar,place,point,China,Xinjiang Uygur,39.476336,75.969926,natural_earth_populated_places
+Shache,Shache,place,point,China,Xinjiang Uygur,38.426142,77.250003,natural_earth_populated_places
+Urumqi,Ürümqi,place,point,China,Xinjiang Uygur,43.806958,87.57306,natural_earth_populated_places
+Yining,Yining,place,point,China,Xinjiang Uygur,43.900019,81.350011,natural_earth_populated_places
+Ürümqi,Ürümqi,place,point,China,Xinjiang Uygur,43.806958,87.57306,natural_earth_populated_places
+Lhasa,Lhasa,place,point,China,Xizang,29.645024,91.10001,natural_earth_populated_places
+Xigaze,Xigaze,place,point,China,Xizang,29.250009,88.88335,natural_earth_populated_places
+Baoshan,Baoshan,place,point,China,Yunnan,25.119977,99.15001,natural_earth_populated_places
+Gejiu,Gejiu,place,point,China,Yunnan,23.37998,103.150076,natural_earth_populated_places
+Kunming,Kunming,place,point,China,Yunnan,25.071926,102.678029,natural_earth_populated_places
+Hangzhou,Hangzhou,place,point,China,Zhejiang,30.25192,120.168073,natural_earth_populated_places
+Ningbo,Ningbo,place,point,China,Zhejiang,29.881917,121.548092,natural_earth_populated_places
+Wenzhou,Wenzhou,place,point,China,Zhejiang,28.021927,120.648147,natural_earth_populated_places
+Leticia,Leticia,place,point,Colombia,Amazonas,-4.201207,-69.955261,natural_earth_populated_places
+Medellin,Medellín,place,point,Colombia,Antioquia,6.276949,-75.576956,natural_earth_populated_places
+Medellín,Medellín,place,point,Colombia,Antioquia,6.276949,-75.576956,natural_earth_populated_places
+Barranquilla,Barranquilla,place,point,Colombia,Atlántico,10.961935,-74.801913,natural_earth_populated_places
+Bogota,Bogota,place,point,Colombia,Bogota,4.598369,-74.08529,natural_earth_populated_places
+Cartagena,Cartagena,place,point,Colombia,Bolívar,10.401684,-75.516339,natural_earth_populated_places
+Manizales,Manizales,place,point,Colombia,Caldas,5.059987,-75.52,natural_earth_populated_places
+Pasto,Pasto,place,point,Colombia,Nariño,1.213607,-77.281107,natural_earth_populated_places
+Cali,Cali,place,point,Colombia,Valle del Cauca,3.401905,-76.501912,natural_earth_populated_places
+Mitu,Mitú,place,point,Colombia,Vaupés,1.198311,-70.173608,natural_earth_populated_places
+Mitú,Mitú,place,point,Colombia,Vaupés,1.198311,-70.173608,natural_earth_populated_places
+Moroni,Moroni,place,point,Comoros,,-11.704158,43.240244,natural_earth_populated_places
+Kayes,Kayes,place,point,Congo (Brazzaville),Bouenza,-4.180018,13.280006,natural_earth_populated_places
+Pointe-Noire,Pointe-Noire,place,point,Congo (Brazzaville),Kouilou,-4.770007,11.880039,natural_earth_populated_places
+Brazzaville,Brazzaville,place,point,Congo (Brazzaville),Pool,-4.25724,15.282744,natural_earth_populated_places
+Bandundu,Bandundu,place,point,Congo (Kinshasa),Bandundu,-3.309993,17.379962,natural_earth_populated_places
+Kikwit,Kikwit,place,point,Congo (Kinshasa),Bandundu,-5.030043,18.850002,natural_earth_populated_places
+Matadi,Matadi,place,point,Congo (Kinshasa),Bas-Congo,-5.81661,13.450021,natural_earth_populated_places
+Kananga,Kananga,place,point,Congo (Kinshasa),Kasaï-Occidental,-5.888096,22.398072,natural_earth_populated_places
+Mbuji-Mayi,Mbuji-Mayi,place,point,Congo (Kinshasa),Kasaï-Oriental,-6.148081,23.59805,natural_earth_populated_places
+Kalemie,Kalemie,place,point,Congo (Kinshasa),Katanga,-5.933296,29.200016,natural_earth_populated_places
+Kolwezi,Kolwezi,place,point,Congo (Kinshasa),Katanga,-10.716724,25.47244,natural_earth_populated_places
+Lubumbashi,Lubumbashi,place,point,Congo (Kinshasa),Katanga,-11.678079,27.478072,natural_earth_populated_places
+Kinshasa,Kinshasa,place,point,Congo (Kinshasa),Kinshasa City,-4.327778,15.313026,natural_earth_populated_places
+Kasongo,Kasongo,place,point,Congo (Kinshasa),Maniema,-4.450027,26.660016,natural_earth_populated_places
+Butembo,Butembo,place,point,Congo (Kinshasa),Nord-Kivu,0.130004,29.280011,natural_earth_populated_places
+Goma,Goma,place,point,Congo (Kinshasa),Nord-Kivu,-1.678799,29.221787,natural_earth_populated_places
+Kisangani,Kisangani,place,point,Congo (Kinshasa),Orientale,0.520006,25.22,natural_earth_populated_places
+Bumba,Bumba,place,point,Congo (Kinshasa),Équateur,2.189981,22.459962,natural_earth_populated_places
+Mbandaka,Mbandaka,place,point,Congo (Kinshasa),Équateur,0.040035,18.260012,natural_earth_populated_places
+Limón,Limón,place,point,Costa Rica,Limón,10.000021,-83.03334,natural_earth_populated_places
+Puerto Limon,Limón,place,point,Costa Rica,Limón,10.000021,-83.03334,natural_earth_populated_places
+San Jose,San José,place,point,Costa Rica,San José,9.936958,-84.085997,natural_earth_populated_places
+San José,San José,place,point,Costa Rica,San José,9.936958,-84.085997,natural_earth_populated_places
+Zagreb,Zagreb,place,point,Croatia,Grad Zagreb,45.800007,15.999995,natural_earth_populated_places
+Havana,Havana,place,point,Cuba,Ciudad de la Habana,23.133905,-82.366128,natural_earth_populated_places
+Santiago de Cuba,Santiago de Cuba,place,point,Cuba,Santiago de Cuba,20.025017,-75.821326,natural_earth_populated_places
+Willemstad,Willemstad,place,point,Curacao,,12.20043,-69.019984,natural_earth_populated_places
+Nicosia,Nicosia,place,point,Cyprus,,35.166677,33.366635,natural_earth_populated_places
+Prague,Prague,place,point,Czechia,Prague,50.085283,14.464034,natural_earth_populated_places
+Kobenhavn,København,place,point,Denmark,Hovedstaden,55.68051,12.56154,natural_earth_populated_places
+København,København,place,point,Denmark,Hovedstaden,55.68051,12.56154,natural_earth_populated_places
+Djibouti,Djibouti,place,point,Djibouti,Djibouti,11.595015,43.148002,natural_earth_populated_places
+Roseau,Roseau,place,point,Dominica,Saint George,15.301016,-61.387013,natural_earth_populated_places
+Santo Domingo,Santo Domingo,place,point,Dominican Republic,Distrito Nacional,18.472019,-69.902031,natural_earth_populated_places
+Santiago,Santiago,place,point,Dominican Republic,Santiago,19.50001,-70.670012,natural_earth_populated_places
+Dili,Dili,place,point,East Timor,Dili,-8.559388,125.579456,natural_earth_populated_places
+Cuenca,Cuenca,place,point,Ecuador,Azuay,-2.899992,-78.999995,natural_earth_populated_places
+Santa Cruz,Santa Cruz,place,point,Ecuador,Gal,-0.533315,-90.35,natural_earth_populated_places
+Guayaquil,Guayaquil,place,point,Ecuador,Guayas,-2.218088,-79.921988,natural_earth_populated_places
+Quito,Quito,place,point,Ecuador,Pichincha,-0.213042,-78.501997,natural_earth_populated_places
+El Faiyum,El Faiyum,place,point,Egypt,Al Fayyum,29.310031,30.839967,natural_earth_populated_places
+Alexandria,Alexandria,place,point,Egypt,Al Iskandariyah,31.201965,29.94805,natural_earth_populated_places
+Cairo,Cairo,place,point,Egypt,Al Qahirah,30.051906,31.248022,natural_earth_populated_places
+Suez,Suez,place,point,Egypt,As Suways,30.004976,32.549941,natural_earth_populated_places
+Aswan,Aswan,place,point,Egypt,Aswan,24.087508,32.898912,natural_earth_populated_places
+Asyut,Asyut,place,point,Egypt,Asyut,27.18998,31.179947,natural_earth_populated_places
+Bur Said,Bur Said,place,point,Egypt,Bur Sa`id,31.25999,32.290008,natural_earth_populated_places
+Luxor,Luxor,place,point,Egypt,Qina,25.700019,32.650038,natural_earth_populated_places
+San Salvador,San Salvador,place,point,El Salvador,San Salvador,13.711948,-89.204987,natural_earth_populated_places
+Malabo,Malabo,place,point,Equatorial Guinea,Bioko Norte,3.750015,8.783278,natural_earth_populated_places
+Asmara,Asmara,place,point,Eritrea,Anseba,15.333339,38.933324,natural_earth_populated_places
+Assab,Assab,place,point,Eritrea,Debubawi Keyih Bahri,13.010019,42.729991,natural_earth_populated_places
+Tallinn,Tallinn,place,point,Estonia,Harju,59.433877,24.728041,natural_earth_populated_places
+Addis Ababa,Addis Ababa,place,point,Ethiopia,Addis Ababa,9.035256,38.698059,natural_earth_populated_places
+Bahir Dar,Bahir Dar,place,point,Ethiopia,Amhara,11.600053,37.383289,natural_earth_populated_places
+Gondar,Gondar,place,point,Ethiopia,Amhara,12.610043,37.460028,natural_earth_populated_places
+Gonder,Gondar,place,point,Ethiopia,Amhara,12.610043,37.460028,natural_earth_populated_places
+Dire Dawa,Dire Dawa,place,point,Ethiopia,Dire Dawa,9.589995,41.860018,natural_earth_populated_places
+Mekele,Mekele,place,point,Ethiopia,Tigray,13.499989,39.469983,natural_earth_populated_places
+Stanley,Stanley,place,point,Falkland Islands,,-51.700011,-57.849968,natural_earth_populated_places
+Palikir,Palikir,place,point,Federated States of Micronesia,,6.916644,158.149974,natural_earth_populated_places
+Suva,Suva,place,point,Fiji,Central,-18.133016,178.441707,natural_earth_populated_places
+Rovaniemi,Rovaniemi,place,point,Finland,Lapland,66.500035,25.715939,natural_earth_populated_places
+Tampere,Tampere,place,point,Finland,Pirkanmaa,61.500005,23.750013,natural_earth_populated_places
+Helsinki,Helsinki,place,point,Finland,Southern Finland,60.177509,24.932181,natural_earth_populated_places
+Vaasa,Vaasa,place,point,Finland,Western Finland,63.099984,21.600015,natural_earth_populated_places
+Strasbourg,Strasbourg,place,point,France,Alsace,48.579966,7.750007,natural_earth_populated_places
+Bordeaux,Bordeaux,place,point,France,Aquitaine,44.851959,-0.596959,natural_earth_populated_places
+Clermont-Ferrand,Clermont-Ferrand,place,point,France,Auvergne,45.779982,3.080008,natural_earth_populated_places
+Caen,Caen,place,point,France,Basse-Normandie,49.183754,-0.349989,natural_earth_populated_places
+Dijon,Dijon,place,point,France,Bourgogne,47.330404,5.030018,natural_earth_populated_places
+Rennes,Rennes,place,point,France,Bretagne,48.100021,-1.670012,natural_earth_populated_places
+Orleans,Orléans,place,point,France,Centre,47.900421,1.900028,natural_earth_populated_places
+Orléans,Orléans,place,point,France,Centre,47.900421,1.900028,natural_earth_populated_places
+Reims,Reims,place,point,France,Champagne-Ardenne,49.25039,4.029976,natural_earth_populated_places
+Ajaccio,Ajaccio,place,point,France,Corse,41.927065,8.728294,natural_earth_populated_places
+Besancon,Besançon,place,point,France,Franche-Comté,47.229997,6.030009,natural_earth_populated_places
+Besançon,Besançon,place,point,France,Franche-Comté,47.229997,6.030009,natural_earth_populated_places
+Basse-terre,Basse-terre,place,point,France,Guadeloupe,16.01041,-61.705484,natural_earth_populated_places
+Cayenne,Cayenne,place,point,France,Guinaa,4.932992,-52.330021,natural_earth_populated_places
+Saint-Laurent-du-Maroni,Saint-Laurent-du-Maroni,place,point,France,Guinaa,5.497624,-54.032535,natural_earth_populated_places
+Le Havre,Le Havre,place,point,France,Haute-Normandie,49.504974,0.10497,natural_earth_populated_places
+Rouen,Rouen,place,point,France,Haute-Normandie,49.430405,1.079975,natural_earth_populated_places
+St.-Denis,St.-Denis,place,point,France,La Réunion,-20.878895,55.448078,natural_earth_populated_places
+Montpellier,Montpellier,place,point,France,Languedoc-Roussillon,43.610399,3.869986,natural_earth_populated_places
+Limoges,Limoges,place,point,France,Limousin,45.829979,1.249991,natural_earth_populated_places
+Nancy,Nancy,place,point,France,Lorraine,48.683681,6.200024,natural_earth_populated_places
+Fort-de-France,Fort-de-France,place,point,France,Martinique,14.610412,-61.080029,natural_earth_populated_places
+Toulouse,Toulouse,place,point,France,Midi-Pyrénées,43.621905,1.447981,natural_earth_populated_places
+Lille,Lille,place,point,France,Nord-Pas-de-Calais,50.651915,3.078062,natural_earth_populated_places
+Nantes,Nantes,place,point,France,Pays de la Loire,47.210386,-1.590017,natural_earth_populated_places
+Amiens,Amiens,place,point,France,Picardie,49.900377,2.300004,natural_earth_populated_places
+Poitier,Poitier,place,point,France,Poitou-Charentes,46.583292,0.333277,natural_earth_populated_places
+Marseille,Marseille,place,point,France,Provence-Alpes-Côte-d'Azur,43.291925,5.373064,natural_earth_populated_places
+Lyon,Lyon,place,point,France,Rhône-Alpes,45.771954,4.828085,natural_earth_populated_places
+Paris,Paris,place,point,France,Île-de-France,48.868639,2.33139,natural_earth_populated_places
+Papeete,Papeete,place,point,French Polynesia,,-17.533363,-149.566669,natural_earth_populated_places
+Libreville,Libreville,place,point,Gabon,Estuaire,0.385389,9.457965,natural_earth_populated_places
+Franceville,Franceville,place,point,Gabon,Haut-Ogooué,-1.6333,13.583295,natural_earth_populated_places
+Port-Gentil,Port-Gentil,place,point,Gabon,Ogooué-Maritime,-0.720022,8.780022,natural_earth_populated_places
+Sukhumi,Sukhumi,place,point,Georgia,Abkhazia,43.020021,41.020018,natural_earth_populated_places
+Batumi,Batumi,place,point,Georgia,Ajaria,41.600005,41.630007,natural_earth_populated_places
+Tbilisi,Tbilisi,place,point,Georgia,Tbilisi,41.726956,44.78885,natural_earth_populated_places
+Munich,Munich,place,point,Germany,Bayern,48.131888,11.573048,natural_earth_populated_places
+Berlin,Berlin,place,point,Germany,Berlin,52.523765,13.399603,natural_earth_populated_places
+Hamburg,Hamburg,place,point,Germany,Hamburg,53.551971,9.998053,natural_earth_populated_places
+Frankfurt,Frankfurt,place,point,Germany,Hessen,50.099977,8.675015,natural_earth_populated_places
+Dresden,Dresden,place,point,Germany,Sachsen,51.049971,13.750003,natural_earth_populated_places
+Accra,Accra,place,point,Ghana,Greater Accra,5.551981,-0.218662,natural_earth_populated_places
+Gibraltar,Gibraltar,place,point,Gibraltar,Gibraltar,36.132435,-5.378075,natural_earth_populated_places
+Athens,Athens,place,point,Greece,Attiki,37.985272,23.731375,natural_earth_populated_places
+Thessaloniki,Thessaloniki,place,point,Greece,Kentriki Makedonia,40.698052,22.883055,natural_earth_populated_places
+Narsarsuaq,Narsarsuaq,place,point,Greenland,Kommune Kujalleq,61.166588,-45.416618,natural_earth_populated_places
+Nuuk,Nuuk,place,point,Greenland,Kommuneqarfik Sermersooq,64.198282,-51.732659,natural_earth_populated_places
+Qaanaaq,Qaanaaq,place,point,Greenland,Qaasuitsup Kommunia,77.483473,-69.332239,natural_earth_populated_places
+Upernavik,Upernavik,place,point,Greenland,Qaasuitsup Kommunia,72.709367,-56.141675,natural_earth_populated_places
+Sisimiut,Sisimiut,place,point,Greenland,Qeqqata Kommunia,66.950008,-53.666606,natural_earth_populated_places
+Saint George's,Saint George's,place,point,Grenada,,12.052633,-61.741643,natural_earth_populated_places
+Agana,Agana,place,point,Guam,,13.470016,144.750017,natural_earth_populated_places
+Guatemala,Guatemala City,place,point,Guatemala,Guatemala,14.623081,-90.528911,natural_earth_populated_places
+Guatemala City,Guatemala City,place,point,Guatemala,Guatemala,14.623081,-90.528911,natural_earth_populated_places
+Quetzaltenango,Quetzaltenango,place,point,Guatemala,Quezaltenango,14.829959,-91.520006,natural_earth_populated_places
+Conakry,Conakry,place,point,Guinea,Conakry,9.533469,-13.682181,natural_earth_populated_places
+Kankan,Kankan,place,point,Guinea,Kankan,10.389998,-9.310011,natural_earth_populated_places
+Nzerekore,Nzérékoré,place,point,Guinea,Nzerekore,7.760003,-8.829988,natural_earth_populated_places
+Nzérékoré,Nzérékoré,place,point,Guinea,Nzerekore,7.760003,-8.829988,natural_earth_populated_places
+Bissau,Bissau,place,point,Guinea Bissau,Bissau,11.865024,-15.598361,natural_earth_populated_places
+Georgetown,Georgetown,place,point,Guyana,East Berbice-Corentyne,6.801974,-58.167029,natural_earth_populated_places
+Port-au-Prince,Port-au-Prince,place,point,Haiti,Ouest,18.542971,-72.33798,natural_earth_populated_places
+Tegucigalpa,Tegucigalpa,place,point,Honduras,Francisco Morazán,14.103991,-87.219475,natural_earth_populated_places
+Hong Kong,Hong Kong,place,point,Hong Kong S.A.R.,,22.306927,114.183064,natural_earth_populated_places
+Budapest,Budapest,place,point,Hungary,Budapest,47.501952,19.081375,natural_earth_populated_places
+Reykjavik,Reykjavík,place,point,Iceland,Suðurnes,64.150024,-21.950015,natural_earth_populated_places
+Reykjavík,Reykjavík,place,point,Iceland,Suðurnes,64.150024,-21.950015,natural_earth_populated_places
+Amaravati,Amaravati,place,point,India,Andhra Pradesh,16.533658,80.52432,natural_earth_populated_places
+Vijayawada,Vijayawada,place,point,India,Andhra Pradesh,16.521905,80.628057,natural_earth_populated_places
+Vishakhapatnam,Vishakhapatnam,place,point,India,Andhra Pradesh,17.731961,83.303036,natural_earth_populated_places
+Dispur,Dispur,place,point,India,Assam,26.144023,91.766636,natural_earth_populated_places
+Guwahati,Guwahati,place,point,India,Assam,26.161963,91.768049,natural_earth_populated_places
+Bhagalpur,Bhagalpur,place,point,India,Bihar,25.229996,86.980003,natural_earth_populated_places
+Patna,Patna,place,point,India,Bihar,25.626905,85.128093,natural_earth_populated_places
+Chandigarh,Chandigarh,place,point,India,Chandigarh,30.721943,76.77806,natural_earth_populated_places
+Bhilai,Bhilai,place,point,India,Chhattisgarh,21.218613,81.431387,natural_earth_populated_places
+Raipur,Raipur,place,point,India,Chhattisgarh,21.23694,81.633061,natural_earth_populated_places
+Ahmedabad,Ahmedabad,place,point,India,Dadra and Nagar Haveli,23.031999,72.578058,natural_earth_populated_places
+Rajkot,Rajkot,place,point,India,Dadra and Nagar Haveli,22.311965,70.798063,natural_earth_populated_places
+Surat,Surat,place,point,India,Dadra and Nagar Haveli,21.20193,72.838094,natural_earth_populated_places
+Vadodara,Vadodara,place,point,India,Dadra and Nagar Haveli,22.311965,73.178073,natural_earth_populated_places
+Delhi,Delhi,place,point,India,Delhi,28.671939,77.228058,natural_earth_populated_places
+New Delhi,New Delhi,place,point,India,Delhi,28.600023,77.19998,natural_earth_populated_places
+Faridabad,Faridabad,place,point,India,Haryana,28.435279,77.314721,natural_earth_populated_places
+Jammu,Jammu,place,point,India,Jammu and Kashmir,32.713733,74.844793,natural_earth_populated_places
+Srinagar,Srinagar,place,point,India,Jammu and Kashmir,34.101917,74.813064,natural_earth_populated_places
+Dhanbad,Dhanbad,place,point,India,Jharkhand,23.802339,86.41804,natural_earth_populated_places
+Jamshedpur,Jamshedpur,place,point,India,Jharkhand,22.789481,86.195573,natural_earth_populated_places
+Ranchi,Ranchi,place,point,India,Jharkhand,23.371952,85.328081,natural_earth_populated_places
+Bengaluru,Bengaluru,place,point,India,Karnataka,12.971941,77.558064,natural_earth_populated_places
+Hubballi,Hubballi,place,point,India,Karnataka,15.361924,75.12307,natural_earth_populated_places
+Kalaburagi,Kalaburagi,place,point,India,Karnataka,17.34996,76.820003,natural_earth_populated_places
+Mangaluru,Mangaluru,place,point,India,Karnataka,12.900025,74.849994,natural_earth_populated_places
+Mysuru,Mysuru,place,point,India,Karnataka,12.31193,76.658067,natural_earth_populated_places
+Kochi,Kochi,place,point,India,Kerala,10.016953,76.22197,natural_earth_populated_places
+Kozhikode,Kozhikode,place,point,India,Kerala,11.252382,75.768044,natural_earth_populated_places
+Thiruvananthapuram,Thiruvananthapuram,place,point,India,Kerala,8.50193,76.948075,natural_earth_populated_places
+Leh,Leh,place,point,India,Ladakh,34.161559,77.572291,natural_earth_populated_places
+Bhopal,Bhopal,place,point,India,Madhya Pradesh,23.251934,77.408047,natural_earth_populated_places
+Gwalior,Gwalior,place,point,India,Madhya Pradesh,26.231933,78.178129,natural_earth_populated_places
+Indore,Indore,place,point,India,Madhya Pradesh,22.717005,75.863077,natural_earth_populated_places
+Jabalpur,Jabalpur,place,point,India,Madhya Pradesh,23.177003,79.953112,natural_earth_populated_places
+Akola,Akola,place,point,India,Maharashtra,20.709988,77.010018,natural_earth_populated_places
+Aurangabad,Aurangabad,place,point,India,Maharashtra,19.897642,75.318356,natural_earth_populated_places
+Kolhapur,Kolhapur,place,point,India,Maharashtra,16.7,74.220007,natural_earth_populated_places
+Mumbai,Mumbai,place,point,India,Maharashtra,19.018936,72.855043,natural_earth_populated_places
+Nagpur,Nagpur,place,point,India,Maharashtra,21.171906,79.088048,natural_earth_populated_places
+Nanded,Nanded,place,point,India,Maharashtra,19.169979,77.300026,natural_earth_populated_places
+Nasik,Nasik,place,point,India,Maharashtra,20.002365,73.778036,natural_earth_populated_places
+Pune,Pune,place,point,India,Maharashtra,18.531963,73.848058,natural_earth_populated_places
+Sholapur,Sholapur,place,point,India,Maharashtra,17.672352,75.898062,natural_earth_populated_places
+Bhubaneshwar,Bhubaneswar,place,point,India,Orissa,20.272374,85.825415,natural_earth_populated_places
+Bhubaneswar,Bhubaneswar,place,point,India,Orissa,20.272374,85.825415,natural_earth_populated_places
+Cuttack,Cuttack,place,point,India,Orissa,20.470003,85.889941,natural_earth_populated_places
+Puducherry,Puducherry,place,point,India,Puducherry,11.934994,79.83,natural_earth_populated_places
+Amritsar,Amritsar,place,point,India,Punjab,31.641938,74.868047,natural_earth_populated_places
+Jullundur,Jullundur,place,point,India,Punjab,31.336867,75.567074,natural_earth_populated_places
+Ludhiana,Ludhiana,place,point,India,Punjab,30.929708,75.870312,natural_earth_populated_places
+Jaipur,Jaipur,place,point,India,Rajasthan,26.923079,75.808042,natural_earth_populated_places
+Jodhpur,Jodhpur,place,point,India,Rajasthan,26.293712,73.014827,natural_earth_populated_places
+Kota,Kota,place,point,India,Rajasthan,25.181945,75.833053,natural_earth_populated_places
+Chennai,Chennai,place,point,India,Tamil Nadu,13.091934,80.278053,natural_earth_populated_places
+Coimbatore,Coimbatore,place,point,India,Tamil Nadu,11.001906,76.948075,natural_earth_populated_places
+Madurai,Madurai,place,point,India,Tamil Nadu,9.921972,78.118081,natural_earth_populated_places
+Salem,Salem,place,point,India,Tamil Nadu,11.671943,78.178129,natural_earth_populated_places
+Tiruchirappalli,Tiruchirappalli,place,point,India,Tamil Nadu,10.811944,78.688021,natural_earth_populated_places
+Hyderabad,Hyderabad,place,point,India,Telangana,17.401929,78.478008,natural_earth_populated_places
+Agra,Agra,place,point,India,Uttar Pradesh,27.172366,78.013075,natural_earth_populated_places
+Aligarh,Aligarh,place,point,India,Uttar Pradesh,27.894157,78.059842,natural_earth_populated_places
+Allahabad,Allahabad,place,point,India,Uttar Pradesh,25.456941,81.838061,natural_earth_populated_places
+Ghaziabad,Ghaziabad,place,point,India,Uttar Pradesh,28.662327,77.406445,natural_earth_populated_places
+Kanpur,Kanpur,place,point,India,Uttar Pradesh,26.461945,80.31805,natural_earth_populated_places
+Lucknow,Lucknow,place,point,India,Uttar Pradesh,26.856985,80.913053,natural_earth_populated_places
+Meerut,Meerut,place,point,India,Uttar Pradesh,29.002358,77.698055,natural_earth_populated_places
+Moradabad,Moradabad,place,point,India,Uttar Pradesh,28.843737,78.754838,natural_earth_populated_places
+Saharanpur,Saharanpur,place,point,India,Uttar Pradesh,29.970017,77.550036,natural_earth_populated_places
+Varanasi,Varanasi,place,point,India,Uttar Pradesh,25.331936,82.998094,natural_earth_populated_places
+Asansol,Asansol,place,point,India,West Bengal,23.685279,86.981387,natural_earth_populated_places
+Kolkata,Kolkata,place,point,India,West Bengal,22.496915,88.32273,natural_earth_populated_places
+Banda Aceh,Banda Aceh,place,point,Indonesia,Aceh,5.549983,95.320011,natural_earth_populated_places
+Tanjung Pandan,Tanjung Pandan,place,point,Indonesia,Bangka-Belitung,-2.750027,107.650008,natural_earth_populated_places
+Tanjungpandan,Tanjung Pandan,place,point,Indonesia,Bangka-Belitung,-2.750027,107.650008,natural_earth_populated_places
+Gorontalo,Gorontalo,place,point,Indonesia,Gorontalo,0.549978,123.070048,natural_earth_populated_places
+Jakarta,Jakarta,place,point,Indonesia,Jakarta Raya,-6.172472,106.827492,natural_earth_populated_places
+Bandung,Bandung,place,point,Indonesia,Jawa Barat,-6.948083,107.568067,natural_earth_populated_places
+Semarang,Semarang,place,point,Indonesia,Jawa Tengah,-6.964672,110.418074,natural_earth_populated_places
+Surakarta,Surakarta,place,point,Indonesia,Jawa Tengah,-7.564979,110.825008,natural_earth_populated_places
+Malang,Malang,place,point,Indonesia,Jawa Timur,-7.978046,112.608069,natural_earth_populated_places
+Surabaya,Surabaya,place,point,Indonesia,Jawa Timur,-7.24729,112.748887,natural_earth_populated_places
+Bandjarmasin,Bandjarmasin,place,point,Indonesia,Kalimantan Selatan,-3.329992,114.580076,natural_earth_populated_places
+Balikpapan,Balikpapan,place,point,Indonesia,Kalimantan Timur,-1.250015,116.830016,natural_earth_populated_places
+Tarakan,Tarakan,place,point,Indonesia,Kalimantan Timur,3.300017,117.633016,natural_earth_populated_places
+Bandar Lampung,Bandar Lampung,place,point,Indonesia,Lampung,-5.428073,105.268052,natural_earth_populated_places
+Ambon,Ambon,place,point,Indonesia,Maluku,-3.716687,128.20002,natural_earth_populated_places
+Ternate,Ternate,place,point,Indonesia,Maluku Utara,0.792961,127.363016,natural_earth_populated_places
+Raba,Raba,place,point,Indonesia,Nusa Tenggara Barat,-8.449989,118.766642,natural_earth_populated_places
+Kupang,Kupang,place,point,Indonesia,Nusa Tenggara Timur,-10.178669,123.582989,natural_earth_populated_places
+Jayapura,Jayapura,place,point,Indonesia,Papua,-2.532986,140.69998,natural_earth_populated_places
+Makassar,Makassar,place,point,Indonesia,Sulawesi Selatan,-5.138013,119.430082,natural_earth_populated_places
+Parepare,Parepare,place,point,Indonesia,Sulawesi Selatan,-4.016668,119.633307,natural_earth_populated_places
+Padang,Padang,place,point,Indonesia,Sumatera Barat,-0.958061,100.358068,natural_earth_populated_places
+Palembang,Palembang,place,point,Indonesia,Sumatera Selatan,-2.978093,104.748084,natural_earth_populated_places
+Medan,Medan,place,point,Indonesia,Sumatera Utara,3.58192,98.648094,natural_earth_populated_places
+Tabriz,Tabriz,place,point,Iran,East Azarbaijan,38.088237,46.2993,natural_earth_populated_places
+Isfahan,Isfahan,place,point,Iran,Esfahan,32.701951,51.698092,natural_earth_populated_places
+Shiraz,Shiraz,place,point,Iran,Fars,29.631906,52.568065,natural_earth_populated_places
+Hamadan,Hamadan,place,point,Iran,Hamadan,34.796027,48.515013,natural_earth_populated_places
+Bandar-e-Abbas,Bandar-e-Abbas,place,point,Iran,Hormozgan,27.20406,56.272136,natural_earth_populated_places
+Ahvaz,Ahvaz,place,point,Iran,Khuzestan,31.281935,48.718067,natural_earth_populated_places
+Mashhad,Mashhad,place,point,Iran,Razavi Khorasan,36.271966,59.568051,natural_earth_populated_places
+Tehran,Tehran,place,point,Iran,Tehran,35.673889,51.422398,natural_earth_populated_places
+Yazd,Yazd,place,point,Iran,Yazd,31.920053,54.370004,natural_earth_populated_places
+Basra,Basra,place,point,Iraq,Al-Basrah,30.51547,47.811611,natural_earth_populated_places
+An Najaf,Najaf,place,point,Iraq,An-Najaf,32.000332,44.335371,natural_earth_populated_places
+Najaf,Najaf,place,point,Iraq,An-Najaf,32.000332,44.335371,natural_earth_populated_places
+Kirkuk,Kirkuk,place,point,Iraq,At-Ta'mim,35.472239,44.392267,natural_earth_populated_places
+Baghdad,Baghdad,place,point,Iraq,Baghdad,33.340594,44.391923,natural_earth_populated_places
+Mosul,Mosul,place,point,Iraq,Ninawa,36.346948,43.143059,natural_earth_populated_places
+Dublin,Dublin,place,point,Ireland,Dublin,53.335007,-6.250852,natural_earth_populated_places
+Douglas,Douglas,place,point,Isle of Man,,54.150427,-4.480021,natural_earth_populated_places
+Jerusalem,Jerusalem,place,point,Israel,Jerusalem,31.778408,35.206626,natural_earth_populated_places
+Tel Aviv,Tel Aviv,place,point,Israel,Tel Aviv,32.081937,34.768066,natural_earth_populated_places
+Tel Aviv-Yafo,Tel Aviv,place,point,Israel,Tel Aviv,32.081937,34.768066,natural_earth_populated_places
+L'Aquila,L'Aquila,place,point,Italy,Abruzzo,42.350398,13.390025,natural_earth_populated_places
+Bari,Bari,place,point,Italy,Apulia,41.11422,16.872758,natural_earth_populated_places
+Potenza,Potenza,place,point,Italy,Basilicata,40.642002,15.798997,natural_earth_populated_places
+Catanzaro,Catanzaro,place,point,Italy,Calabria,38.900376,16.60001,natural_earth_populated_places
+Naples,Naples,place,point,Italy,Campania,40.841971,14.243066,natural_earth_populated_places
+Bologna,Bologna,place,point,Italy,Emilia-Romagna,44.500422,11.340021,natural_earth_populated_places
+Trieste,Trieste,place,point,Italy,Friuli-Venezia Giulia,45.650378,13.800026,natural_earth_populated_places
+Rome,Rome,place,point,Italy,Lazio,41.897902,12.481313,natural_earth_populated_places
+Genoa,Genoa,place,point,Italy,Liguria,44.409988,8.930039,natural_earth_populated_places
+Milan,Milan,place,point,Italy,Lombardia,45.471921,9.203063,natural_earth_populated_places
+Ancona,Ancona,place,point,Italy,Marche,43.600374,13.499941,natural_earth_populated_places
+Campobasso,Campobasso,place,point,Italy,Molise,41.562999,14.655997,natural_earth_populated_places
+Turin,Turin,place,point,Italy,Piemonte,45.072333,7.668015,natural_earth_populated_places
+Cagliari,Cagliari,place,point,Italy,Sardegna,39.222398,9.103982,natural_earth_populated_places
+Catania,Catania,place,point,Italy,Sicily,37.499971,15.079999,natural_earth_populated_places
+Palermo,Palermo,place,point,Italy,Sicily,38.126969,13.348081,natural_earth_populated_places
+Florence,Florence,place,point,Italy,Toscana,43.780001,11.25,natural_earth_populated_places
+Trento,Trento,place,point,Italy,Trentino-Alto Adige,46.080429,11.119983,natural_earth_populated_places
+Perugia,Perugia,place,point,Italy,Umbria,43.110378,12.389983,natural_earth_populated_places
+Aosta,Aosta,place,point,Italy,Valle d'Aosta,45.737001,7.315003,natural_earth_populated_places
+Venice,Venice,place,point,Italy,Veneto,45.438659,12.334999,natural_earth_populated_places
+Yamoussoukro,Yamoussoukro,place,point,Ivory Coast,Lacs,6.818381,-5.275503,natural_earth_populated_places
+Abidjan,Abidjan,place,point,Ivory Coast,Lagunes,5.321943,-4.041994,natural_earth_populated_places
+Bouake,Bouaké,place,point,Ivory Coast,Vallée du Bandama,7.689982,-5.030014,natural_earth_populated_places
+Bouaké,Bouaké,place,point,Ivory Coast,Vallée du Bandama,7.689982,-5.030014,natural_earth_populated_places
+Kingston,Kingston,place,point,Jamaica,Kingston,17.977077,-76.767434,natural_earth_populated_places
+Nagoya,Nagoya,place,point,Japan,Aichi,35.156943,136.913046,natural_earth_populated_places
+Matsuyama,Matsuyama,place,point,Japan,Ehime,33.845543,132.765839,natural_earth_populated_places
+Fukuoka,Fukuoka,place,point,Japan,Fukuoka,33.596961,130.408068,natural_earth_populated_places
+Gifu,Gifu,place,point,Japan,Gifu,35.423095,136.762753,natural_earth_populated_places
+Hiroshima,Hiroshima,place,point,Japan,Hiroshima,34.389781,132.440967,natural_earth_populated_places
+Hakodate,Hakodate,place,point,Japan,Hokkaido,41.79498,140.739978,natural_earth_populated_places
+Kushiro,Kushiro,place,point,Japan,Hokkaido,42.97496,144.374691,natural_earth_populated_places
+Sapporo,Sapporo,place,point,Japan,Hokkaido,43.076925,141.338099,natural_earth_populated_places
+Kochi,Kōchi,place,point,Japan,Kochi,33.562433,133.537523,natural_earth_populated_places
+Kōchi,Kōchi,place,point,Japan,Kochi,33.562433,133.537523,natural_earth_populated_places
+Kyoto,Kyoto,place,point,Japan,Kyoto,35.031938,135.748052,natural_earth_populated_places
+Sendai,Sendai,place,point,Japan,Miyagi,38.289052,141.019772,natural_earth_populated_places
+Miyazaki,Miyazaki,place,point,Japan,Miyazaki,31.918244,131.418376,natural_earth_populated_places
+Nagano,Nagano,place,point,Japan,Nagano,36.649997,138.170005,natural_earth_populated_places
+Nagasaki,Nagasaki,place,point,Japan,Nagasaki,32.764988,129.885033,natural_earth_populated_places
+Naha,Naha,place,point,Japan,Okinawa,26.207172,127.672972,natural_earth_populated_places
+Osaka,Ōsaka,place,point,Japan,Osaka,34.751981,135.458199,natural_earth_populated_places
+Ōsaka,Ōsaka,place,point,Japan,Osaka,34.751981,135.458199,natural_earth_populated_places
+Tokyo,Tokyo,place,point,Japan,Tokyo,35.686963,139.749462,natural_earth_populated_places
+Sakata,Sakata,place,point,Japan,Yamagata,38.920039,139.850058,natural_earth_populated_places
+Amman,Amman,place,point,Jordan,Amman,31.951971,35.931354,natural_earth_populated_places
+Almaty,Almaty,place,point,Kazakhstan,Almaty,43.326936,76.91309,natural_earth_populated_places
+Astana,Nur-Sultan,place,point,Kazakhstan,Aqmola,51.181125,71.427774,natural_earth_populated_places
+Nur-Sultan,Nur-Sultan,place,point,Kazakhstan,Aqmola,51.181125,71.427774,natural_earth_populated_places
+Aqtobe,Aqtobe,place,point,Kazakhstan,Aqtöbe,50.280018,57.169988,natural_earth_populated_places
+Atyrau,Atyrau,place,point,Kazakhstan,Atyrau,47.112692,51.920024,natural_earth_populated_places
+Oskemen,Oskemen,place,point,Kazakhstan,East Kazakhstan,49.990035,82.614947,natural_earth_populated_places
+Semey,Semey,place,point,Kazakhstan,East Kazakhstan,50.434995,80.275038,natural_earth_populated_places
+Ekibastuz,Ekibastuz,place,point,Kazakhstan,Pavlodar,51.729981,75.31994,natural_earth_populated_places
+Pavlodar,Pavlodar,place,point,Kazakhstan,Pavlodar,52.299998,76.950021,natural_earth_populated_places
+Qaraghandy,Qaraghandy,place,point,Kazakhstan,Qaraghandy,49.884977,73.11501,natural_earth_populated_places
+Rudniy,Rudniy,place,point,Kazakhstan,Qostanay,52.952697,63.130038,natural_earth_populated_places
+Rudny,Rudniy,place,point,Kazakhstan,Qostanay,52.952697,63.130038,natural_earth_populated_places
+Qyzylorda,Qyzylorda,place,point,Kazakhstan,Qyzylorda,44.800016,65.464986,natural_earth_populated_places
+Shymkent,Shymkent,place,point,Kazakhstan,South Kazakhstan,42.320012,69.595018,natural_earth_populated_places
+Taraz,Taraz,place,point,Kazakhstan,Zhambyl,42.899977,71.364987,natural_earth_populated_places
+Mombasa,Mombasa,place,point,Kenya,Coast,-4.03808,39.687972,natural_earth_populated_places
+Meru,Meru,place,point,Kenya,Eastern,0.059982,37.640018,natural_earth_populated_places
+Nairobi,Nairobi,place,point,Kenya,Nairobi,-1.281401,36.814711,natural_earth_populated_places
+Eldoret,Eldoret,place,point,Kenya,Rift Valley,0.520006,35.269981,natural_earth_populated_places
+Tarawa,Tarawa,place,point,Kiribati,,1.338188,173.017571,natural_earth_populated_places
+Pristina,Pristina,place,point,Kosovo,Pristina,42.66671,21.165984,natural_earth_populated_places
+Kuwait City,Kuwait City,place,point,Kuwait,Al Kuwayt,29.371664,47.976355,natural_earth_populated_places
+Bishkek,Bishkek,place,point,Kyrgyzstan,Bishkek,42.875025,74.583258,natural_earth_populated_places
+Vientiane,Vientiane,place,point,Laos,Vientiane [prefecture],17.966693,102.59998,natural_earth_populated_places
+Riga,Riga,place,point,Latvia,Riga,56.950024,24.099965,natural_earth_populated_places
+Beirut,Beirut,place,point,Lebanon,Beirut,33.873921,35.507762,natural_earth_populated_places
+Maseru,Maseru,place,point,Lesotho,Maseru,-29.316674,27.483273,natural_earth_populated_places
+Monrovia,Monrovia,place,point,Liberia,Montserrado,6.314582,-10.79966,natural_earth_populated_places
+Al Jawf,Al Jawf,place,point,Libya,Al Kufrah,24.199982,23.289989,natural_earth_populated_places
+Zuwara,Zuwara,place,point,Libya,An Nuqat al Khams,32.93441,12.079149,natural_earth_populated_places
+Zuwarah,Zuwara,place,point,Libya,An Nuqat al Khams,32.93441,12.079149,natural_earth_populated_places
+Banghazi,Banghazi,place,point,Libya,Benghazi,32.118679,20.064777,natural_earth_populated_places
+Misrata,Misrata,place,point,Libya,Misratah,32.379973,15.099998,natural_earth_populated_places
+Misratah,Misrata,place,point,Libya,Misratah,32.379973,15.099998,natural_earth_populated_places
+Tmassa,Tmassa,place,point,Libya,Murzuq,26.366645,15.800007,natural_earth_populated_places
+Tmassah,Tmassa,place,point,Libya,Murzuq,26.366645,15.800007,natural_earth_populated_places
+Sabha,Sabha,place,point,Libya,Sabha,27.033271,14.43332,natural_earth_populated_places
+Tripoli,Tripoli,place,point,Libya,Tajura' wa an Nawahi al Arba,32.8925,13.180012,natural_earth_populated_places
+Vaduz,Vaduz,place,point,Liechtenstein,,47.133724,9.51667,natural_earth_populated_places
+Vilnius,Vilnius,place,point,Lithuania,Vilniaus,54.683366,25.316635,natural_earth_populated_places
+Luxembourg,Luxembourg,place,point,Luxembourg,Luxembourg,49.61166,6.130003,natural_earth_populated_places
+Macau,Macau,place,point,Macau S.A.R,,22.202998,113.545048,natural_earth_populated_places
+Antananarivo,Antananarivo,place,point,Madagascar,Antananarivo,-18.914692,47.514678,natural_earth_populated_places
+Antsiranana,Antsiranana,place,point,Madagascar,Antsiranana,-12.276502,49.311526,natural_earth_populated_places
+Fianarantsoa,Fianarantsoa,place,point,Madagascar,Fianarantsoa,-21.433331,47.083265,natural_earth_populated_places
+Mahajanga,Mahajanga,place,point,Madagascar,Mahajanga,-15.670014,46.345016,natural_earth_populated_places
+Toliara,Toliara,place,point,Madagascar,Toliary,-23.356831,43.689984,natural_earth_populated_places
+Blantyre,Blantyre,place,point,Malawi,Blantyre,-15.790007,34.989947,natural_earth_populated_places
+Lilongwe,Lilongwe,place,point,Malawi,Lilongwe,-13.983295,33.783302,natural_earth_populated_places
+Mzuzu,Mzuzu,place,point,Malawi,Mzimba,-11.459987,34.01998,natural_earth_populated_places
+George Town,George Town,place,point,Malaysia,Pulau Pinang,5.413613,100.329368,natural_earth_populated_places
+Kuching,Kuching,place,point,Malaysia,Sarawak,1.52997,110.329999,natural_earth_populated_places
+Kuala Lumpur,Kuala Lumpur,place,point,Malaysia,Selangor,3.168612,101.698037,natural_earth_populated_places
+Putrajaya,Putrajaya,place,point,Malaysia,Selangor,2.91402,101.701947,natural_earth_populated_places
+Male,Malé,place,point,Maldives,,4.166708,73.499948,natural_earth_populated_places
+Malé,Malé,place,point,Maldives,,4.166708,73.499948,natural_earth_populated_places
+Bamako,Bamako,place,point,Mali,Bamako,12.651961,-8.001985,natural_earth_populated_places
+Gao,Gao,place,point,Mali,Gao,16.26659,-0.050008,natural_earth_populated_places
+Kayes,Kayes,place,point,Mali,Kayes,14.449982,-11.44001,natural_earth_populated_places
+Djenne,Djenné,place,point,Mali,Mopti,13.89999,-4.549991,natural_earth_populated_places
+Djenné,Djenné,place,point,Mali,Mopti,13.89999,-4.549991,natural_earth_populated_places
+Segou,Ségou,place,point,Mali,Ségou,13.439992,-6.260016,natural_earth_populated_places
+Ségou,Ségou,place,point,Mali,Ségou,13.439992,-6.260016,natural_earth_populated_places
+Timbuktu,Timbuktu,place,point,Mali,Timbuktu,16.766585,-3.016597,natural_earth_populated_places
+Valletta,Valletta,place,point,Malta,,35.899733,14.514711,natural_earth_populated_places
+Majuro,Majuro,place,point,Marshall Islands,,7.103004,171.38,natural_earth_populated_places
+Atar,Atar,place,point,Mauritania,Adrar,20.51664,-13.049989,natural_earth_populated_places
+Nouadhibou,Nouadhibou,place,point,Mauritania,Dakhlet Nouadhibou,20.900002,-17.056024,natural_earth_populated_places
+Ayoun el Atrous,Ayoun el Atrous,place,point,Mauritania,Hodh el Gharbi,16.666591,-9.616659,natural_earth_populated_places
+Nouakchott,Nouakchott,place,point,Mauritania,Nouakchott,18.086427,-15.97534,natural_earth_populated_places
+Port Louis,Port Louis,place,point,Mauritius,,-20.166639,57.499994,natural_earth_populated_places
+Mexicali,Mexicali,place,point,Mexico,Baja California,32.651928,-115.481962,natural_earth_populated_places
+Tijuana,Tijuana,place,point,Mexico,Baja California,32.501963,-117.081942,natural_earth_populated_places
+La Paz,La Paz,place,point,Mexico,Baja California Sur,24.139959,-110.319995,natural_earth_populated_places
+Campeche,Campeche,place,point,Mexico,Campeche,19.82999,-90.499991,natural_earth_populated_places
+Tuxtla Gutierrez,Tuxtla Gutiérrez,place,point,Mexico,Chiapas,16.749997,-93.15001,natural_earth_populated_places
+Tuxtla Gutiérrez,Tuxtla Gutiérrez,place,point,Mexico,Chiapas,16.749997,-93.15001,natural_earth_populated_places
+Chihuahua,Chihuahua,place,point,Mexico,Chihuahua,28.646927,-106.086928,natural_earth_populated_places
+Torreon,Torreón,place,point,Mexico,Coahuila,25.571999,-103.421949,natural_earth_populated_places
+Torreón,Torreón,place,point,Mexico,Coahuila,25.571999,-103.421949,natural_earth_populated_places
+Colima,Colima,place,point,Mexico,Colima,19.229975,-103.72001,natural_earth_populated_places
+Mexico City,Mexico City,place,point,Mexico,Distrito Federal,19.444388,-99.132934,natural_earth_populated_places
+Leon,León,place,point,Mexico,Guanajuato,21.151933,-101.701976,natural_earth_populated_places
+León,León,place,point,Mexico,Guanajuato,21.151933,-101.701976,natural_earth_populated_places
+Acapulco,Acapulco,place,point,Mexico,Guerrero,16.849991,-99.915979,natural_earth_populated_places
+Guadalajara,Guadalajara,place,point,Mexico,Jalisco,20.671962,-103.33198,natural_earth_populated_places
+Monterrey,Monterrey,place,point,Mexico,Nuevo León,25.671941,-100.331931,natural_earth_populated_places
+Oaxaca,Oaxaca,place,point,Mexico,Oaxaca,17.08269,-96.66995,natural_earth_populated_places
+Puebla,Puebla,place,point,Mexico,Puebla,19.051906,-98.201983,natural_earth_populated_places
+Cancun,Cancún,place,point,Mexico,Quintana Roo,21.16996,-86.830008,natural_earth_populated_places
+Cancún,Cancún,place,point,Mexico,Quintana Roo,21.16996,-86.830008,natural_earth_populated_places
+San Luis Potosi,San Luis Potosí,place,point,Mexico,San Luis Potosí,22.171922,-101.001941,natural_earth_populated_places
+San Luis Potosí,San Luis Potosí,place,point,Mexico,San Luis Potosí,22.171922,-101.001941,natural_earth_populated_places
+Culiacan,Culiacán,place,point,Mexico,Sinaloa,24.831941,-107.381914,natural_earth_populated_places
+Culiacán,Culiacán,place,point,Mexico,Sinaloa,24.831941,-107.381914,natural_earth_populated_places
+Mazatlan,Mazatlán,place,point,Mexico,Sinaloa,23.221101,-106.420001,natural_earth_populated_places
+Mazatlán,Mazatlán,place,point,Mexico,Sinaloa,23.221101,-106.420001,natural_earth_populated_places
+Guaymas,Guaymas,place,point,Mexico,Sonora,27.930012,-110.889986,natural_earth_populated_places
+Hermosillo,Hermosillo,place,point,Mexico,Sonora,29.098881,-110.954065,natural_earth_populated_places
+Nogales,Nogales,place,point,Mexico,Sonora,31.305,-110.944996,natural_earth_populated_places
+Matamoros,Matamoros,place,point,Mexico,Tamaulipas,25.879982,-97.500003,natural_earth_populated_places
+Nuevo Laredo,Nuevo Laredo,place,point,Mexico,Tamaulipas,27.499987,-99.550007,natural_earth_populated_places
+Tampico,Tampico,place,point,Mexico,Tamaulipas,22.30002,-97.870006,natural_earth_populated_places
+Veracruz,Veracruz,place,point,Mexico,Veracruz,19.177342,-96.159981,natural_earth_populated_places
+Merida,Mérida,place,point,Mexico,Yucatán,20.968585,-89.618579,natural_earth_populated_places
+Mérida,Mérida,place,point,Mexico,Yucatán,20.968585,-89.618579,natural_earth_populated_places
+Chisinau,Chișinău,place,point,Moldova,Chisinau,47.005024,28.857711,natural_earth_populated_places
+Chișinău,Chișinău,place,point,Moldova,Chisinau,47.005024,28.857711,natural_earth_populated_places
+Monaco,Monaco,place,point,Monaco,,43.739646,7.406913,natural_earth_populated_places
+Choibalsan,Choibalsan,place,point,Mongolia,Dornod,48.066587,114.506023,natural_earth_populated_places
+Choybalsan,Choibalsan,place,point,Mongolia,Dornod,48.066587,114.506023,natural_earth_populated_places
+Dund-Us,Dund-Us,place,point,Mongolia,Hovd,48.016642,91.633259,natural_earth_populated_places
+Erdenet,Erdenet,place,point,Mongolia,Orhon,49.053297,104.118337,natural_earth_populated_places
+Ulaanbaatar,Ulaanbaatar,place,point,Mongolia,Ulaanbaatar,47.918619,106.91467,natural_earth_populated_places
+Dalandzadgad,Dalandzadgad,place,point,Mongolia,Ömnögovi,43.583553,104.440281,natural_earth_populated_places
+Podgorica,Podgorica,place,point,Montenegro,Podgorica,42.465973,19.266307,natural_earth_populated_places
+Safi,Safi,place,point,Morocco,Doukkala - Abda,32.319977,-9.239989,natural_earth_populated_places
+Fez,Fez,place,point,Morocco,Fès - Boulemane,34.056546,-5.002323,natural_earth_populated_places
+Casablanca,Casablanca,place,point,Morocco,Grand Casablanca,33.601922,-7.618313,natural_earth_populated_places
+Laayoune,Laayoune,place,point,Morocco,Laâyoune - Boujdour - Sakia El Hamra,27.149982,-13.200006,natural_earth_populated_places
+Marrakesh,Marrakesh,place,point,Morocco,Marrakech - Tensift - Al Haouz,31.631939,-8.001933,natural_earth_populated_places
+Oujda,Oujda,place,point,Morocco,Oriental,34.690013,-1.909972,natural_earth_populated_places
+Rabat,Rabat,place,point,Morocco,Rabat - Salé - Zemmour - Zaer,34.025307,-6.836408,natural_earth_populated_places
+Pemba,Pemba,place,point,Mozambique,Cabo Delgado,-12.983046,40.532347,natural_earth_populated_places
+Xai-Xai,Xai-Xai,place,point,Mozambique,Gaza,-25.039985,33.640003,natural_earth_populated_places
+Maputo,Maputo,place,point,Mozambique,Maputo,-25.953332,32.587217,natural_earth_populated_places
+Nacala,Nacala,place,point,Mozambique,Nampula,-14.518611,40.715024,natural_earth_populated_places
+Nampula,Nampula,place,point,Mozambique,Nampula,-15.136041,39.293043,natural_earth_populated_places
+Beira,Beira,place,point,Mozambique,Sofala,-19.820045,34.870006,natural_earth_populated_places
+Tete,Tete,place,point,Mozambique,Tete,-16.170035,33.580007,natural_earth_populated_places
+Quelimane,Quelimane,place,point,Mozambique,Zambezia,-17.880008,36.889986,natural_earth_populated_places
+Mandalay,Mandalay,place,point,Myanmar,Mandalay,21.971934,96.083083,natural_earth_populated_places
+Naypyidaw,Naypyidaw,place,point,Myanmar,Mandalay,19.768503,96.116673,natural_earth_populated_places
+Sittwe,Sittwe,place,point,Myanmar,Rakhine,20.139997,92.880005,natural_earth_populated_places
+Rangoon,Yangon,place,point,Myanmar,Yangon,16.7853,96.164732,natural_earth_populated_places
+Yangon,Yangon,place,point,Myanmar,Yangon,16.7853,96.164732,natural_earth_populated_places
+Swakopmund,Swakopmund,place,point,Namibia,Erongo,-22.668863,14.53502,natural_earth_populated_places
+Walvis Bay,Walvis Bay,place,point,Namibia,Erongo,-22.957528,14.505306,natural_earth_populated_places
+Keetmanshoop,Keetmanshoop,place,point,Namibia,Karas,-26.573896,18.129994,natural_earth_populated_places
+Luderitz,Lüderitz,place,point,Namibia,Karas,-26.648,15.159426,natural_earth_populated_places
+Lüderitz,Lüderitz,place,point,Namibia,Karas,-26.648,15.159426,natural_earth_populated_places
+Windhoek,Windhoek,place,point,Namibia,Khomas,-22.570006,17.083546,natural_earth_populated_places
+Grootfontein,Grootfontein,place,point,Namibia,Otjozondjupa,-19.566624,18.116558,natural_earth_populated_places
+Otjiwarongo,Otjiwarongo,place,point,Namibia,Otjozondjupa,-20.459541,16.640007,natural_earth_populated_places
+Kathmandu,Kathmandu,place,point,Nepal,Bhaktapur,27.718638,85.314696,natural_earth_populated_places
+Amsterdam,Amsterdam,place,point,Netherlands,Noord-Holland,52.351915,4.914694,natural_earth_populated_places
+The Hague,The Hague,place,point,Netherlands,Zuid-Holland,52.080037,4.269961,natural_earth_populated_places
+Noumea,Nouméa,place,point,New Caledonia,Sud,-22.262528,166.444285,natural_earth_populated_places
+Nouméa,Nouméa,place,point,New Caledonia,Sud,-22.262528,166.444285,natural_earth_populated_places
+Auckland,Auckland,place,point,New Zealand,Auckland,-36.848055,174.763027,natural_earth_populated_places
+Manukau,Manukau,place,point,New Zealand,Auckland,-36.99997,174.884971,natural_earth_populated_places
+Christchurch,Christchurch,place,point,New Zealand,Canterbury,-43.535022,172.630023,natural_earth_populated_places
+Napier,Napier,place,point,New Zealand,Gisborne,-39.490001,176.926451,natural_earth_populated_places
+Wellington,Wellington,place,point,New Zealand,Manawatu-Wanganui,-41.299988,174.783266,natural_earth_populated_places
+Blenheim,Blenheim,place,point,New Zealand,Marlborough,-41.513517,173.954958,natural_earth_populated_places
+Dunedin,Dunedin,place,point,New Zealand,Otago,-45.885423,170.491016,natural_earth_populated_places
+Hamilton,Hamilton,place,point,New Zealand,Waikato,-37.778269,175.289578,natural_earth_populated_places
+Managua,Managua,place,point,Nicaragua,Managua,12.154962,-86.270438,natural_earth_populated_places
+Agadez,Agadez,place,point,Niger,Agadez,16.995873,7.98281,natural_earth_populated_places
+Maradi,Niamey,place,point,Niger,Maradi,13.491643,7.096404,natural_earth_populated_places
+Niamey,Niamey,place,point,Niger,Maradi,13.491643,7.096404,natural_earth_populated_places
+Niamey,Niamey,place,point,Niger,Niamey,13.518652,2.11471,natural_earth_populated_places
+Tahoua,Tahoua,place,point,Niger,Tahoua,14.899981,5.259927,natural_earth_populated_places
+Zinder,Zinder,place,point,Niger,Zinder,13.799996,8.983317,natural_earth_populated_places
+Makurdi,Makurdi,place,point,Nigeria,Benue,7.729979,8.530011,natural_earth_populated_places
+Maiduguri,Maiduguri,place,point,Nigeria,Borno,11.851906,13.158067,natural_earth_populated_places
+Warri,Warri,place,point,Nigeria,Delta,5.519959,5.76,natural_earth_populated_places
+Benin City,Benin City,place,point,Nigeria,Edo,6.342423,5.618062,natural_earth_populated_places
+Enugu,Enugu,place,point,Nigeria,Enugu,6.450031,7.499997,natural_earth_populated_places
+Abuja,Abuja,place,point,Nigeria,Federal Capital Territory,9.085279,7.531382,natural_earth_populated_places
+Kaduna,Kaduna,place,point,Nigeria,Kaduna,10.521961,7.438055,natural_earth_populated_places
+Kano,Kano,place,point,Nigeria,Kano,12.001923,8.518092,natural_earth_populated_places
+Lagos,Lagos,place,point,Nigeria,Lagos,6.445208,3.389585,natural_earth_populated_places
+Ibadan,Ibadan,place,point,Nigeria,Oyo,7.381972,3.928036,natural_earth_populated_places
+Ogbomosho,Ogbomosho,place,point,Nigeria,Oyo,8.131952,4.238043,natural_earth_populated_places
+Port Harcourt,Port Harcourt,place,point,Nigeria,Rivers,4.811948,7.008055,natural_earth_populated_places
+Sokoto,Sokoto,place,point,Nigeria,Sokoto,13.060016,5.240031,natural_earth_populated_places
+Wonsan,Wonsan,place,point,North Korea,Kangwon-do,39.16049,127.430816,natural_earth_populated_places
+Sinuiju,Sinuiju,place,point,North Korea,P'yongan-bukto,40.085859,124.421284,natural_earth_populated_places
+Pyongyang,Pyongyang,place,point,North Korea,P'yongyang,39.021385,125.752745,natural_earth_populated_places
+Skopje,Skopje,place,point,North Macedonia,Centar,42.000006,21.433462,natural_earth_populated_places
+Hammerfest,Hammerfest,place,point,Norway,Finnmark,70.66128,23.688001,natural_earth_populated_places
+Bergen,Bergen,place,point,Norway,Hordaland,60.391002,5.324522,natural_earth_populated_places
+Oslo,Oslo,place,point,Norway,Oslo,59.918636,10.748033,natural_earth_populated_places
+Trondheim,Trondheim,place,point,Norway,Sør-Trøndelag,63.416658,10.416666,natural_earth_populated_places
+Tromso,Tromsø,place,point,Norway,Troms,69.635076,18.992025,natural_earth_populated_places
+Tromsø,Tromsø,place,point,Norway,Troms,69.635076,18.992025,natural_earth_populated_places
+Kristiansand,Kristiansand,place,point,Norway,Vest-Agder,58.166642,8.000018,natural_earth_populated_places
+Muscat,Muscat,place,point,Oman,Muscat,23.613325,58.593312,natural_earth_populated_places
+Quetta,Quetta,place,point,Pakistan,Baluchistan,30.221948,67.023048,natural_earth_populated_places
+Islamabad,Islamabad,place,point,Pakistan,F.C.T.,33.701942,73.164689,natural_earth_populated_places
+Peshawar,Peshawar,place,point,Pakistan,N.W.F.P.,34.006962,71.533057,natural_earth_populated_places
+Gujranwala,Gujranwala,place,point,Pakistan,Punjab,32.162372,74.183076,natural_earth_populated_places
+Lahore,Lahore,place,point,Pakistan,Punjab,31.561917,74.348079,natural_earth_populated_places
+Multan,Multan,place,point,Pakistan,Punjab,30.201923,71.453062,natural_earth_populated_places
+Hyderabad,Hyderabad,place,point,Pakistan,Sind,25.381933,68.373043,natural_earth_populated_places
+Karachi,Karachi,place,point,Pakistan,Sind,24.871938,66.988063,natural_earth_populated_places
+Larkana,Larkana,place,point,Pakistan,Sind,27.561766,68.206782,natural_earth_populated_places
+Melekeok,Melekeok,place,point,Palau,,7.487396,134.626549,natural_earth_populated_places
+Gaza,Gaza City,place,point,Palestine,,31.529999,34.445019,natural_earth_populated_places
+Gaza City,Gaza City,place,point,Palestine,,31.529999,34.445019,natural_earth_populated_places
+Ramallah,Ramallah,place,point,Palestine,,31.902945,35.206209,natural_earth_populated_places
+David,David,place,point,Panama,Chiriquí,8.433321,-82.433325,natural_earth_populated_places
+Panama City,Panama City,place,point,Panama,Panama,8.969963,-79.534983,natural_earth_populated_places
+Port Moresby,Port Moresby,place,point,Papua New Guinea,Central,-9.464708,147.192504,natural_earth_populated_places
+Rabaul,Rabaul,place,point,Papua New Guinea,East New Britain,-4.20549,152.143431,natural_earth_populated_places
+Goroka,Goroka,place,point,Papua New Guinea,Eastern Highlands,-6.083312,145.385482,natural_earth_populated_places
+Lae,Lae,place,point,Papua New Guinea,Morobe,-6.732988,146.990035,natural_earth_populated_places
+Mt.  Hagen,Mt.  Hagen,place,point,Papua New Guinea,Western Highlands,-5.863222,144.21682,natural_earth_populated_places
+Mt. Hagen,Mt.  Hagen,place,point,Papua New Guinea,Western Highlands,-5.863222,144.21682,natural_earth_populated_places
+Ciudad del Este,Ciudad del Este,place,point,Paraguay,Alto Paran,-25.5167,-54.616057,natural_earth_populated_places
+Asuncion,Asunción,place,point,Paraguay,Asunción,-25.294457,-57.643451,natural_earth_populated_places
+Asunción,Asunción,place,point,Paraguay,Asunción,-25.294457,-57.643451,natural_earth_populated_places
+Chimbote,Chimbote,place,point,Peru,Ancash,-9.070003,-78.569995,natural_earth_populated_places
+Arequipa,Arequipa,place,point,Peru,Arequipa,-16.418048,-71.531957,natural_earth_populated_places
+Cusco,Cusco,place,point,Peru,Cusco,-13.525029,-71.972155,natural_earth_populated_places
+Ica,Ica,place,point,Peru,Ica,-14.067993,-75.725492,natural_earth_populated_places
+Huancayo,Huancayo,place,point,Peru,Junín,-12.08,-75.20002,natural_earth_populated_places
+Trujillo,Trujillo,place,point,Peru,La Libertad,-8.120035,-79.019968,natural_earth_populated_places
+Lima,Lima,place,point,Peru,Lima,-12.046067,-77.052008,natural_earth_populated_places
+Iquitos,Iquitos,place,point,Peru,Loreto,-3.750018,-73.25001,natural_earth_populated_places
+Piura,Piura,place,point,Peru,Piura,-5.210032,-80.629973,natural_earth_populated_places
+Tacna,Tacna,place,point,Peru,Tacna,-18.000001,-70.250012,natural_earth_populated_places
+Pucallpa,Pucallpa,place,point,Peru,Ucayali,-8.368909,-74.534996,natural_earth_populated_places
+Baguio,Baguio,place,point,Philippines,Benguet,16.429991,120.569943,natural_earth_populated_places
+Baguio City,Baguio,place,point,Philippines,Benguet,16.429991,120.569943,natural_earth_populated_places
+Cebu,Cebu,place,point,Philippines,Cebu,10.321922,123.898129,natural_earth_populated_places
+Davao,Davao,place,point,Philippines,Davao Del Sur,7.111963,125.62805,natural_earth_populated_places
+Laoag,Laoag,place,point,Philippines,Ilocos Norte,18.198849,120.59361,natural_earth_populated_places
+Iloilo,Iloilo,place,point,Philippines,Iloilo,10.705043,122.545016,natural_earth_populated_places
+Manila,Manila,place,point,Philippines,Metropolitan Manila,14.606105,120.980271,natural_earth_populated_places
+General Santos,General Santos,place,point,Philippines,South Cotabato,6.110827,125.174726,natural_earth_populated_places
+Zamboanga,Zamboanga,place,point,Philippines,Zamboanga del Sur,6.921923,122.078085,natural_earth_populated_places
+Krakow,Kraków,place,point,Poland,Lesser Poland,50.061925,19.958066,natural_earth_populated_places
+Kraków,Kraków,place,point,Poland,Lesser Poland,50.061925,19.958066,natural_earth_populated_places
+Warsaw,Warsaw,place,point,Poland,Masovian,52.251947,20.998054,natural_earth_populated_places
+Gdansk,Gdańsk,place,point,Poland,Pomeranian,54.359975,18.64004,natural_earth_populated_places
+Gdańsk,Gdańsk,place,point,Poland,Pomeranian,54.359975,18.64004,natural_earth_populated_places
+Ponta Delgada,Ponta Delgada,place,point,Portugal,Azores,37.748302,-25.666584,natural_earth_populated_places
+Lisbon,Lisbon,place,point,Portugal,Lisboa,38.724669,-9.146812,natural_earth_populated_places
+Funchal,Funchal,place,point,Portugal,Madeira,32.649983,-16.88004,natural_earth_populated_places
+San Juan,San Juan,place,point,Puerto Rico,,18.440023,-66.129979,natural_earth_populated_places
+Doha,Doha,place,point,Qatar,Ad Dawhah,25.286556,51.532968,natural_earth_populated_places
+Bucharest,Bucharest,place,point,Romania,Bucharest,44.435318,26.098001,natural_earth_populated_places
+Constanta,Constanța,place,point,Romania,Constanta,44.202662,28.609974,natural_earth_populated_places
+Constanța,Constanța,place,point,Romania,Constanta,44.202662,28.609974,natural_earth_populated_places
+Iasi,Iași,place,point,Romania,Iasi,47.168347,27.574947,natural_earth_populated_places
+Iași,Iași,place,point,Romania,Iasi,47.168347,27.574947,natural_earth_populated_places
+Barnaul,Barnaul,place,point,Russia,Altay,53.354998,83.745007,natural_earth_populated_places
+Blagoveshchensk,Blagoveshchensk,place,point,Russia,Amur,50.266608,127.533342,natural_earth_populated_places
+Archangel,Archangel,place,point,Russia,Arkhangel'sk,64.574959,40.545008,natural_earth_populated_places
+Astrakhan,Astrakhan,place,point,Russia,Astrakhan',46.348655,48.054989,natural_earth_populated_places
+Ufa,Ufa,place,point,Russia,Bashkortostan,54.791921,56.038085,natural_earth_populated_places
+Bryansk,Bryansk,place,point,Russia,Bryansk,53.259991,34.429981,natural_earth_populated_places
+Ulan Ude,Ulan-Ude,place,point,Russia,Buryat,51.824988,107.624996,natural_earth_populated_places
+Ulan-Ude,Ulan-Ude,place,point,Russia,Buryat,51.824988,107.624996,natural_earth_populated_places
+Grozny,Grozny,place,point,Russia,Chechnya,43.318685,45.698699,natural_earth_populated_places
+Groznyy,Grozny,place,point,Russia,Chechnya,43.318685,45.698699,natural_earth_populated_places
+Chelyabinsk,Chelyabinsk,place,point,Russia,Chelyabinsk,55.156937,61.436722,natural_earth_populated_places
+Magnitogorsk,Magnitogorsk,place,point,Russia,Chelyabinsk,53.422694,58.980007,natural_earth_populated_places
+Bukachacha,Bukachacha,place,point,Russia,Chita,52.983341,116.916626,natural_earth_populated_places
+Chita,Chita,place,point,Russia,Chita,52.055026,113.465002,natural_earth_populated_places
+Anadyr,Anadyr,place,point,Russia,Chukchi Autonomous Okrug,64.73699,177.474996,natural_earth_populated_places
+Ugolnye Kopi,Ugolnye Kopi,place,point,Russia,Chukchi Autonomous Okrug,64.733296,177.699996,natural_earth_populated_places
+St.  Petersburg,St.  Petersburg,place,point,Russia,City of St. Petersburg,59.94096,30.314074,natural_earth_populated_places
+St. Petersburg,St.  Petersburg,place,point,Russia,City of St. Petersburg,59.94096,30.314074,natural_earth_populated_places
+Sevastapol,Sevastopol,place,point,Russia,Crimea,44.599977,33.464975,natural_earth_populated_places
+Sevastopol,Sevastopol,place,point,Russia,Crimea,44.599977,33.464975,natural_earth_populated_places
+Angarsk,Angarsk,place,point,Russia,Irkutsk,52.560008,103.920003,natural_earth_populated_places
+Bratsk,Bratsk,place,point,Russia,Irkutsk,56.156997,101.615027,natural_earth_populated_places
+Irkutsk,Irkutsk,place,point,Russia,Irkutsk,52.319971,104.245048,natural_earth_populated_places
+Ust-Ilimsk,Ust-Ilimsk,place,point,Russia,Irkutsk,57.98996,102.633311,natural_earth_populated_places
+Ust-Ulimsk,Ust-Ilimsk,place,point,Russia,Irkutsk,57.98996,102.633311,natural_earth_populated_places
+Nalchik,Nalchik,place,point,Russia,Kabardin-Balkar,43.498106,43.617947,natural_earth_populated_places
+Naltchik,Nalchik,place,point,Russia,Kabardin-Balkar,43.498106,43.617947,natural_earth_populated_places
+Kaliningrad,Kaliningrad,place,point,Russia,Kaliningrad,54.700006,20.497343,natural_earth_populated_places
+Palana,Palana,place,point,Russia,Kamchatka,59.084002,159.95002,natural_earth_populated_places
+Petropavlovsk Kamchatskiy,Petropavlovsk-Kamchatsky,place,point,Russia,Kamchatka,53.061992,158.62302,natural_earth_populated_places
+Petropavlovsk-Kamchatsky,Petropavlovsk-Kamchatsky,place,point,Russia,Kamchatka,53.061992,158.62302,natural_earth_populated_places
+Petrozavodsk,Petrozavodsk,place,point,Russia,Karelia,61.849983,34.280016,natural_earth_populated_places
+Kemerovo,Kemerovo,place,point,Russia,Kemerovo,55.339967,86.08998,natural_earth_populated_places
+Novokuznetsk,Novokuznetsk,place,point,Russia,Kemerovo,53.750012,87.114982,natural_earth_populated_places
+Khabarovsk,Khabarovsk,place,point,Russia,Khabarovsk,48.454987,135.120011,natural_earth_populated_places
+Okhotsk,Okhotsk,place,point,Russia,Khabarovsk,59.383002,143.217036,natural_earth_populated_places
+Surgut,Surgut,place,point,Russia,Khanty-Mansiy,61.259942,73.425017,natural_earth_populated_places
+Kirov,Kirov,place,point,Russia,Kirov,58.590053,49.669981,natural_earth_populated_places
+Vorkuta,Vorkuta,place,point,Russia,Komi,67.5,64.009984,natural_earth_populated_places
+Krasnodar,Krasnodar,place,point,Russia,Krasnodar,45.019977,39.000038,natural_earth_populated_places
+Sochi,Sochi,place,point,Russia,Krasnodar,43.590012,39.729967,natural_earth_populated_places
+Abakan,Abakan,place,point,Russia,Krasnoyarsk,53.703685,91.445002,natural_earth_populated_places
+Krasnoyarsk,Krasnoyarsk,place,point,Russia,Krasnoyarsk,56.015929,92.864055,natural_earth_populated_places
+Magadan,Magadan,place,point,Russia,Maga Buryatdan,59.57498,150.810009,natural_earth_populated_places
+Moscow,Moscow,place,point,Russia,Moskva,55.75411,37.613577,natural_earth_populated_places
+Murmansk,Murmansk,place,point,Russia,Murmansk,68.969988,33.100036,natural_earth_populated_places
+Nizhny Novgorod,Nizhny Novgorod,place,point,Russia,Nizhegorod,56.334953,43.998149,natural_earth_populated_places
+Novosibirsk,Novosibirsk,place,point,Russia,Novosibirsk,55.031906,82.958096,natural_earth_populated_places
+Omsk,Omsk,place,point,Russia,Omsk,54.991934,73.398008,natural_earth_populated_places
+Orenburg,Orenburg,place,point,Russia,Orenburg,51.779978,55.110011,natural_earth_populated_places
+Penza,Penza,place,point,Russia,Penza,53.180021,44.999982,natural_earth_populated_places
+Perm,Perm,place,point,Russia,Perm',58.001906,56.248047,natural_earth_populated_places
+Dalnegorsk,Dalnegorsk,place,point,Russia,Primor'ye,44.537216,135.517247,natural_earth_populated_places
+Vladivostok,Vladivostok,place,point,Russia,Primor'ye,43.130015,131.910026,natural_earth_populated_places
+Pskov,Pskov,place,point,Russia,Pskov,57.829996,28.32994,natural_earth_populated_places
+Rostov,Rostov,place,point,Russia,Rostov,47.236594,39.71071,natural_earth_populated_places
+Ryazan,Ryazan,place,point,Russia,Ryazan',54.619959,39.719994,natural_earth_populated_places
+Aldan,Aldan,place,point,Russia,Sakha (Yakutia),58.602998,125.38939,natural_earth_populated_places
+Ambarchik,Ambarchik,place,point,Russia,Sakha (Yakutia),69.651006,162.333595,natural_earth_populated_places
+Batagay,Batagay,place,point,Russia,Sakha (Yakutia),67.655985,134.635027,natural_earth_populated_places
+Chokurdakh,Chokurdakh,place,point,Russia,Sakha (Yakutia),70.618311,147.89458,natural_earth_populated_places
+Lensk,Lensk,place,point,Russia,Sakha (Yakutia),60.725271,114.94703,natural_earth_populated_places
+Mirny,Mirny,place,point,Russia,Sakha (Yakutia),62.540019,113.961354,natural_earth_populated_places
+Mirnyy,Mirny,place,point,Russia,Sakha (Yakutia),62.540019,113.961354,natural_earth_populated_places
+Nizhneyansk,Nizhneyansk,place,point,Russia,Sakha (Yakutia),71.433326,136.066619,natural_earth_populated_places
+Tiksi,Tiksi,place,point,Russia,Sakha (Yakutia),71.626886,128.834967,natural_earth_populated_places
+Ust Nera,Ust-Nera,place,point,Russia,Sakha (Yakutia),64.566587,143.199983,natural_earth_populated_places
+Ust-Nera,Ust-Nera,place,point,Russia,Sakha (Yakutia),64.566587,143.199983,natural_earth_populated_places
+Yakutsk,Yakutsk,place,point,Russia,Sakha (Yakutia),62.034959,129.735016,natural_earth_populated_places
+Zhigansk,Zhigansk,place,point,Russia,Sakha (Yakutia),66.769709,123.371115,natural_earth_populated_places
+Okha,Okha,place,point,Russia,Sakhalin,53.573899,142.947853,natural_earth_populated_places
+Yuzhno Sakhalinsk,Yuzhno Sakhalinsk,place,point,Russia,Sakhalin,46.964974,142.740011,natural_earth_populated_places
+Samara,Samara,place,point,Russia,Samara,53.196953,50.149349,natural_earth_populated_places
+Saratov,Saratov,place,point,Russia,Saratov,51.581936,46.02805,natural_earth_populated_places
+Smolensk,Smolensk,place,point,Russia,Smolensk,54.782688,32.047336,natural_earth_populated_places
+Stavropol,Stavropol,place,point,Russia,Stavropol',45.050001,41.980011,natural_earth_populated_places
+Nizhny Tagil,Nizhny Tagil,place,point,Russia,Sverdlovsk,57.920016,59.974985,natural_earth_populated_places
+Yekaterinburg,Yekaterinburg,place,point,Russia,Sverdlovsk,56.851976,60.598014,natural_earth_populated_places
+Kazan,Kazan,place,point,Russia,Tatarstan,55.751888,49.124399,natural_earth_populated_places
+Dikson,Dikson,place,point,Russia,Taymyr,73.506972,80.545099,natural_earth_populated_places
+Khatanga,Khatanga,place,point,Russia,Taymyr,72.041144,102.465001,natural_earth_populated_places
+Norilsk,Norilsk,place,point,Russia,Taymyr,69.340017,88.224992,natural_earth_populated_places
+Tomsk,Tomsk,place,point,Russia,Tomsk,56.494987,84.975009,natural_earth_populated_places
+Kyzyl,Kyzyl,place,point,Russia,Tuva,51.706701,94.383066,natural_earth_populated_places
+Tver,Tver,place,point,Russia,Tver',56.859978,35.889995,natural_earth_populated_places
+Tyumen,Tyumen,place,point,Russia,Tyumen',57.140012,65.529995,natural_earth_populated_places
+Ulyanovsk,Ulyanovsk,place,point,Russia,Ul'yanovsk,54.329977,48.410006,natural_earth_populated_places
+Volgograd,Volgograd,place,point,Russia,Volgograd,48.711956,44.498015,natural_earth_populated_places
+Vologda,Vologda,place,point,Russia,Vologda,59.209989,39.919982,natural_earth_populated_places
+Voronezh,Voronezh,place,point,Russia,Voronezh,51.731927,39.26805,natural_earth_populated_places
+Yaroslavl,Yaroslavl,place,point,Russia,Yaroslavl',57.619983,39.870011,natural_earth_populated_places
+Kigali,Kigali,place,point,Rwanda,Kigali City,-1.951644,30.058586,natural_earth_populated_places
+Basseterre,Basseterre,place,point,Saint Kitts and Nevis,,17.302031,-62.717009,natural_earth_populated_places
+Castries,Castries,place,point,Saint Lucia,,14.001974,-61.000008,natural_earth_populated_places
+Kingstown,Kingstown,place,point,Saint Vincent and the Grenadines,,13.148279,-61.212062,natural_earth_populated_places
+Apia,Apia,place,point,Samoa,,-13.841545,-171.738642,natural_earth_populated_places
+San Marino,San Marino,place,point,San Marino,,43.936096,12.44177,natural_earth_populated_places
+Sao Tome,São Tomé,place,point,Sao Tome and Principe,,0.333402,6.733325,natural_earth_populated_places
+São Tomé,São Tomé,place,point,Sao Tome and Principe,,0.333402,6.733325,natural_earth_populated_places
+Medina,Medina,place,point,Saudi Arabia,Al Madinah,24.501935,39.578057,natural_earth_populated_places
+Riyadh,Riyadh,place,point,Saudi Arabia,Ar Riyad,24.642779,46.770796,natural_earth_populated_places
+Jeddah,Jeddah,place,point,Saudi Arabia,Makkah,21.518835,39.217252,natural_earth_populated_places
+Makkah,Makkah,place,point,Saudi Arabia,Makkah,21.431967,39.818094,natural_earth_populated_places
+Tabuk,Tabuk,place,point,Saudi Arabia,Tabuk,28.383835,36.554967,natural_earth_populated_places
+Dakar,Dakar,place,point,Senegal,Dakar,14.717778,-17.475076,natural_earth_populated_places
+Kaolack,Kaolack,place,point,Senegal,Kaolack,14.149975,-16.10001,natural_earth_populated_places
+Kaedi,Kaédi,place,point,Senegal,Matam,16.150008,-13.499988,natural_earth_populated_places
+Kaédi,Kaédi,place,point,Senegal,Matam,16.150008,-13.499988,natural_earth_populated_places
+Belgrade,Belgrade,place,point,Serbia,Grad Beograd,44.820591,20.466045,natural_earth_populated_places
+Novi Sad,Novi Sad,place,point,Serbia,Južno-Backi,45.250376,19.849941,natural_earth_populated_places
+Victoria,Victoria,place,point,Seychelles,,-4.616632,55.44999,natural_earth_populated_places
+Freetown,Freetown,place,point,Sierra Leone,Western,8.471957,-13.236162,natural_earth_populated_places
+Singapore,Singapore,place,point,Singapore,,1.294979,103.853875,natural_earth_populated_places
+Bratislava,Bratislava,place,point,Slovakia,Bratislavský,48.150018,17.116981,natural_earth_populated_places
+Ljubljana,Ljubljana,place,point,Slovenia,Osrednjeslovenska,46.055288,14.514969,natural_earth_populated_places
+Honiara,Honiara,place,point,Solomon Islands,Guadalcanal,-9.437994,159.949766,natural_earth_populated_places
+Mogadishu,Mogadishu,place,point,Somalia,Banaadir,2.068627,45.364732,natural_earth_populated_places
+Berbera,Berbera,place,point,Somaliland,,10.43555,45.016415,natural_earth_populated_places
+Hargeisa,Hargeisa,place,point,Somaliland,,9.560022,44.06531,natural_earth_populated_places
+Hargeysa,Hargeisa,place,point,Somaliland,,9.560022,44.06531,natural_earth_populated_places
+East London,East London,place,point,South Africa,Eastern Cape,-32.970043,27.87002,natural_earth_populated_places
+Middelburg,Middelburg,place,point,South Africa,Eastern Cape,-31.500004,25.009987,natural_earth_populated_places
+Port Elizabeth,Port Elizabeth,place,point,South Africa,Eastern Cape,-33.968088,25.598083,natural_earth_populated_places
+Johannesburg,Johannesburg,place,point,South Africa,Gauteng,-26.168099,28.028064,natural_earth_populated_places
+Pretoria,Pretoria,place,point,South Africa,Gauteng,-25.704975,28.227483,natural_earth_populated_places
+Durban,Durban,place,point,South Africa,KwaZulu-Natal,-29.863067,30.978065,natural_earth_populated_places
+Springbok,Springbok,place,point,South Africa,Northern Cape,-29.666731,17.883291,natural_earth_populated_places
+Upington,Upington,place,point,South Africa,Northern Cape,-28.460034,21.230011,natural_earth_populated_places
+Bloemfontein,Bloemfontein,place,point,South Africa,Orange Free State,-29.119994,26.229913,natural_earth_populated_places
+Welkom,Welkom,place,point,South Africa,Orange Free State,-27.969987,26.729986,natural_earth_populated_places
+Cape Town,Cape Town,place,point,South Africa,Western Cape,-33.918065,18.433042,natural_earth_populated_places
+George,George,place,point,South Africa,Western Cape,-33.950035,22.45004,natural_earth_populated_places
+Worcester,Worcester,place,point,South Africa,Western Cape,-33.640028,19.43994,natural_earth_populated_places
+Busan,Busan,place,point,South Korea,Busan,35.096999,129.008102,natural_earth_populated_places
+Daejeon,Daejeon,place,point,South Korea,Daejeon,36.337492,127.423082,natural_earth_populated_places
+Incheon,Incheon,place,point,South Korea,Inch'on-gwangyoksi,37.478094,126.640288,natural_earth_populated_places
+Gwangju,Gwangju,place,point,South Korea,Kwangju-gwangyoksi,35.172912,126.908488,natural_earth_populated_places
+Seoul,Seoul,place,point,South Korea,Seoul,37.568295,126.997785,natural_earth_populated_places
+Juba,Juba,place,point,South Sudan,Central Equatoria,4.829975,31.580026,natural_earth_populated_places
+Malakal,Malakal,place,point,South Sudan,Upper Nile,9.536897,31.65599,natural_earth_populated_places
+Wau,Wau,place,point,South Sudan,West Bahr-al-Ghazal,7.699981,27.989961,natural_earth_populated_places
+Las Palmas,Las Palmas,place,point,Spain,,28.099976,-15.429999,natural_earth_populated_places
+Cordoba,Córdoba,place,point,Spain,Andalucía,37.879999,-4.770004,natural_earth_populated_places
+Córdoba,Córdoba,place,point,Spain,Andalucía,37.879999,-4.770004,natural_earth_populated_places
+Seville,Seville,place,point,Spain,Andalucía,37.405015,-5.980007,natural_earth_populated_places
+Barcelona,Barcelona,place,point,Spain,Cataluña,41.385245,2.181425,natural_earth_populated_places
+Valencia,Valencia,place,point,Spain,Comunidad Valenciana,39.486963,-0.401958,natural_earth_populated_places
+Madrid,Madrid,place,point,Spain,Comunidad de Madrid,40.401972,-3.685298,natural_earth_populated_places
+Vigo,Vigo,place,point,Spain,Galicia,42.220019,-8.729995,natural_earth_populated_places
+Bilbao,Bilbao,place,point,Spain,País Vasco,43.249982,-2.929987,natural_earth_populated_places
+Colombo,Colombo,place,point,Sri Lanka,Colombo,6.931966,79.857751,natural_earth_populated_places
+Sri Jawewardenepura Kotte,Sri Jayawardenepura Kotte,place,point,Sri Lanka,Colombo,6.900004,79.949993,natural_earth_populated_places
+Sri Jayawardenepura Kotte,Sri Jayawardenepura Kotte,place,point,Sri Lanka,Colombo,6.900004,79.949993,natural_earth_populated_places
+Kandy,Kandy,place,point,Sri Lanka,Kandy,7.279981,80.670001,natural_earth_populated_places
+Kassala,Kassala,place,point,Sudan,Kassala,15.459972,36.390016,natural_earth_populated_places
+Khartoum,Khartoum,place,point,Sudan,Khartoum,15.590024,32.532233,natural_earth_populated_places
+Omdurman,Omdurman,place,point,Sudan,Khartoum,15.616681,32.480022,natural_earth_populated_places
+Al-Ubayyid,Al-Ubayyid,place,point,Sudan,North Kurdufan,13.18329,30.216698,natural_earth_populated_places
+El Obeid,Al-Ubayyid,place,point,Sudan,North Kurdufan,13.18329,30.216698,natural_earth_populated_places
+Dongola,Dongola,place,point,Sudan,Northern,19.166594,30.483297,natural_earth_populated_places
+El Fasher,El Fasher,place,point,Sudan,Northern Darfur,13.629981,25.350018,natural_earth_populated_places
+Port Sudan,Port Sudan,place,point,Sudan,Red Sea,19.615791,37.216426,natural_earth_populated_places
+Niyala,Nyala,place,point,Sudan,South Darfur,12.059973,24.889995,natural_earth_populated_places
+Nyala,Nyala,place,point,Sudan,South Darfur,12.059973,24.889995,natural_earth_populated_places
+Geneina,Geneina,place,point,Sudan,West Darfur,13.450018,22.440015,natural_earth_populated_places
+Paramaribo,Paramaribo,place,point,Suriname,Paramaribo,5.83503,-55.167031,natural_earth_populated_places
+Cottica,Cottica,place,point,Suriname,Sipaliwini,3.850009,-54.233289,natural_earth_populated_places
+Longyearbyen,Longyearbyen,place,point,Svalbard and Jan Mayen Islands,Svalbard,78.216684,15.549996,natural_earth_populated_places
+Lulea,Luleå,place,point,Sweden,Norrbotten,65.596635,22.158378,natural_earth_populated_places
+Luleå,Luleå,place,point,Sweden,Norrbotten,65.596635,22.158378,natural_earth_populated_places
+Malmo,Malmö,place,point,Sweden,Skåne,55.583337,13.033302,natural_earth_populated_places
+Malmö,Malmö,place,point,Sweden,Skåne,55.583337,13.033302,natural_earth_populated_places
+Stockholm,Stockholm,place,point,Sweden,Stockholm,59.352706,18.095389,natural_earth_populated_places
+Sundsvall,Sundsvall,place,point,Sweden,Västernorrland,62.400053,17.316659,natural_earth_populated_places
+Bern,Bern,place,point,Switzerland,Bern,46.916683,7.466976,natural_earth_populated_places
+Geneva,Geneva,place,point,Switzerland,Genève,46.210008,6.140028,natural_earth_populated_places
+Zurich,Zürich,place,point,Switzerland,Zürich,47.381934,8.548064,natural_earth_populated_places
+Zürich,Zürich,place,point,Switzerland,Zürich,47.381934,8.548064,natural_earth_populated_places
+Aleppo,Aleppo,place,point,Syria,Aleppo (Halab),36.231917,37.168074,natural_earth_populated_places
+Damascus,Damascus,place,point,Syria,Damascus,33.50198,36.29805,natural_earth_populated_places
+Kaohsiung,Kaohsiung,place,point,Taiwan,Kaohsiung City,22.633307,120.266602,natural_earth_populated_places
+Taichung,Taichung,place,point,Taiwan,Taichung City,24.152078,120.681667,natural_earth_populated_places
+Taipei,Taipei,place,point,Taiwan,Taipei City,25.035833,121.568333,natural_earth_populated_places
+Dushanbe,Dushanbe,place,point,Tajikistan,Tadzhikistan Territories,38.560035,68.773879,natural_earth_populated_places
+Arusha,Arusha,place,point,Tanzania,Arusha,-3.360016,36.669999,natural_earth_populated_places
+Dar es Salaam,Dar es Salaam,place,point,Tanzania,Dar-Es-Salaam,-6.798067,39.266396,natural_earth_populated_places
+Dodoma,Dodoma,place,point,Tanzania,Dodoma,-6.183306,35.750004,natural_earth_populated_places
+Mbeya,Mbeya,place,point,Tanzania,Mbeya,-8.890014,33.430042,natural_earth_populated_places
+Morogoro,Morogoro,place,point,Tanzania,Morogoro,-6.820011,37.660016,natural_earth_populated_places
+Mwanza,Mwanza,place,point,Tanzania,Mwanza,-2.520015,32.930021,natural_earth_populated_places
+Zanzibar,Zanzibar,place,point,Tanzania,Zanzibar West,-6.16,39.200026,natural_earth_populated_places
+Bangkok,Bangkok,place,point,Thailand,Bangkok Metropolis,13.751945,100.514699,natural_earth_populated_places
+Chiang Mai,Chiang Mai,place,point,Thailand,Chiang Mai,18.799975,98.980046,natural_earth_populated_places
+Nakhon Ratchasima,Nakhon Ratchasima,place,point,Thailand,Nakhon Ratchasima,15.000026,102.100011,natural_earth_populated_places
+Surat Thani,Surat Thani,place,point,Thailand,Surat Thani,9.150099,99.340127,natural_earth_populated_places
+Freeport,Freeport,place,point,The Bahamas,,26.533276,-78.700013,natural_earth_populated_places
+Nassau,Nassau,place,point,The Bahamas,,25.08339,-77.350044,natural_earth_populated_places
+Banjul,Banjul,place,point,The Gambia,Banjul,13.453877,-16.591702,natural_earth_populated_places
+Lome,Lomé,place,point,Togo,Maritime,6.133883,1.220811,natural_earth_populated_places
+Lomé,Lomé,place,point,Togo,Maritime,6.133883,1.220811,natural_earth_populated_places
+Atakpame,Atakpamé,place,point,Togo,Plateaux,7.530043,1.120024,natural_earth_populated_places
+Atakpamé,Atakpamé,place,point,Togo,Plateaux,7.530043,1.120024,natural_earth_populated_places
+Nuku'alofa,Nuku'alofa,place,point,Tonga,,-21.138512,-175.220565,natural_earth_populated_places
+Nukualofa,Nuku'alofa,place,point,Tonga,,-21.138512,-175.220565,natural_earth_populated_places
+Port-of-Spain,Port-of-Spain,place,point,Trinidad and Tobago,Port of Spain,10.651997,-61.517031,natural_earth_populated_places
+Sousse,Sousse,place,point,Tunisia,Sousse,35.829995,10.625026,natural_earth_populated_places
+Tunis,Tunis,place,point,Tunisia,Tunis,36.802778,10.179678,natural_earth_populated_places
+Adana,Adana,place,point,Turkey,Adana,36.996935,35.318058,natural_earth_populated_places
+Ankara,Ankara,place,point,Turkey,Ankara,39.929184,32.862446,natural_earth_populated_places
+Bursa,Bursa,place,point,Turkey,Bursa,40.201933,29.068052,natural_earth_populated_places
+Istanbul,Istanbul,place,point,Turkey,Istanbul,41.106942,29.008056,natural_earth_populated_places
+Izmir,İzmir,place,point,Turkey,Izmir,38.438096,27.149848,natural_earth_populated_places
+İzmir,İzmir,place,point,Turkey,Izmir,38.438096,27.149848,natural_earth_populated_places
+Konya,Konya,place,point,Turkey,Konya,37.876958,32.473064,natural_earth_populated_places
+Samsun,Samsun,place,point,Turkey,Samsun,41.279998,36.343663,natural_earth_populated_places
+Ashgabat,Ashgabat,place,point,Turkmenistan,Ahal,37.949995,58.383299,natural_earth_populated_places
+Turkmenbasy,Türkmenbaşy,place,point,Turkmenistan,Balkan,40.023047,52.969676,natural_earth_populated_places
+Türkmenbaşy,Türkmenbaşy,place,point,Turkmenistan,Balkan,40.023047,52.969676,natural_earth_populated_places
+Turkmenabat,Türkmenabat,place,point,Turkmenistan,Chardzhou,39.110002,63.580036,natural_earth_populated_places
+Türkmenabat,Türkmenabat,place,point,Turkmenistan,Chardzhou,39.110002,63.580036,natural_earth_populated_places
+Mary,Mary,place,point,Turkmenistan,Mary,37.600016,61.833321,natural_earth_populated_places
+Grand Turk,Grand Turk,place,point,Turks and Caicos Islands,,21.466427,-71.135979,natural_earth_populated_places
+Funafuti,Funafuti,place,point,Tuvalu,,-8.516652,179.216647,natural_earth_populated_places
+Arua,Arua,place,point,Uganda,Arua Municipality,3.02037,30.900015,natural_earth_populated_places
+Gulu,Gulu,place,point,Uganda,Aswa,2.779997,32.280035,natural_earth_populated_places
+Bombo,Bombo,place,point,Uganda,Bamunanika,0.583299,32.5333,natural_earth_populated_places
+Mbale,Mbale,place,point,Uganda,Bungokho,1.09041,34.169997,natural_earth_populated_places
+Jinja,Jinja,place,point,Uganda,Jinja,0.440424,33.199927,natural_earth_populated_places
+Fort Portal,Fort Portal,place,point,Uganda,Kabarole,0.671004,30.275002,natural_earth_populated_places
+Kampala,Kampala,place,point,Uganda,Kampala,0.318605,32.581378,natural_earth_populated_places
+Mbarara,Mbarara,place,point,Uganda,Kashari,-0.599616,30.650005,natural_earth_populated_places
+Masaka,Masaka,place,point,Uganda,Masaka,-0.329607,31.729991,natural_earth_populated_places
+Moroto,Moroto,place,point,Uganda,Moroto,2.540348,34.639994,natural_earth_populated_places
+Dnipro,Dnipro,place,point,Ukraine,Dnipropetrovs'k,48.481918,34.998078,natural_earth_populated_places
+Donetsk,Donetsk,place,point,Ukraine,Donets'k,48.001948,37.828034,natural_earth_populated_places
+Kharkiv,Kharkiv,place,point,Ukraine,Kharkiv,50.001929,36.248079,natural_earth_populated_places
+Kiev,Kyiv,place,point,Ukraine,Kiev,50.435313,30.514682,natural_earth_populated_places
+Kyiv,Kyiv,place,point,Ukraine,Kiev,50.435313,30.514682,natural_earth_populated_places
+Lviv,Lviv,place,point,Ukraine,L'viv,49.83498,24.029996,natural_earth_populated_places
+Lvov,Lviv,place,point,Ukraine,L'viv,49.83498,24.029996,natural_earth_populated_places
+Odessa,Odessa,place,point,Ukraine,Odessa,46.491962,30.708055,natural_earth_populated_places
+Zhytomyr,Zhytomyr,place,point,Ukraine,Zhytomyr,50.245575,28.662168,natural_earth_populated_places
+Abu Dhabi,Abu Dhabi,place,point,United Arab Emirates,Abu Dhabi,24.466684,54.366593,natural_earth_populated_places
+Dubai,Dubai,place,point,United Arab Emirates,Dubay,25.231942,55.278029,natural_earth_populated_places
+Belfast,Belfast,place,point,United Kingdom,Belfast,54.600012,-5.960034,natural_earth_populated_places
+Cardiff,Cardiff,place,point,United Kingdom,Cardiff,51.499995,-3.225008,natural_earth_populated_places
+Edinburgh,Edinburgh,place,point,United Kingdom,Edinburgh,55.948328,-3.219091,natural_earth_populated_places
+Glasgow,Glasgow,place,point,United Kingdom,Glasgow,55.876351,-4.252653,natural_earth_populated_places
+Manchester,Manchester,place,point,United Kingdom,Manchester,53.502361,-2.249933,natural_earth_populated_places
+Birmingham,Birmingham,place,point,United Kingdom,West Midlands,52.47692,-1.921943,natural_earth_populated_places
+London,London,place,point,United Kingdom,Westminster,51.501941,-0.118668,natural_earth_populated_places
+Montgomery,Montgomery,place,point,United States of America,Alabama,32.361602,-86.279189,natural_earth_populated_places
+Anchorage,Anchorage,place,point,United States of America,Alaska,61.21997,-149.900215,natural_earth_populated_places
+Bethel,Bethel,place,point,United States of America,Alaska,60.793303,-161.755796,natural_earth_populated_places
+Cold Bay,Cold Bay,place,point,United States of America,Alaska,55.200001,-162.715092,natural_earth_populated_places
+Fairbanks,Fairbanks,place,point,United States of America,Alaska,64.836984,-147.710659,natural_earth_populated_places
+Juneau,Juneau,place,point,United States of America,Alaska,58.314127,-134.419997,natural_earth_populated_places
+Kodiak,Kodiak,place,point,United States of America,Alaska,57.789998,-152.406987,natural_earth_populated_places
+Nome,Nome,place,point,United States of America,Alaska,64.5061,-165.406374,natural_earth_populated_places
+Point Hope,Point Hope,place,point,United States of America,Alaska,68.347726,-166.80802,natural_earth_populated_places
+Prudhoe Bay,Prudhoe Bay,place,point,United States of America,Alaska,70.292181,-148.66936,natural_earth_populated_places
+Sitka,Sitka,place,point,United States of America,Alaska,57.060398,-135.327549,natural_earth_populated_places
+Utqiaġvik,Utqiaġvik,place,point,United States of America,Alaska,71.29057,-156.78858,natural_earth_populated_places
+Valdez,Valdez,place,point,United States of America,Alaska,61.135996,-146.348287,natural_earth_populated_places
+Flagstaff,Flagstaff,place,point,United States of America,Arizona,35.198096,-111.650508,natural_earth_populated_places
+Phoenix,Phoenix,place,point,United States of America,Arizona,33.541926,-112.071938,natural_earth_populated_places
+Tucson,Tucson,place,point,United States of America,Arizona,32.206943,-110.891932,natural_earth_populated_places
+Eureka,Eureka,place,point,United States of America,California,40.802224,-124.147497,natural_earth_populated_places
+Fresno,Fresno,place,point,United States of America,California,36.747717,-119.772984,natural_earth_populated_places
+Los Angeles,Los Angeles,place,point,United States of America,California,33.991924,-118.181926,natural_earth_populated_places
+Sacramento,Sacramento,place,point,United States of America,California,38.576967,-121.471984,natural_earth_populated_places
+San Bernardino,San Bernardino,place,point,United States of America,California,34.12233,-117.30198,natural_earth_populated_places
+San Diego,San Diego,place,point,United States of America,California,32.82197,-117.181936,natural_earth_populated_places
+San Francisco,San Francisco,place,point,United States of America,California,37.769196,-122.417169,natural_earth_populated_places
+San Jose,San Jose,place,point,United States of America,California,37.301929,-121.851935,natural_earth_populated_places
+Santa Barbara,Santa Barbara,place,point,United States of America,California,34.43499,-119.71999,natural_earth_populated_places
+Colorado Springs,Colorado Springs,place,point,United States of America,Colorado,38.862963,-104.791986,natural_earth_populated_places
+Denver,Denver,place,point,United States of America,Colorado,39.741134,-104.985962,natural_earth_populated_places
+Bridgeport,Bridgeport,place,point,United States of America,Connecticut,41.181925,-73.201907,natural_earth_populated_places
+"Washington,  D.C.","Washington,  D.C.",place,point,United States of America,District of Columbia,38.901495,-77.011364,natural_earth_populated_places
+"Washington, D.C.","Washington,  D.C.",place,point,United States of America,District of Columbia,38.901495,-77.011364,natural_earth_populated_places
+Jacksonville,Jacksonville,place,point,United States of America,Florida,30.331967,-81.671933,natural_earth_populated_places
+Miami,Miami,place,point,United States of America,Florida,25.789557,-80.226052,natural_earth_populated_places
+Orlando,Orlando,place,point,United States of America,Florida,28.511923,-81.381976,natural_earth_populated_places
+Tallahassee,Tallahassee,place,point,United States of America,Florida,30.449988,-84.280034,natural_earth_populated_places
+Tampa,Tampa,place,point,United States of America,Florida,27.948934,-82.460567,natural_earth_populated_places
+Atlanta,Atlanta,place,point,United States of America,Georgia,33.83196,-84.401895,natural_earth_populated_places
+Savannah,Savannah,place,point,United States of America,Georgia,32.021106,-81.109995,natural_earth_populated_places
+Hilo,Hilo,place,point,United States of America,Hawaii,19.699998,-155.090027,natural_earth_populated_places
+Honolulu,Honolulu,place,point,United States of America,Hawaii,21.308822,-157.859944,natural_earth_populated_places
+Boise,Boise,place,point,United States of America,Idaho,43.60859,-116.22749,natural_earth_populated_places
+Chicago,Chicago,place,point,United States of America,Illinois,41.831937,-87.752001,natural_earth_populated_places
+Indianapolis,Indianapolis,place,point,United States of America,Indiana,39.751934,-86.171994,natural_earth_populated_places
+Des Moines,Des Moines,place,point,United States of America,Iowa,41.57998,-93.619981,natural_earth_populated_places
+Topeka,Topeka,place,point,United States of America,Kansas,39.050005,-95.669985,natural_earth_populated_places
+Baton Rouge,Baton Rouge,place,point,United States of America,Louisiana,30.457946,-91.140158,natural_earth_populated_places
+New Orleans,New Orleans,place,point,United States of America,Louisiana,29.996948,-90.041913,natural_earth_populated_places
+Shreveport,Shreveport,place,point,United States of America,Louisiana,32.500018,-93.770023,natural_earth_populated_places
+Augusta,Augusta,place,point,United States of America,Maine,44.310563,-69.779989,natural_earth_populated_places
+Baltimore,Baltimore,place,point,United States of America,Maryland,39.301936,-76.621931,natural_earth_populated_places
+Boston,Boston,place,point,United States of America,Massachusetts,42.331906,-71.07196,natural_earth_populated_places
+Detroit,Detroit,place,point,United States of America,Michigan,42.331906,-83.082002,natural_earth_populated_places
+Sault Ste. Marie,Sault Ste. Marie,place,point,United States of America,Michigan,46.495262,-84.345276,natural_earth_populated_places
+International Falls,International Falls,place,point,United States of America,Minnesota,48.601128,-93.410846,natural_earth_populated_places
+Minneapolis,Minneapolis,place,point,United States of America,Minnesota,44.981925,-93.253732,natural_earth_populated_places
+St.  Paul,St.  Paul,place,point,United States of America,Minnesota,44.943987,-93.084975,natural_earth_populated_places
+St. Paul,St.  Paul,place,point,United States of America,Minnesota,44.943987,-93.084975,natural_earth_populated_places
+Jackson,Jackson,place,point,United States of America,Mississippi,32.298815,-90.184997,natural_earth_populated_places
+Kansas City,Kansas City,place,point,United States of America,Missouri,39.109034,-94.60604,natural_earth_populated_places
+St. Louis,St. Louis,place,point,United States of America,Missouri,38.636964,-90.241926,natural_earth_populated_places
+Billings,Billings,place,point,United States of America,Montana,45.788302,-108.54,natural_earth_populated_places
+Great Falls,Great Falls,place,point,United States of America,Montana,47.500291,-111.299987,natural_earth_populated_places
+Helena,Helena,place,point,United States of America,Montana,46.592749,-112.035291,natural_earth_populated_places
+Missoula,Missoula,place,point,United States of America,Montana,46.872241,-113.993053,natural_earth_populated_places
+Omaha,Omaha,place,point,United States of America,Nebraska,41.240001,-96.00999,natural_earth_populated_places
+Elko,Elko,place,point,United States of America,Nevada,40.832506,-115.761989,natural_earth_populated_places
+Las Vegas,Las Vegas,place,point,United States of America,Nevada,36.211944,-115.221952,natural_earth_populated_places
+Reno,Reno,place,point,United States of America,Nevada,39.529976,-119.82001,natural_earth_populated_places
+Albuquerque,Albuquerque,place,point,United States of America,New Mexico,35.104975,-106.641331,natural_earth_populated_places
+Santa Fe,Santa Fe,place,point,United States of America,New Mexico,35.686929,-105.937239,natural_earth_populated_places
+Buffalo,Buffalo,place,point,United States of America,New York,42.881924,-78.881948,natural_earth_populated_places
+New York,New York,place,point,United States of America,New York,40.751925,-73.981963,natural_earth_populated_places
+Rochester,Rochester,place,point,United States of America,New York,43.172372,-77.621896,natural_earth_populated_places
+Syracuse,Syracuse,place,point,United States of America,New York,43.049994,-76.150014,natural_earth_populated_places
+Raleigh,Raleigh,place,point,United States of America,North Carolina,35.818781,-78.644693,natural_earth_populated_places
+Wilmington,Wilmington,place,point,United States of America,North Carolina,34.225519,-77.94502,natural_earth_populated_places
+Bismarck,Bismarck,place,point,United States of America,North Dakota,46.808317,-100.783316,natural_earth_populated_places
+Fargo,Fargo,place,point,United States of America,North Dakota,46.877228,-96.789426,natural_earth_populated_places
+Minot,Minot,place,point,United States of America,North Dakota,48.232494,-101.295817,natural_earth_populated_places
+Cincinnati,Cincinnati,place,point,United States of America,Ohio,39.163831,-84.458869,natural_earth_populated_places
+Cleveland,Cleveland,place,point,United States of America,Ohio,41.471933,-81.696944,natural_earth_populated_places
+Oklahoma City,Oklahoma City,place,point,United States of America,Oklahoma,35.471989,-97.520629,natural_earth_populated_places
+Tulsa,Tulsa,place,point,United States of America,Oklahoma,36.120003,-95.930021,natural_earth_populated_places
+Portland,Portland,place,point,United States of America,Oregon,45.52197,-122.681936,natural_earth_populated_places
+Salem,Salem,place,point,United States of America,Oregon,44.92807,-123.023897,natural_earth_populated_places
+Philadelphia,Philadelphia,place,point,United States of America,Pennsylvania,40.001919,-75.171942,natural_earth_populated_places
+Pittsburgh,Pittsburgh,place,point,United States of America,Pennsylvania,40.431945,-80.001931,natural_earth_populated_places
+Columbia,Columbia,place,point,United States of America,South Carolina,34.039975,-80.899982,natural_earth_populated_places
+Pierre,Pierre,place,point,United States of America,South Dakota,44.368337,-100.350552,natural_earth_populated_places
+Sioux Falls,Sioux Falls,place,point,United States of America,South Dakota,43.549989,-96.729998,natural_earth_populated_places
+Knoxville,Knoxville,place,point,United States of America,Tennessee,35.970012,-83.92003,natural_earth_populated_places
+Memphis,Memphis,place,point,United States of America,Tennessee,35.121933,-90.001941,natural_earth_populated_places
+Nashville,Nashville,place,point,United States of America,Tennessee,36.17192,-86.781931,natural_earth_populated_places
+Amarillo,Amarillo,place,point,United States of America,Texas,35.22998,-101.829997,natural_earth_populated_places
+Austin,Austin,place,point,United States of America,Texas,30.268896,-97.744724,natural_earth_populated_places
+Corpus Christi,Corpus Christi,place,point,United States of America,Texas,27.742814,-97.401895,natural_earth_populated_places
+Dallas,Dallas,place,point,United States of America,Texas,32.82197,-96.841963,natural_earth_populated_places
+El Paso,El Paso,place,point,United States of America,Texas,31.78193,-106.511941,natural_earth_populated_places
+Ft.  Worth,Ft.  Worth,place,point,United States of America,Texas,32.739977,-97.340038,natural_earth_populated_places
+Ft. Worth,Ft.  Worth,place,point,United States of America,Texas,32.739977,-97.340038,natural_earth_populated_places
+Houston,Houston,place,point,United States of America,Texas,29.82192,-95.341925,natural_earth_populated_places
+Laredo,Laredo,place,point,United States of America,Texas,27.506136,-99.507219,natural_earth_populated_places
+San Antonio,San Antonio,place,point,United States of America,Texas,29.489279,-98.509251,natural_earth_populated_places
+Salt Lake City,Salt Lake City,place,point,United States of America,Utah,40.776962,-111.931998,natural_earth_populated_places
+Burlington,Burlington,place,point,United States of America,Vermont,44.475798,-73.212467,natural_earth_populated_places
+Norfolk,Norfolk,place,point,United States of America,Virginia,36.849959,-76.280006,natural_earth_populated_places
+Richmond,Richmond,place,point,United States of America,Virginia,37.551965,-77.451932,natural_earth_populated_places
+Olympia,Olympia,place,point,United States of America,Washington,47.038045,-122.899434,natural_earth_populated_places
+Seattle,Seattle,place,point,United States of America,Washington,47.571948,-122.341931,natural_earth_populated_places
+Spokane,Spokane,place,point,United States of America,Washington,47.669996,-117.419949,natural_earth_populated_places
+Vancouver,Vancouver,place,point,United States of America,Washington,45.630301,-122.639993,natural_earth_populated_places
+Charleston,Charleston,place,point,United States of America,West Virginia,38.349738,-81.632728,natural_earth_populated_places
+Milwaukee,Milwaukee,place,point,United States of America,Wisconsin,43.054601,-87.921913,natural_earth_populated_places
+Casper,Casper,place,point,United States of America,Wyoming,42.86662,-106.312488,natural_earth_populated_places
+Cheyenne,Cheyenne,place,point,United States of America,Wyoming,41.140007,-104.819711,natural_earth_populated_places
+Durazno,Durazno,place,point,Uruguay,Durazno,-33.410016,-56.51005,natural_earth_populated_places
+Montevideo,Montevideo,place,point,Uruguay,Montevideo,-34.856096,-56.172998,natural_earth_populated_places
+Andijan,Andijan,place,point,Uzbekistan,Andijon,40.790003,72.339967,natural_earth_populated_places
+Andijon,Andijan,place,point,Uzbekistan,Andijon,40.790003,72.339967,natural_earth_populated_places
+Bukhara,Bukhara,place,point,Uzbekistan,Bukhoro,39.780012,64.43001,natural_earth_populated_places
+Nukus,Nukus,place,point,Uzbekistan,Karakalpakstan,42.470003,59.615007,natural_earth_populated_places
+Samarkand,Samarkand,place,point,Uzbekistan,Samarkand,39.670019,66.944999,natural_earth_populated_places
+Samarqand,Samarkand,place,point,Uzbekistan,Samarkand,39.670019,66.944999,natural_earth_populated_places
+Tashkent,Tashkent,place,point,Uzbekistan,Tashkent,41.313648,69.292987,natural_earth_populated_places
+Port Vila,Port Vila,place,point,Vanuatu,Shefa,-17.73335,168.316641,natural_earth_populated_places
+Vatican City,Vatican City,place,point,Vatican,Lazio,41.903282,12.453387,natural_earth_populated_places
+Puerto Ayacucho,Puerto Ayacucho,place,point,Venezuela,Amazonas,5.663904,-67.623609,natural_earth_populated_places
+Ciudad Guayana,Ciudad Guayana,place,point,Venezuela,Bolívar,8.370018,-62.619987,natural_earth_populated_places
+Valencia,Valencia,place,point,Venezuela,Carabobo,10.231927,-67.981967,natural_earth_populated_places
+Caracas,Caracas,place,point,Venezuela,Distrito Capital,10.502944,-66.918983,natural_earth_populated_places
+Merida,Mérida,place,point,Venezuela,Mérida,8.39999,-71.13001,natural_earth_populated_places
+Mérida,Mérida,place,point,Venezuela,Mérida,8.39999,-71.13001,natural_earth_populated_places
+San Cristobal,San Cristóbal,place,point,Venezuela,Táchira,7.770003,-72.249968,natural_earth_populated_places
+San Cristóbal,San Cristóbal,place,point,Venezuela,Táchira,7.770003,-72.249968,natural_earth_populated_places
+Maracaibo,Maracaibo,place,point,Venezuela,Zulia,10.731923,-71.661924,natural_earth_populated_places
+Ho Chi Minh City,Ho Chi Minh City,place,point,Vietnam,H? Chí Minh city,10.781971,106.693081,natural_earth_populated_places
+Haiphong,Haiphong,place,point,Vietnam,Qu?ng Ninh,20.831952,106.678147,natural_earth_populated_places
+Hanoi,Hanoi,place,point,Vietnam,Thái Nguyên,21.035273,105.848068,natural_earth_populated_places
+Da Nang,Da Nang,place,point,Vietnam,Ðà N?ng,16.060039,108.249971,natural_earth_populated_places
+Bir Lehlou,Bir Lehlou,place,point,Western Sahara,,26.119167,-9.652522,natural_earth_populated_places
+Sanaa,Sanaa,place,point,Yemen,Amanat Al Asimah,15.356679,44.204648,natural_earth_populated_places
+Taizz,Taizz,place,point,Yemen,Ta`izz,13.606398,44.037474,natural_earth_populated_places
+Aden,Aden,place,point,Yemen,`Adan,12.779723,45.00949,natural_earth_populated_places
+Kabwe,Kabwe,place,point,Zambia,Central,-14.440011,28.449984,natural_earth_populated_places
+Kitwe,Kitwe,place,point,Zambia,Copperbelt,-12.810033,28.220024,natural_earth_populated_places
+Mufulira,Mufulira,place,point,Zambia,Copperbelt,-12.549998,28.25997,natural_earth_populated_places
+Chipata,Chipata,place,point,Zambia,Eastern,-13.62957,32.640013,natural_earth_populated_places
+Lusaka,Lusaka,place,point,Zambia,Lusaka,-15.414698,28.281382,natural_earth_populated_places
+Livingstone,Livingstone,place,point,Zambia,Southern,-17.860009,25.860013,natural_earth_populated_places
+Bulawayo,Bulawayo,place,point,Zimbabwe,Bulawayo,-20.169998,28.580002,natural_earth_populated_places
+Chitungwiza,Chitungwiza,place,point,Zimbabwe,Harare,-18.000001,31.100003,natural_earth_populated_places
+Harare,Harare,place,point,Zimbabwe,Harare,-17.815844,31.042764,natural_earth_populated_places
+Mbabane,Mbabane,place,point,eSwatini,Hhohho,-26.316651,31.133335,natural_earth_populated_places
+Lobamba,Lobamba,place,point,eSwatini,Manzini,-26.466668,31.199997,natural_earth_populated_places
