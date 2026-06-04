@@ -5,10 +5,16 @@ from __future__ import annotations
 import logging
 import os
 import re
+from pathlib import Path
 
 import pandas as pd
 
-from processing.normalize import parse_citations
+try:
+    from pipeline_capabilities import RisInput, normalize_ris_source
+    from processing.normalize import parse_citations
+except ModuleNotFoundError:  # pragma: no cover - package import path
+    from DansBib.pipeline_capabilities import RisInput, normalize_ris_source
+    from DansBib.processing.normalize import parse_citations
 
 LOGGER = logging.getLogger(__name__)
 SCHEMA_COLUMNS = ["title", "doi", "authors", "year", "citations", "source"]
@@ -26,26 +32,43 @@ def _append_ris_value(record: dict[str, list[str]], tag: str, value: str) -> Non
 
 
 def _detect_ris_source(path: str, records: list[dict[str, list[str]]], source_db: str | None = None) -> str:
-    """Detect whether a RIS export should be treated as WoS or Covidence."""
-    if source_db:
-        source = source_db.strip().lower()
-        if source in {"covidence", "wos", "wos_ris"}:
-            return "covidence" if source == "covidence" else "wos"
+    """Detect the RIS export origin when it is not supplied explicitly."""
+    explicit_source = normalize_ris_source(source_db)
+    if source_db and explicit_source != "unknown":
+        return explicit_source
 
     filename = os.path.basename(path).lower()
     if "covidence" in filename:
         return "covidence"
+    if "scopus" in filename:
+        return "scopus"
+    if "pubmed" in filename:
+        return "pubmed"
+    if "openalex" in filename:
+        return "openalex"
+    if "wos" in filename or "webofscience" in filename or "web_of_science" in filename:
+        return "wos"
 
     for record in records[:10]:
         searchable = " ".join(
             str(value)
-            for tag in ("DB", "DP", "N1", "PB", "SN", "UR")
+            for tag in ("DB", "DP", "N1", "PB", "SN", "UR", "AN", "UT")
             for value in record.get(tag, [])
         ).lower()
         if "covidence" in searchable:
             return "covidence"
+        if "scopus" in searchable:
+            return "scopus"
+        if "pubmed" in searchable or "medline" in searchable:
+            return "pubmed"
+        if "openalex" in searchable:
+            return "openalex"
+        if "web of science" in searchable or "wos" in searchable:
+            return "wos"
+        if any(record.get(tag) for tag in ("TC", "Z9", "UT")):
+            return "wos"
 
-    return "wos"
+    return explicit_source
 
 
 def _parse_ris_file(path: str, source_db: str | None = None) -> pd.DataFrame:
@@ -76,7 +99,7 @@ def _parse_ris_file(path: str, source_db: str | None = None) -> pd.DataFrame:
         records.append(current)
 
     detected_source = _detect_ris_source(path, records, source_db)
-    source_db_value = "covidence" if detected_source == "covidence" else "wos_ris"
+    source_db_value = "covidence" if detected_source == "covidence" else f"{detected_source}_ris"
     rows = []
     for record in records:
         notes = " ".join(record.get("N1", []))
@@ -96,6 +119,7 @@ def _parse_ris_file(path: str, source_db: str | None = None) -> pd.DataFrame:
                 "citations": citation_value,
                 "citation_available": citation_value is not None,
                 "source": detected_source,
+                "ris_source": detected_source,
                 "abstract": _first_ris_value(record, "AB", "N2"),
                 "keywords": "; ".join(record.get("KW", []) or record.get("M1", [])),
                 "institutions": "; ".join(dict.fromkeys(record.get("C3", []))),
@@ -124,14 +148,23 @@ def _first_ris_value(record: dict[str, list[str]], *tags: str) -> str:
     return ""
 
 
-def load_ris_files(ris_files: list[str], source_db: str | None = None) -> pd.DataFrame:
+def _coerce_ris_input(value: str | os.PathLike[str] | RisInput, source_db: str | None = None) -> RisInput:
+    if isinstance(value, RisInput):
+        if source_db is not None:
+            return RisInput(path=value.path, source=normalize_ris_source(source_db))
+        return value
+    return RisInput(path=Path(value), source=normalize_ris_source(source_db))
+
+
+def load_ris_files(ris_files: list[str | os.PathLike[str] | RisInput], source_db: str | None = None) -> pd.DataFrame:
     """Load all available RIS files and combine them into one DataFrame."""
     frames = []
-    for path in ris_files:
+    for ris_input in (_coerce_ris_input(value, source_db=source_db) for value in ris_files):
+        path = os.fspath(ris_input.path)
         if not os.path.exists(path):
             LOGGER.warning("RIS file not found: %s", path)
             continue
-        frames.append(_parse_ris_file(path, source_db=source_db))
+        frames.append(_parse_ris_file(path, source_db=ris_input.source))
     combined = pd.concat(frames, ignore_index=True, sort=False) if frames else pd.DataFrame(columns=SCHEMA_COLUMNS)
     if not combined.empty:
         covidence_count = int(combined.get("source_db", pd.Series(dtype=str)).astype(str).str.lower().eq("covidence").sum())

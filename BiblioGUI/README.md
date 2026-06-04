@@ -50,11 +50,15 @@ The guided builder follows Dan-style Web of Science logic:
 
 Use **Generate Query Preview** to review the numbered query lines, then **Use This Query** to place the generated query into the main query box.
 
-## Selecting RIS Files
+## Selecting Sources And RIS Files
 
-RIS files are read from the configured RIS input folder. Use **Browse RIS Folder** to choose a different folder, then **Refresh RIS**.
+Live API sources are OpenAlex, PubMed, Web of Science, and Scopus. These are the only live database checkboxes exposed by the GUI.
 
-Use **RIS-only mode** when you want to run only from local RIS files and avoid live API sources.
+RIS is a local file input type, not a database. RIS files may come from Web of Science, Scopus, PubMed, OpenAlex, Covidence, or another/unknown source. After adding or refreshing RIS files, choose the source/origin for each file in the RIS list.
+
+Use **Add RIS Files** to select one or more `.ris` files directly. RIS files are also read from the configured RIS input folder; use **Browse** to choose a different folder, then **Refresh RIS**.
+
+Use **RIS-only mode** when you want to run only from selected local RIS files and avoid live API sources. With RIS-only mode off, selected RIS files can be combined with selected live API sources in the same run.
 
 ## Safe Modes
 
@@ -98,6 +102,18 @@ The GUI builds a `PipelineRequest` and passes it to `pipeline_runner.run_pipelin
 
 ```bash
 python main.py "query terms" --databases openalex,pubmed --ris-files path/to/file.ris
+```
+
+When RIS source/origin metadata is known, the GUI also passes matching source labels:
+
+```bash
+python main.py "query terms" --databases openalex,pubmed --ris-files path/to/file.ris --ris-file-sources wos
+```
+
+For RIS-only mode, the GUI sends an explicit empty live database selection and the selected RIS files:
+
+```bash
+python main.py "query terms" --databases "" --ris-files path/to/file.ris --ris-file-sources covidence
 ```
 
 The runner uses the configured DansBib path as the subprocess working directory and uses the DansBib virtual environment Python if available. Otherwise it falls back to the current `sys.executable`.

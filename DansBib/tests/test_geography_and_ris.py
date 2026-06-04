@@ -16,6 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from processing.geography import apply_country_extraction, extract_country
 from processing.ris_parser import load_ris_files
+from pipeline_capabilities import RisInput
 
 
 class GeographyExtractionTests(unittest.TestCase):
@@ -81,8 +82,41 @@ class RisParserTests(unittest.TestCase):
         }
         self.assertTrue(expected_columns.issubset(set(dataframe.columns)))
         self.assertEqual(dataframe.loc[0, "title"], "Example Title")
+        self.assertEqual(dataframe.loc[0, "source"], "unknown")
+        self.assertEqual(dataframe.loc[0, "source_db"], "unknown_ris")
+
+    def test_ris_marked_covidence_is_labeled_covidence(self) -> None:
+        dataframe = self._load_sample_with_source("covidence")
+        self.assertEqual(dataframe.loc[0, "source"], "covidence")
+        self.assertEqual(dataframe.loc[0, "source_db"], "covidence")
+
+    def test_ris_marked_wos_is_labeled_wos(self) -> None:
+        dataframe = self._load_sample_with_source("wos")
         self.assertEqual(dataframe.loc[0, "source"], "wos")
         self.assertEqual(dataframe.loc[0, "source_db"], "wos_ris")
+
+    def test_ris_without_source_is_not_automatically_covidence(self) -> None:
+        dataframe = self._load_sample_with_source(None)
+        self.assertNotEqual(dataframe.loc[0, "source"], "covidence")
+
+    def _load_sample_with_source(self, source: str | None) -> pd.DataFrame:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            ris_path = Path(temp_dir) / "sample.ris"
+            ris_path.write_text(
+                "\n".join(
+                    [
+                        "TY  - JOUR",
+                        "TI  - Example Title",
+                        "AU  - Smith, Jane",
+                        "PY  - 2024",
+                        "ER  -",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            if source is None:
+                return load_ris_files([str(ris_path)])
+            return load_ris_files([RisInput(path=ris_path, source=source)])
 
 
 if __name__ == "__main__":

@@ -34,6 +34,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from DansBib.pipeline_capabilities import RIS_SOURCE_LABELS, SOURCE_DISPLAY_LABELS, RisInput, normalize_ris_source
+
 from .utils.app_config import APP_VERSION, AppConfig, load_config, save_config
 from .utils.diagnostics import collect_diagnostics, friendly_error_message
 from .utils.file_utils import open_path
@@ -56,16 +58,6 @@ from .utils.query_builder import (
     build_wos_numbered_query,
     parse_terms,
 )
-
-
-SOURCE_LABELS = {
-    "openalex": "OpenAlex",
-    "pubmed": "PubMed",
-    "wos": "Web of Science",
-    "scopus": "Scopus",
-    "covidence": "Covidence / local RIS",
-}
-
 
 class TaskThread(QThread):
     log = Signal(str)
@@ -92,6 +84,8 @@ class DansBibQtWindow(QMainWindow):
         self.concept_widgets: dict[str, tuple[QLineEdit, QComboBox]] = {}
         self.source_checks: dict[str, QCheckBox] = {}
         self.ris_checks: dict[Path, QCheckBox] = {}
+        self.ris_source_combos: dict[Path, QComboBox] = {}
+        self.manual_ris_files: list[Path] = []
 
         self.setWindowTitle("DansBib GUI")
         self.resize(1260, 860)
@@ -251,10 +245,10 @@ class DansBibQtWindow(QMainWindow):
         return scroll
 
     def _build_source_box(self) -> QGroupBox:
-        box = QGroupBox("Source selection")
+        box = QGroupBox("Live API sources")
         layout = QVBoxLayout(box)
-        for key in ("openalex", "pubmed", "wos", "scopus", "covidence"):
-            check = QCheckBox(SOURCE_LABELS[key])
+        for key in LIVE_API_SOURCES:
+            check = QCheckBox(SOURCE_DISPLAY_LABELS[key])
             check.setChecked(bool(self.settings.default_sources.get(key, False)))
             check.stateChanged.connect(self._validate_run_state)
             self.source_checks[key] = check
@@ -277,9 +271,14 @@ class DansBibQtWindow(QMainWindow):
         self.ris_list_layout = QVBoxLayout(self.ris_list)
         self.ris_list_layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(self.ris_list)
+        button_row = QHBoxLayout()
+        add_files = QPushButton("Add RIS Files")
+        add_files.clicked.connect(self._add_ris_files)
         refresh = QPushButton("Refresh RIS")
         refresh.clicked.connect(self._refresh_ris_files)
-        layout.addWidget(refresh)
+        button_row.addWidget(add_files)
+        button_row.addWidget(refresh)
+        layout.addLayout(button_row)
         self.ris_warning = QLabel("")
         self.ris_warning.setObjectName("WarningText")
         self.ris_warning.setWordWrap(True)
@@ -299,13 +298,10 @@ class DansBibQtWindow(QMainWindow):
         self.include_ris_check = QCheckBox("Include selected RIS files")
         self.include_ris_check.setChecked(True)
         self.include_ris_check.stateChanged.connect(self._validate_run_state)
-        self.ris_as_covidence_check = QCheckBox("Treat RIS as Covidence")
-        self.ris_as_covidence_check.setChecked(True)
         layout.addWidget(self.dry_run_check)
         layout.addWidget(self.safe_local_check)
         layout.addWidget(self.ris_only_check)
         layout.addWidget(self.include_ris_check)
-        layout.addWidget(self.ris_as_covidence_check)
 
         self.advanced_check = QCheckBox("Show advanced options")
         self.advanced_check.stateChanged.connect(self._toggle_advanced)
@@ -526,11 +522,21 @@ class DansBibQtWindow(QMainWindow):
 
     def _selected_sources(self) -> list[str]:
         if self.ris_only_check.isChecked() or self.safe_local_check.isChecked():
-            return ["covidence"] if self.include_ris_check.isChecked() else []
+            return []
         return [key for key, check in self.source_checks.items() if check.isChecked()]
 
     def _selected_ris_files(self) -> list[Path]:
         return [path for path, check in self.ris_checks.items() if check.isChecked()]
+
+    def _selected_ris_inputs(self) -> list[RisInput]:
+        inputs: list[RisInput] = []
+        for path, check in self.ris_checks.items():
+            if not check.isChecked():
+                continue
+            combo = self.ris_source_combos.get(path)
+            source = normalize_ris_source(combo.currentData() if combo else "unknown")
+            inputs.append(RisInput(path=path, source=source))
+        return inputs
 
     def _validate_run_state(self) -> None:
         query = self.query_text.toPlainText().strip()
@@ -540,7 +546,10 @@ class DansBibQtWindow(QMainWindow):
         if not has_query:
             errors.append("Enter a research question/topic or generate a guided query.")
         errors.extend(result.errors if not query else [])
-        if self.include_ris_check.isChecked() and (self.ris_only_check.isChecked() or self.source_checks.get("covidence", QCheckBox()).isChecked()):
+        ris_only = self.ris_only_check.isChecked() or self.safe_local_check.isChecked()
+        for check in self.source_checks.values():
+            check.setEnabled(not ris_only)
+        if self.include_ris_check.isChecked() and (self.ris_only_check.isChecked() or self._selected_ris_files()):
             if not self._selected_ris_files():
                 self.ris_warning.setText("RIS is selected, but no RIS files are checked.")
             else:
@@ -562,15 +571,27 @@ class DansBibQtWindow(QMainWindow):
             if widget:
                 widget.deleteLater()
         self.ris_checks.clear()
-        files = list_ris_files(self.settings)
+        self.ris_source_combos.clear()
+        files = list(dict.fromkeys([*list_ris_files(self.settings), *self.manual_ris_files]))
         if not files:
             self.ris_list_layout.addWidget(QLabel("No .ris files found in the configured RIS folder."))
         for path in files:
+            row = QWidget()
+            row_layout = QHBoxLayout(row)
+            row_layout.setContentsMargins(0, 0, 0, 0)
             check = QCheckBox(path.name)
             check.setToolTip(str(path))
             check.stateChanged.connect(self._validate_run_state)
+            combo = QComboBox()
+            for source in RIS_SOURCE_LABELS:
+                combo.addItem(SOURCE_DISPLAY_LABELS[source], source)
+            combo.setCurrentIndex(combo.findData("unknown"))
+            combo.currentIndexChanged.connect(self._validate_run_state)
             self.ris_checks[path] = check
-            self.ris_list_layout.addWidget(check)
+            self.ris_source_combos[path] = combo
+            row_layout.addWidget(check, 1)
+            row_layout.addWidget(combo)
+            self.ris_list_layout.addWidget(row)
         self.ris_list_layout.addStretch(1)
         self.ris_folder_label.setText(str(self.settings.resolved_ris_input_folder()))
         self._validate_run_state()
@@ -586,8 +607,9 @@ class DansBibQtWindow(QMainWindow):
             filters={"review": None, "early_access": None, "open_access": None},
             ris_files=self._selected_ris_files(),
             include_ris=self.include_ris_check.isChecked(),
-            ris_as_covidence=self.ris_as_covidence_check.isChecked(),
             scaling_mode=self.scaling_combo.currentText(),
+            ris_inputs=self._selected_ris_inputs(),
+            ris_only_mode=self.ris_only_check.isChecked(),
             slug=self.slug_edit.text().strip(),
             start_year=self._year_value(self.start_year),
             end_year=self._year_value(self.end_year),
@@ -712,6 +734,16 @@ class DansBibQtWindow(QMainWindow):
             save_config(self.settings)
             self.ris_path.setText(path)
             self._refresh_ris_files()
+
+    def _add_ris_files(self) -> None:
+        paths, _ = QFileDialog.getOpenFileNames(self, "Select RIS files", str(self.settings.resolved_ris_input_folder()), "RIS files (*.ris)")
+        if not paths:
+            return
+        for raw_path in paths:
+            path = Path(raw_path)
+            if path not in self.manual_ris_files:
+                self.manual_ris_files.append(path)
+        self._refresh_ris_files()
 
     def _browse_ris_folder_from_setup(self) -> None:
         path = self._browse_folder("Select RIS input folder", self.settings.resolved_ris_input_folder())

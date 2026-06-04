@@ -14,6 +14,7 @@ import time
 from collections.abc import Callable
 from contextlib import contextmanager
 from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 import requests
@@ -24,6 +25,13 @@ from apis.openalex_api import search_openalex
 from apis.pubmed_api import search_pubmed
 from apis.scopus_api import search_scopus, check_pybliometrics_setup_once
 from apis.wos_api import search_wos
+from pipeline_capabilities import (
+    CONCEPT_PROFILES,
+    LIVE_API_DATABASES,
+    RIS_SOURCE_LABELS,
+    RisInput,
+    normalize_ris_source,
+)
 from processing.analysis import (
     prepare_analysis_dataset,
     run_citation_analysis,
@@ -528,6 +536,19 @@ def get_default_ris_files() -> list[str]:
     return sorted(set(glob.glob(os.path.join(DEFAULT_RIS_RAW_DIR, "*.ris"))))
 
 
+def build_ris_inputs(ris_files: list[str] | None, ris_file_sources: list[str] | None = None) -> list[RisInput]:
+    """Pair RIS paths with optional per-file source/origin labels."""
+    if not ris_files:
+        return []
+    sources = ris_file_sources or []
+    if sources and len(sources) != len(ris_files):
+        raise ValueError("--ris-file-sources count must match --ris-files count")
+    return [
+        RisInput(path=Path(path), source=normalize_ris_source(sources[index] if index < len(sources) else "unknown"))
+        for index, path in enumerate(ris_files)
+    ]
+
+
 def write_pipeline_logs(raw: pd.DataFrame, normalized: pd.DataFrame, deduped: pd.DataFrame, outputs_dir: str, prefix: str = "") -> None:
     """Write reproducibility diagnostics for validation, deduplication, and missing metadata."""
     wos_raw = raw[raw.get("source", pd.Series(dtype=str)).astype(str).str.lower().eq("wos")].copy() if not raw.empty else pd.DataFrame()
@@ -591,20 +612,20 @@ def write_pipeline_logs(raw: pd.DataFrame, normalized: pd.DataFrame, deduped: pd
 
 
 def prompt_for_databases() -> tuple[list[str] | None, bool]:
-    """Prompt interactively for database selection and optional RIS skipping."""
-    options = {"1": "openalex", "2": "pubmed", "3": "scopus", "4": "wos", "5": "covidence"}
+    """Prompt interactively for live API database selection and optional RIS skipping."""
+    options = {"1": "openalex", "2": "pubmed", "3": "scopus", "4": "wos"}
 
     print("\nSelect databases:")
-    print("1. OpenAlex\n2. PubMed\n3. Scopus\n4. Web of Science\n5. Covidence RIS\n6. No RIS files")
+    print("1. OpenAlex\n2. PubMed\n3. Scopus\n4. Web of Science\n5. No RIS files")
     try:
-        raw = input("Enter selection (e.g. 123, 36 for Scopus no RIS, 5 for Covidence RIS, blank for defaults): ").strip()
+        raw = input("Enter selection (e.g. 123, 35 for Scopus no RIS, blank for defaults): ").strip()
     except (EOFError, KeyboardInterrupt):
         return None, False
 
     if not raw:
         return None, False
 
-    no_ris = "6" in raw
+    no_ris = "5" in raw
     selected = list(dict.fromkeys(options[c] for c in raw if c in options))
     return (selected if selected else None), no_ris
 
@@ -697,62 +718,6 @@ SYNONYMS = {
     "ckd": "chronic kidney disease",
 }
 
-CONCEPT_PROFILES = {
-    "telehealth_cancer_treatment": {
-        "telehealth": [
-            "telemedicine",
-            "telehealth",
-            "telecommunication",
-            "telecommunications",
-            "e-health",
-            "ehealth",
-            "virtual health",
-            "virtual care",
-            "virtual consultation",
-            "virtual medicine",
-            "mobile health",
-            "mhealth",
-            "remote consultation",
-            "remote care",
-            "digital health",
-            "video visit",
-            "video visits",
-            "remote monitoring",
-        ],
-        "cancer": [
-            "cancer",
-            "cancers",
-            "oncology",
-            "oncologic",
-            "oncological",
-            "neoplasm",
-            "neoplasms",
-            "tumor",
-            "tumour",
-            "tumors",
-            "tumours",
-            "carcinoma",
-            "malignancy",
-            "malignant",
-            "chemotherapy",
-            "radiation therapy",
-            "radiotherapy",
-            "cancer screening",
-            "cancer diagnosis",
-            "cancer treatment",
-        ],
-        "geography": [
-            "texas",
-            "west texas",
-            "rural",
-            "rural populations",
-            "southwest united states",
-            "southwestern united states",
-            "north america",
-        ],
-    }
-}
-
 QA_SEARCH_COLUMNS = (
     "title",
     "abstract",
@@ -818,7 +783,7 @@ def clean_query(raw: str) -> str:
 def _query_label(query: QueryInput) -> str:
     """Return a stable display/output label for a string query or per-source query map."""
     if isinstance(query, dict):
-        for source_name in ("openalex", "pubmed", "scopus", "wos", "covidence"):
+        for source_name in LIVE_API_DATABASES:
             source_query = str(query.get(source_name, "")).strip()
             if source_query:
                 return source_query
@@ -1227,9 +1192,7 @@ def write_query_readme(
 
     for db_key in selected_databases:
         normalized_db = db_key.lower()
-        if normalized_db == "covidence":
-            lines.append("- Covidence: RIS file ingestion only; no API query was sent.")
-        elif normalized_db in {"openalex", "pubmed", "scopus", "wos"}:
+        if normalized_db in LIVE_API_DATABASES:
             query_text = _database_query_text(normalized_db, query, filters)
             lines.append(f"- {_display_db_name(normalized_db)}: `{query_text}`")
         else:
@@ -1264,6 +1227,7 @@ def run_pipeline(
     query: QueryInput,
     databases: list[str] | None = None,
     ris_files: list[str] | None = None,
+    ris_file_sources: list[str] | None = None,
     filters: dict[str, bool | None] | None = None,
     original_query: str | None = None,
     start_year: int | None = None,
@@ -1280,11 +1244,12 @@ def run_pipeline(
     """
     Query selected databases, normalize, deduplicate, compute metrics, and save results.
 
-    databases: list of strings among {"openalex", "pubmed", "scopus", "wos", "covidence"}.
+    databases: list of live API sources among {"openalex", "pubmed", "scopus", "wos"}.
                If None, DEFAULT_DATABASES from utils.config is used.
     """
     if databases is None:
         databases = DEFAULT_DATABASES
+    ris_inputs = build_ris_inputs(ris_files, ris_file_sources)
 
     active_filters = merge_filters(filters)
     if isinstance(query, str):
@@ -1314,7 +1279,7 @@ def run_pipeline(
     LOGGER.info("Project slug: %s", project_slug)
     LOGGER.info("Query filters: %s", active_filters)
     LOGGER.info("Databases: %s", databases)
-    LOGGER.info("RIS files loaded: %s", ris_files or [])
+    LOGGER.info("RIS files loaded: %s", [str(item.path) for item in ris_inputs])
     LOGGER.info("Scaling mode: %s", get_scaling_mode())
 
     rebuilt_caches: dict[str, int] = {}
@@ -1340,13 +1305,9 @@ def run_pipeline(
 
     collected_frames: list[pd.DataFrame] = []
     attempted_databases: list[str] = []
-    covidence_requested = any(db.lower() == "covidence" for db in databases)
 
     for db in databases:
         db_key = db.lower()
-        if db_key == "covidence":
-            LOGGER.info("Covidence selected as RIS ingestion source; no API query will be attempted.")
-            continue
         if db_key not in db_map:
             recognized = ", ".join(RECOGNIZED_DATABASES)
             LOGGER.warning("Unknown database '%s' - skipping. Recognized sources: %s", db, recognized)
@@ -1381,13 +1342,11 @@ def run_pipeline(
         _log_year_distribution(df, db_key)
         collected_frames.append(df)
 
-    if ris_files:
-        ris_df = load_ris_files(ris_files, source_db="covidence" if covidence_requested else None)
+    if ris_inputs:
+        ris_df = load_ris_files(ris_inputs)
         if not ris_df.empty:
-            attempted_databases.append("covidence" if covidence_requested else "ris")
+            attempted_databases.extend(str(source) for source in ris_df.get("source", pd.Series(dtype=str)).dropna().unique())
             collected_frames.append(ris_df)
-    elif covidence_requested:
-        LOGGER.warning("Covidence selected but no RIS files were provided or discovered.")
 
     if collected_frames:
         master = pd.concat(collected_frames, ignore_index=True, sort=False)
@@ -1541,7 +1500,7 @@ def run_pipeline(
 
     _print_run_summary(
         slug=project_slug,
-        source_files=[os.path.abspath(path) for path in ris_files or []],
+        source_files=[os.path.abspath(str(item.path)) for item in ris_inputs],
         all_ris_records=len(all_ris_records_df),
         records_missing_year=records_missing_year,
         records_before_start_year=records_before_start_year,
@@ -1573,7 +1532,7 @@ def run_pipeline(
         selected_databases=databases,
         attempted_databases=list(dict.fromkeys(attempted_databases)),
         filters=active_filters,
-        requested_ris_files=ris_files,
+        requested_ris_files=[str(item.path) for item in ris_inputs],
         raw=master,
         deduped=deduped,
         output_path=output_path,
@@ -1609,12 +1568,20 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument("query", nargs="?", help="Query string to send to the configured scholarly APIs.", default=None)
     parser.add_argument(
         "--databases",
-        help="Comma-separated list of sources (openalex,pubmed,scopus,wos,covidence). Covidence is RIS-only. If omitted, defaults used.",
+        help="Comma-separated list of live API sources (openalex,pubmed,scopus,wos). If omitted, defaults are used.",
         default=None,
     )
     parser.add_argument(
         "--ris-files",
         help="Comma-separated list of RIS files to include. If omitted, data/raw RIS files are auto-loaded unless --no-ris is set.",
+        default=None,
+    )
+    parser.add_argument(
+        "--ris-file-sources",
+        help=(
+            "Comma-separated source/origin labels matching --ris-files. "
+            f"Allowed values: {','.join(RIS_SOURCE_LABELS)}. Defaults to unknown/auto-detect per file."
+        ),
         default=None,
     )
     parser.add_argument(
@@ -1698,7 +1665,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # Handle database selection
-    if args.databases:
+    if args.databases is not None:
         databases = [d.strip().lower() for d in args.databases.split(",") if d.strip()]
         no_ris_from_prompt = False
     else:
@@ -1717,6 +1684,10 @@ def main() -> None:
                 LOGGER.error("  %s", path)
             LOGGER.error("Pass the intended file with --ris-files to prevent mixed-project contamination.")
             return
+    ris_file_sources = [source.strip() for source in args.ris_file_sources.split(",") if source.strip()] if args.ris_file_sources else None
+    if ris_file_sources and len(ris_file_sources) != len(ris_files):
+        LOGGER.error("--ris-file-sources count must match --ris-files count.")
+        return
     LOGGER.info("RIS files loaded: %s", ris_files)
 
     # Handle query input: allow CLI, or interactive prompt if omitted/empty; ensure cleaned and non-empty.
@@ -1737,10 +1708,11 @@ def main() -> None:
     LOGGER.info("Running cleaned query: %s", cleaned)
 
     dataframe, metrics = run_pipeline(
-        cleaned,
-        databases,
-        ris_files,
-        filters,
+        query=cleaned,
+        databases=databases,
+        ris_files=ris_files,
+        ris_file_sources=ris_file_sources,
+        filters=filters,
         original_query=raw_query,
         start_year=args.start_year,
         end_year=args.end_year,

@@ -423,8 +423,8 @@ def load_global_place_cache(
                 entry = {
                     "canonical_name": canonical,
                     "resolved": True,
-                    "source": "natural_earth_populated_places",
-                    "source_reference": "natural_earth_populated_places",
+                    "source": str(row.get("source") or "local_city_gazetteer").strip(),
+                    "source_reference": str(row.get("source") or "local_city_gazetteer").strip(),
                     "geo_type": "place",
                     "map_level": "point",
                     "place_kind": "populated_place",
@@ -448,8 +448,8 @@ def load_global_place_cache(
             cache[term] = {
                 "canonical_name": term.title(),
                 "resolved": True,
-                "source": "natural_earth_populated_places",
-                "source_reference": "natural_earth_populated_places",
+                "source": "local_city_gazetteer",
+                "source_reference": "local_city_gazetteer",
                 "geo_type": "place",
                 "map_level": "point",
                 "place_kind": "populated_place",
@@ -1504,14 +1504,14 @@ def write_cleanup_qa(slug: str, suppressions: list[pd.DataFrame], args: argparse
     raw_geo = count_detected_terms(OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv")
     cleaned_geo = count_detected_terms(OUTPUTS_DIR / f"{slug}_geographic_term_counts_cleaned.csv")
     suppressed_geo = len(qa_df[qa_df["domain"] == "geographic"]) if not qa_df.empty else 0
-    ne_loaded = len(load_global_place_cache())
-    ne_detected = count_terms_by_source(OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv", "natural_earth_populated_places")
-    ne_suppressed = 0
+    city_loaded = len(load_global_place_cache())
+    city_detected = count_terms_by_source(OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv", "geonames_cities5000")
+    city_suppressed = 0
     if not qa_df.empty and {"domain", "term"}.issubset(qa_df.columns):
         raw_terms = pd.read_csv(OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv", dtype=str, keep_default_na=False) if (OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv").exists() else pd.DataFrame()
         if not raw_terms.empty and {"canonical_name", "source"} <= set(raw_terms.columns):
-            ne_terms = set(raw_terms[raw_terms["source"] == "natural_earth_populated_places"]["canonical_name"].astype(str))
-            ne_suppressed = len(qa_df[(qa_df["domain"] == "geographic") & (qa_df["term"].astype(str).isin(ne_terms))])
+            city_terms = set(raw_terms[raw_terms["source"].isin({"geonames_cities5000", "local_city_gazetteer"})]["canonical_name"].astype(str))
+            city_suppressed = len(qa_df[(qa_df["domain"] == "geographic") & (qa_df["term"].astype(str).isin(city_terms))])
     reason_counts = Counter(qa_df["reason"]) if not qa_df.empty and "reason" in qa_df.columns else Counter()
     summary_lines = [
         "GeoCensus cleanup QA summary",
@@ -1521,16 +1521,16 @@ def write_cleanup_qa(slug: str, suppressions: list[pd.DataFrame], args: argparse
         f"- supplemental_aliases: {'yes' if bool(aliases.get('geography')) else 'no'}",
         "",
         "GeoNames used:",
-        "- no, removed from project",
+        f"- {'yes' if city_loaded else 'no, add files under data/reference/maps/gazetteers/cities/geonames'}",
         "",
         f"Geo scope: {args.geo_scope}",
         f"CDPs included: {'yes' if args.include_cdps else 'no'}",
         f"Raw geographic terms: {raw_geo}",
         f"Cleaned geographic terms: {cleaned_geo}",
         f"Suppressed geographic terms: {suppressed_geo}",
-        f"Natural Earth populated place terms loaded: {ne_loaded}",
-        f"Natural Earth populated place terms detected: {ne_detected}",
-        f"Natural Earth populated place terms suppressed: {ne_suppressed}",
+        f"City gazetteer terms loaded: {city_loaded}",
+        f"City gazetteer terms detected: {city_detected}",
+        f"City gazetteer terms suppressed: {city_suppressed}",
         "",
         "Suppression reasons:",
         *[f"- {reason}: {count}" for reason, count in reason_counts.most_common()],
@@ -1575,9 +1575,9 @@ def filter_geographic_cache(
         if normalize_text(key) in VAGUE_GEOGRAPHY_TERMS:
             continue
         source = str(entry.get("source") or "")
-        if source not in {"us_census", "census_gazetteer", "supplemental_alias", "natural_earth_populated_places"}:
+        if source not in {"us_census", "census_gazetteer", "supplemental_alias", "local_city_gazetteer", "geonames_cities5000"}:
             continue
-        if source == "natural_earth_populated_places":
+        if source in {"local_city_gazetteer", "geonames_cities5000"}:
             country = normalize_text(entry.get("country") or "")
             state = normalize_text(entry.get("state") or entry.get("admin1_name") or "")
             if geo_scope == "texas" and not (country in {"united states", "usa", "us"} and state in {"texas", "tx"}):

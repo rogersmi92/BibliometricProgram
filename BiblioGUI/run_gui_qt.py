@@ -3,10 +3,14 @@ from __future__ import annotations
 import os
 import sys
 import traceback
+from pathlib import Path
 
 
 def main() -> int:
     os.environ.setdefault("QT_MAC_WANTS_LAYER", "1")
+    repo_root = Path(__file__).resolve().parents[1]
+    if str(repo_root) not in sys.path:
+        sys.path.insert(0, str(repo_root))
     print("Starting DansBib Qt GUI...", flush=True)
     try:
         try:

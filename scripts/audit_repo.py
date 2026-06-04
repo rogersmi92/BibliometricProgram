@@ -13,7 +13,25 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from DansBib.utils.map_providers import (
+    ALLOWED_MAP_DATA_EXTENSIONS,
+    DENIED_MAP_DATA_EXTENSIONS,
+    EXPECTED_INSTITUTION_HEADERS,
+    IMPORTANT_COUNTRY_ISO3,
+    MAPS_ROOT as DANSBIB_MAPS_ROOT,
+    geoboundaries_dir,
+    geoboundaries_geojson_path,
+    expected_readme_paths,
+    report_missing_map_packages,
+    world_adm0_geojson_path,
+    world_adm0_index_path,
+)
+
 LARGE_FILE_LIMIT = 50 * 1024 * 1024
+LARGE_GEOSPATIAL_LIMIT = 25 * 1024 * 1024
 GENERATED_DIRS = [
     Path("DansBib/data/outputs"),
     Path("DansBib/data/processed"),
@@ -21,6 +39,41 @@ GENERATED_DIRS = [
     Path("DansBib/data/cache"),
     Path("DansBib/data/VOS"),
 ]
+OLD_MAPS_DIR = Path("DansBib/data/reference/Maps")
+MAPS_DIR = Path("DansBib/data/reference/maps")
+NON_POLITICAL_MAP_MARKERS = (
+    "coastline",
+    "land",
+    "ocean",
+    "lakes",
+    "rivers",
+    "reefs",
+    "glaciated_areas",
+    "antarctic_ice_shelves",
+    "geography_regions",
+    "geographic_lines",
+    "marine_polys",
+    "minor_islands",
+    "playas",
+    "raster",
+    "physical",
+    "urban_areas",
+    "naturalearth",
+    "natural_earth",
+    "ne_10m",
+    "ne_50m",
+    "ne_110m",
+)
+EXPECTED_MAP_SUBTREES = (
+    Path("DansBib/data/reference/maps/README.md"),
+    Path("DansBib/data/reference/maps/MAP_PACKAGES_NEEDED.md"),
+    Path("DansBib/data/reference/maps/boundaries"),
+    Path("DansBib/data/reference/maps/gazetteers"),
+    Path("DansBib/data/reference/maps/institutions"),
+)
+ALLOWED_MAP_JSON_FILES = {
+    Path("DansBib/data/reference/maps/boundaries/geoboundaries/ALL/ADM0/WORLD_ADM0_INDEX.json"),
+}
 SKIP_DIRS = {
     ".git",
     ".mypy_cache",
@@ -154,6 +207,117 @@ def audit_tracked_generated_outputs(tracked_files: list[Path]) -> dict[Path, lis
     return findings
 
 
+def audit_old_maps_paths(tracked_files: list[Path]) -> list[Path]:
+    findings = [path for path in tracked_files if is_under(path, OLD_MAPS_DIR)]
+    reference_dir = ROOT / "DansBib/data/reference"
+    has_exact_old_dir = reference_dir.exists() and any(child.name == "Maps" for child in reference_dir.iterdir())
+    if has_exact_old_dir:
+        old_path = ROOT / OLD_MAPS_DIR
+        findings.extend(path.relative_to(ROOT) for path in old_path.rglob("*") if path.is_file())
+    return sorted(set(findings))
+
+
+def audit_tracked_map_files(tracked_files: list[Path]) -> list[tuple[Path, str]]:
+    findings: list[tuple[Path, str]] = []
+    for path in tracked_files:
+        if not is_under(path, MAPS_DIR):
+            continue
+        path_text = str(path).lower()
+        suffix = path.suffix.lower()
+        if path.name == "README.md" or path.name == "MAP_PACKAGES_NEEDED.md":
+            continue
+        if path in ALLOWED_MAP_JSON_FILES:
+            continue
+        if any(marker in path_text for marker in NON_POLITICAL_MAP_MARKERS):
+            findings.append((path, "non-political/physical map marker"))
+            continue
+        if suffix in DENIED_MAP_DATA_EXTENSIONS:
+            findings.append((path, "denied map data extension"))
+            continue
+        if suffix not in ALLOWED_MAP_DATA_EXTENSIONS and suffix not in {".csv", ".txt", ".md"}:
+            findings.append((path, "unexpected map file extension"))
+            continue
+    return sorted(findings)
+
+
+def audit_priority_geoboundaries_layout() -> list[tuple[Path, str]]:
+    findings: list[tuple[Path, str]] = []
+    required_dirs = [world_adm0_index_path().parent, world_adm0_geojson_path().parent]
+    for iso3 in IMPORTANT_COUNTRY_ISO3:
+        required_dirs.append(geoboundaries_dir(iso3, "ADM1"))
+        required_dirs.append(geoboundaries_dir(iso3, "ADM2"))
+    for path in required_dirs:
+        if not path.exists():
+            findings.append((path.relative_to(ROOT), "missing expected folder"))
+    for iso3 in IMPORTANT_COUNTRY_ISO3:
+        expected_adm1 = geoboundaries_geojson_path(iso3, "ADM1")
+        expected_adm2 = geoboundaries_geojson_path(iso3, "ADM2")
+        if expected_adm1.exists() and expected_adm1.name != f"{iso3}_ADM1.geojson":
+            findings.append((expected_adm1.relative_to(ROOT), "unexpected ADM1 filename"))
+        if expected_adm2.exists() and expected_adm2.name != f"{iso3}_ADM2.geojson":
+            findings.append((expected_adm2.relative_to(ROOT), "unexpected ADM2 filename"))
+    return sorted(findings)
+
+
+def audit_map_files_in_unexpected_folders(tracked_files: list[Path]) -> list[Path]:
+    findings: list[Path] = []
+    for path in tracked_files:
+        if not is_under(path, MAPS_DIR):
+            continue
+        if path.suffix.lower() not in ALLOWED_MAP_DATA_EXTENSIONS and path.suffix.lower() not in {".csv", ".txt"}:
+            continue
+        if any(is_under(path, subtree) for subtree in EXPECTED_MAP_SUBTREES):
+            continue
+        findings.append(path)
+    return sorted(findings)
+
+
+def audit_missing_map_readmes() -> list[Path]:
+    return sorted(path.relative_to(ROOT) for path in expected_readme_paths() if not path.exists())
+
+
+def audit_institution_csv_headers() -> list[tuple[Path, str]]:
+    findings: list[tuple[Path, str]] = []
+    institution_root = ROOT / "DansBib/data/reference/maps/institutions"
+    for filename, expected in EXPECTED_INSTITUTION_HEADERS.items():
+        path = institution_root / filename
+        if not path.exists():
+            findings.append((path.relative_to(ROOT), "missing file"))
+            continue
+        try:
+            header = path.read_text(encoding="utf-8", errors="replace").splitlines()[0].split(",")
+        except IndexError:
+            findings.append((path.relative_to(ROOT), "missing header"))
+            continue
+        if header != expected:
+            findings.append((path.relative_to(ROOT), "header mismatch"))
+    return findings
+
+
+def audit_natural_earth_required_code() -> list[Path]:
+    findings: list[Path] = []
+    patterns = ("data/reference/Maps", 'REFERENCE_DIR / "Maps"', "ne_10m", "ne_50m", "ne_110m")
+    for path in iter_project_files(".py"):
+        if path in {Path("scripts/audit_repo.py"), Path("DansBib/tests/test_map_providers.py")}:
+            continue
+        text = (ROOT / path).read_text(encoding="utf-8", errors="replace")
+        if any(pattern in text for pattern in patterns):
+            findings.append(path)
+    return sorted(findings)
+
+
+def audit_large_tracked_geospatial_files(tracked_files: list[Path]) -> list[tuple[Path, int]]:
+    findings: list[tuple[Path, int]] = []
+    geospatial_exts = ALLOWED_MAP_DATA_EXTENSIONS | DENIED_MAP_DATA_EXTENSIONS
+    for path in tracked_files:
+        if path.suffix.lower() not in geospatial_exts:
+            continue
+        absolute = ROOT / path
+        if absolute.is_file() and absolute.stat().st_size > LARGE_GEOSPATIAL_LIMIT:
+            findings.append((path, absolute.stat().st_size))
+    return sorted(findings, key=lambda item: item[1], reverse=True)
+
+
 def requirement_name(line: str) -> str | None:
     text = line.strip()
     if not text or text.startswith("#") or text.startswith("-"):
@@ -280,6 +444,85 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"  - {path}")
             if len(paths) > 20:
                 print(f"  - ... {len(paths) - 20} more")
+    else:
+        print_empty()
+
+    print_section("Old Map Paths")
+    old_maps = audit_old_maps_paths(tracked_files)
+    finding_count += len(old_maps)
+    if old_maps:
+        for path in old_maps:
+            print(f"WARN: {path}")
+    else:
+        print_empty()
+
+    print_section("Tracked Map Files")
+    tracked_map_findings = audit_tracked_map_files(tracked_files)
+    finding_count += len(tracked_map_findings)
+    if tracked_map_findings:
+        for path, reason in tracked_map_findings:
+            print(f"WARN: {path} ({reason})")
+    else:
+        print_empty()
+
+    print_section("Map Files In Unexpected Folders")
+    unexpected_map_files = audit_map_files_in_unexpected_folders(tracked_files)
+    finding_count += len(unexpected_map_files)
+    if unexpected_map_files:
+        for path in unexpected_map_files:
+            print(f"WARN: {path}")
+    else:
+        print_empty()
+
+    print_section("Map README Placeholders")
+    missing_readmes = audit_missing_map_readmes()
+    finding_count += len(missing_readmes)
+    if missing_readmes:
+        for path in missing_readmes:
+            print(f"WARN: missing {path}")
+    else:
+        print_empty()
+
+    print_section("Priority geoBoundaries Layout")
+    layout_findings = audit_priority_geoboundaries_layout()
+    finding_count += len(layout_findings)
+    if layout_findings:
+        for path, reason in layout_findings:
+            print(f"WARN: {path} ({reason})")
+    else:
+        print_empty()
+
+    print_section("Map Provider Package Status")
+    for status in report_missing_map_packages():
+        prefix = "OK" if status.present else "INFO"
+        print(f"{prefix}: {status.label}: {status.message}")
+    print(f"INFO: WORLD_ADM0_INDEX.json is index metadata: {world_adm0_index_path().relative_to(ROOT)}")
+    print(f"INFO: WORLD_ADM0.geojson is drawable world geometry: {world_adm0_geojson_path().relative_to(ROOT)}")
+
+    print_section("Institution CSV Headers")
+    institution_header_findings = audit_institution_csv_headers()
+    finding_count += len(institution_header_findings)
+    if institution_header_findings:
+        for path, reason in institution_header_findings:
+            print(f"WARN: {path} ({reason})")
+    else:
+        print_empty()
+
+    print_section("Natural Earth Required Code References")
+    natural_earth_refs = audit_natural_earth_required_code()
+    finding_count += len(natural_earth_refs)
+    if natural_earth_refs:
+        for path in natural_earth_refs:
+            print(f"WARN: {path}")
+    else:
+        print_empty()
+
+    print_section("Large Tracked Geospatial Files")
+    large_geospatial = audit_large_tracked_geospatial_files(tracked_files)
+    finding_count += len(large_geospatial)
+    if large_geospatial:
+        for path, size in large_geospatial:
+            print(f"WARN: {path} ({format_size(size)})")
     else:
         print_empty()
 

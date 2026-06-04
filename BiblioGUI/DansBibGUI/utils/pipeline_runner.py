@@ -11,15 +11,23 @@ from datetime import datetime
 from pathlib import Path
 from typing import Callable, Iterable, Optional
 
+from DansBib.pipeline_capabilities import (
+    CONCEPT_PROFILES as PIPELINE_CONCEPT_PROFILES,
+    LIVE_API_DATABASES,
+    RIS_SOURCE_LABELS,
+    SCALING_MODES,
+    RisInput,
+    normalize_ris_source,
+)
+
 from .app_config import AppConfig
 from .file_utils import ensure_folder
 
 LogCallback = Optional[Callable[[str], None]]
-SCALING_MODES = ("small", "medium", "large", "extreme")
-RECOGNIZED_SOURCES = ("openalex", "pubmed", "scopus", "wos", "covidence")
-CONCEPT_PROFILES = ("telehealth_cancer_treatment",)
+RECOGNIZED_SOURCES = LIVE_API_DATABASES
+CONCEPT_PROFILES = tuple(sorted(PIPELINE_CONCEPT_PROFILES))
 DERIVED_MARKERS = ("h_index", "year_count", "edge", "rank")
-LIVE_API_SOURCES = ("openalex", "pubmed", "scopus", "wos")
+LIVE_API_SOURCES = LIVE_API_DATABASES
 
 
 @dataclass(frozen=True)
@@ -29,8 +37,10 @@ class PipelineRequest:
     filters: dict[str, bool | None]
     ris_files: list[Path]
     include_ris: bool
-    ris_as_covidence: bool
     scaling_mode: str
+    ris_inputs: list[RisInput] | None = None
+    ris_only_mode: bool = False
+    ris_as_covidence: bool = False
     slug: str = ""
     start_year: int | None = None
     end_year: int | None = None
@@ -91,23 +101,29 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
     _preflight(settings, runtime, log_path, log_callback)
 
     sources = _normalize_sources(request.sources, log_callback)
-    if request.include_ris and (request.ris_as_covidence or not sources) and "covidence" not in sources:
-        sources.append("covidence")
-    if request.safe_local_test:
-        sources = ["covidence"] if request.include_ris else []
+    if request.ris_only_mode or request.safe_local_test:
+        sources = []
 
     command = [_python_executable(settings), "main.py", _query_with_flags(request.query, request.filters)]
     if sources:
         command.extend(["--databases", ",".join(sources)])
+    elif request.ris_only_mode or request.safe_local_test:
+        command.extend(["--databases", ""])
     if request.include_ris:
-        selected_ris = []
-        for path in request.ris_files:
+        selected_ris: list[RisInput] = []
+        requested_ris_inputs = request.ris_inputs or [
+            RisInput(path=path, source="covidence" if request.ris_as_covidence else "unknown")
+            for path in request.ris_files
+        ]
+        for ris_input in requested_ris_inputs:
+            path = Path(ris_input.path)
             if path.exists():
-                selected_ris.append(str(path))
+                selected_ris.append(RisInput(path=path, source=normalize_ris_source(ris_input.source)))
             else:
                 _log(log_callback, log_path, f"Skipping missing RIS file: {path}")
         if selected_ris:
-            command.extend(["--ris-files", ",".join(selected_ris)])
+            command.extend(["--ris-files", ",".join(str(item.path) for item in selected_ris)])
+            command.extend(["--ris-file-sources", ",".join(item.source for item in selected_ris)])
     else:
         command.append("--no-ris")
     if request.slug.strip():
@@ -140,6 +156,8 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
     _log(log_callback, log_path, f"DansBib root: {runtime.root}")
     _log(log_callback, log_path, f"Python executable: {command[0]}")
     _log(log_callback, log_path, f"Selected sources: {', '.join(sources) if sources else 'RIS/offline inputs only'}")
+    if request.include_ris:
+        _log(log_callback, log_path, f"RIS sources: {_format_ris_inputs(request.ris_inputs or [])}")
     _log(log_callback, log_path, f"Run log: {log_path}")
     default_outputs = runtime.root / "data" / "outputs"
     if runtime.outputs_dir != default_outputs:
@@ -273,6 +291,12 @@ def _normalize_sources(sources: list[str], log_callback: LogCallback = None) -> 
             continue
         normalized.append(source_key)
     return list(dict.fromkeys(normalized))
+
+
+def _format_ris_inputs(ris_inputs: list[RisInput]) -> str:
+    if not ris_inputs:
+        return "none"
+    return ", ".join(f"{Path(item.path).name}:{normalize_ris_source(item.source)}" for item in ris_inputs)
 
 
 def _python_executable(settings: AppConfig) -> str:

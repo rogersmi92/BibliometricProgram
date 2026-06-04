@@ -1,130 +1,125 @@
-from pathlib import Path
+#!/usr/bin/env python3
+"""Build global place-name reference files from local GeoNames city data."""
+
+from __future__ import annotations
+
 import csv
 import sys
+from pathlib import Path
 
-ROOT = Path("/Users/roger.smith/Desktop/BibliometricProgram/DansBib")
+from utils.map_providers import expected_geonames_files, geonames_dir
 
-PLACE_SHP = ROOT / "data/reference/Maps/50m_cultural/ne_50m_populated_places.shp"
+ROOT = Path(__file__).resolve().parent
 OUT_TXT = ROOT / "data/reference/geography/global_place_names.txt"
 OUT_CSV = ROOT / "data/reference/geography/global_place_names.csv"
 
-def clean(value):
+
+def clean(value: object) -> str:
     return str(value or "").strip()
 
-def try_geopandas():
-    import geopandas as gpd
-    gdf = gpd.read_file(PLACE_SHP)
-    rows = []
 
-    for _, row in gdf.iterrows():
-        name = clean(row.get("NAME") or row.get("name"))
-        nameascii = clean(row.get("NAMEASCII") or row.get("nameascii"))
-        country = clean(row.get("ADM0NAME") or row.get("adm0name"))
-        admin1 = clean(row.get("ADM1NAME") or row.get("adm1name"))
-        lat = clean(row.get("LATITUDE") or row.get("latitude"))
-        lon = clean(row.get("LONGITUDE") or row.get("longitude"))
+def load_country_names(country_info_path: Path) -> dict[str, str]:
+    names: dict[str, str] = {}
+    if not country_info_path.exists():
+        return names
+    with country_info_path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
+        reader = csv.reader((line for line in handle if not line.startswith("#")), delimiter="\t")
+        for row in reader:
+            if len(row) >= 5:
+                names[row[0]] = row[4]
+    return names
 
-        for term in {name, nameascii}:
-            if term:
-                rows.append({
-                    "term": term,
-                    "canonical_name": name or term,
-                    "geo_type": "place",
-                    "map_level": "point",
-                    "country": country,
-                    "admin1_name": admin1,
-                    "latitude": lat,
-                    "longitude": lon,
-                    "source": "natural_earth_populated_places",
-                })
 
+def load_admin1_names(admin1_path: Path) -> dict[str, str]:
+    names: dict[str, str] = {}
+    if not admin1_path.exists():
+        return names
+    with admin1_path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
+        reader = csv.reader(handle, delimiter="\t")
+        for row in reader:
+            if len(row) >= 2:
+                names[row[0]] = row[1]
+    return names
+
+
+def read_geonames_rows() -> list[dict[str, str]]:
+    base = geonames_dir()
+    cities_path = base / "cities5000.txt"
+    country_names = load_country_names(base / "countryInfo.txt")
+    admin1_names = load_admin1_names(base / "admin1CodesASCII.txt")
+    if not cities_path.exists():
+        missing = "\n".join(f"- {path}" for path in expected_geonames_files() if not path.exists())
+        raise FileNotFoundError(f"GeoNames city files are missing. Add them under {base}:\n{missing}")
+
+    rows: list[dict[str, str]] = []
+    with cities_path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
+        reader = csv.reader(handle, delimiter="\t")
+        for row in reader:
+            if len(row) < 19:
+                continue
+            name = clean(row[1])
+            ascii_name = clean(row[2])
+            alternates = [clean(value) for value in clean(row[3]).split(",") if clean(value)]
+            latitude = clean(row[4])
+            longitude = clean(row[5])
+            country_code = clean(row[8])
+            admin1_code = clean(row[10])
+            country = country_names.get(country_code, country_code)
+            admin1 = admin1_names.get(f"{country_code}.{admin1_code}", admin1_code)
+            for term in sorted({name, ascii_name, *alternates}):
+                if not term:
+                    continue
+                rows.append(
+                    {
+                        "term": term,
+                        "canonical_name": name or ascii_name or term,
+                        "geo_type": "place",
+                        "map_level": "point",
+                        "country": country,
+                        "admin1_name": admin1,
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "source": "geonames_cities5000",
+                    }
+                )
     return rows
 
-def try_pyshp():
-    import shapefile
-    reader = shapefile.Reader(str(PLACE_SHP))
-    fields = [field[0] for field in reader.fields[1:]]
-    rows = []
 
-    for record in reader.records():
-        data = dict(zip(fields, record))
-
-        name = clean(data.get("NAME") or data.get("name"))
-        nameascii = clean(data.get("NAMEASCII") or data.get("nameascii"))
-        country = clean(data.get("ADM0NAME") or data.get("adm0name"))
-        admin1 = clean(data.get("ADM1NAME") or data.get("adm1name"))
-        lat = clean(data.get("LATITUDE") or data.get("latitude"))
-        lon = clean(data.get("LONGITUDE") or data.get("longitude"))
-
-        for term in {name, nameascii}:
-            if term:
-                rows.append({
-                    "term": term,
-                    "canonical_name": name or term,
-                    "geo_type": "place",
-                    "map_level": "point",
-                    "country": country,
-                    "admin1_name": admin1,
-                    "latitude": lat,
-                    "longitude": lon,
-                    "source": "natural_earth_populated_places",
-                })
-
-    return rows
-
-def main():
-    if not PLACE_SHP.exists():
-        raise FileNotFoundError(f"Missing shapefile: {PLACE_SHP}")
-
-    try:
-        rows = try_geopandas()
-        method = "geopandas"
-    except Exception:
-        try:
-            rows = try_pyshp()
-            method = "pyshp"
-        except ImportError:
-            print("Missing dependency. Run this, then retry:")
-            print("python3 -m pip install pyshp")
-            sys.exit(1)
-
+def main() -> int:
+    rows = read_geonames_rows()
     deduped = {}
     for row in rows:
-        key = (
-            row["term"].lower(),
-            row["country"].lower(),
-            row["admin1_name"].lower(),
-        )
+        key = (row["term"].lower(), row["country"].lower(), row["admin1_name"].lower())
         deduped[key] = row
 
-    final_rows = sorted(
-        deduped.values(),
-        key=lambda r: (r["country"], r["admin1_name"], r["term"])
-    )
-
-    with OUT_CSV.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=[
-            "term",
-            "canonical_name",
-            "geo_type",
-            "map_level",
-            "country",
-            "admin1_name",
-            "latitude",
-            "longitude",
-            "source",
-        ])
+    final_rows = sorted(deduped.values(), key=lambda item: (item["country"], item["admin1_name"], item["term"]))
+    OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
+    with OUT_CSV.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=[
+                "term",
+                "canonical_name",
+                "geo_type",
+                "map_level",
+                "country",
+                "admin1_name",
+                "latitude",
+                "longitude",
+                "source",
+            ],
+        )
         writer.writeheader()
         writer.writerows(final_rows)
 
-    unique_terms = sorted({row["term"] for row in final_rows if row["term"]})
-    OUT_TXT.write_text("\n".join(unique_terms) + "\n", encoding="utf-8")
+    OUT_TXT.write_text("\n".join(sorted({row["term"] for row in final_rows if row["term"]})) + "\n", encoding="utf-8")
+    print(f"Wrote {len(final_rows)} place-name rows from GeoNames.")
+    return 0
 
-    print(f"Used: {method}")
-    print(f"Place rows written: {len(final_rows)}")
-    print(f"Unique place names written: {len(unique_terms)}")
-    print(f"Wrote: {OUT_TXT}")
-    print(f"Wrote: {OUT_CSV}")
 
 if __name__ == "__main__":
-    main()
+    try:
+        raise SystemExit(main())
+    except FileNotFoundError as exc:
+        print(exc, file=sys.stderr)
+        raise SystemExit(1)

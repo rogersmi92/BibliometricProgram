@@ -26,6 +26,20 @@ from pathlib import Path
 from typing import Callable, Iterable
 from urllib.parse import quote_plus
 
+from utils.map_providers import (
+    IMPORTANT_COUNTRY_ISO3,
+    MAPS_ROOT,
+    build_world_adm0_geojson,
+    country_admin_boundary_file,
+    census_boundary_dir,
+    census_boundary_shapefile,
+    census_city_gazetteer_dir,
+    custom_gazetteer_dir,
+    geoboundaries_boundary_file,
+    geonames_dir,
+    report_missing_map_packages,
+    world_adm0_geojson_path,
+)
 from utils.runtime_paths import configure_matplotlib_cache
 
 ROOT = Path(__file__).resolve().parent
@@ -2876,30 +2890,11 @@ WORLD_REGIONS_TEMPLATE = [
     ("East Asia & Pacific", 25, 120),
 ]
 GEOMETRY_SOURCE_CANDIDATES = {
-    "world": REFERENCE_DIR / "geography" / "boundaries" / "world.geojson",
-    "us": REFERENCE_DIR / "geography" / "boundaries" / "us_states.geojson",
-    "texas": REFERENCE_DIR / "geography" / "boundaries" / "texas_counties.geojson",
-    "world_regions": REFERENCE_DIR / "geography" / "boundaries" / "world_regions.geojson",
+    "world": MAPS_ROOT / "boundaries" / "geoboundaries",
+    "us": census_boundary_dir("states"),
+    "texas": census_boundary_dir("counties"),
+    "world_regions": MAPS_ROOT / "boundaries" / "geoboundaries",
 }
-MAPS_ROOT = REFERENCE_DIR / "Maps"
-CULTURAL_FOLDER_ORDER = ("50m_cultural", "10m_cultural", "110m_cultural")
-IGNORED_MAP_FOLDERS = ("10m_physical", "50m_physical", "110m_physical", "50m_raster")
-COUNTRY_LAYER_PATTERNS = (
-    "ne_50m_admin_0_countries.shp",
-    "ne_10m_admin_0_countries.shp",
-    "ne_110m_admin_0_countries.shp",
-)
-ADMIN1_LAYER_PATTERNS = (
-    "ne_50m_admin_1_states_provinces_lakes.shp",
-    "ne_50m_admin_1_states_provinces.shp",
-    "ne_10m_admin_1_states_provinces.shp",
-    "ne_110m_admin_1_states_provinces.shp",
-)
-PLACE_LAYER_PATTERNS = (
-    "ne_50m_populated_places.shp",
-    "ne_10m_populated_places.shp",
-    "ne_110m_populated_places.shp",
-)
 EAST_ASIA_COUNTRIES = {
     "china",
     "japan",
@@ -2955,8 +2950,8 @@ class MapDiscovery:
     missing_expected: list[Path]
     invalid_layers: list[str]
     fallback_choices: list[str]
-    ignored_folders: list[Path]
-    cultural_folders: list[Path]
+    missing_packages: list[str]
+    boundary_folders: list[Path]
 
 
 def map_norm(value: object) -> str:
@@ -2964,17 +2959,6 @@ def map_norm(value: object) -> str:
     text = re.sub(r"[^a-z0-9]+", " ", text)
     text = re.sub(r"\s+", " ", text).strip()
     return COUNTRY_ALIASES.get(text, US_STATE_ABBREVIATIONS.get(text, text))
-
-
-def discover_map_files() -> dict[str, list[Path]]:
-    discovered = {folder: [] for folder in CULTURAL_FOLDER_ORDER}
-    if not MAPS_ROOT.exists():
-        return discovered
-    for folder in CULTURAL_FOLDER_ORDER:
-        path = MAPS_ROOT / folder
-        if path.exists():
-            discovered[folder] = sorted(path.glob("*.shp"))
-    return discovered
 
 
 def dbf_fields_and_records(dbf_path: Path) -> tuple[list[str], list[dict[str, object]]]:
@@ -3063,7 +3047,84 @@ def shp_geometries(shp_path: Path) -> tuple[int, list[dict[str, object]]]:
     return shape_type, geometries
 
 
+def geojson_rings(geometry: dict[str, object]) -> list[list[tuple[float, float]]]:
+    geometry_type = geometry.get("type")
+    coordinates = geometry.get("coordinates")
+    if geometry_type == "Polygon" and isinstance(coordinates, list):
+        return [
+            [(float(x), float(y)) for x, y, *_rest in ring]
+            for ring in coordinates
+            if isinstance(ring, list) and len(ring) >= 3
+        ]
+    if geometry_type == "MultiPolygon" and isinstance(coordinates, list):
+        rings: list[list[tuple[float, float]]] = []
+        for polygon in coordinates:
+            if not isinstance(polygon, list):
+                continue
+            rings.extend(
+                [(float(x), float(y)) for x, y, *_rest in ring]
+                for ring in polygon
+                if isinstance(ring, list) and len(ring) >= 3
+            )
+        return rings
+    return []
+
+
+def geojson_point(geometry: dict[str, object]) -> tuple[float, float] | None:
+    coordinates = geometry.get("coordinates")
+    if geometry.get("type") == "Point" and isinstance(coordinates, list) and len(coordinates) >= 2:
+        return float(coordinates[0]), float(coordinates[1])
+    if geometry.get("type") == "MultiPoint" and isinstance(coordinates, list) and coordinates:
+        point = coordinates[0]
+        if isinstance(point, list) and len(point) >= 2:
+            return float(point[0]), float(point[1])
+    return None
+
+
+def read_geojson_layer(path: Path) -> ShapeLayer:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(payload, dict) and payload.get("type") == "FeatureCollection":
+        features = payload.get("features", [])
+    elif isinstance(payload, dict) and payload.get("type") == "Feature":
+        features = [payload]
+    else:
+        features = []
+    if not isinstance(features, list) or not features:
+        raise ValueError("empty GeoJSON feature collection")
+    records: list[dict[str, object]] = []
+    fields: set[str] = set()
+    shape_type = 0
+    for feature in features:
+        if not isinstance(feature, dict):
+            continue
+        properties = feature.get("properties") if isinstance(feature.get("properties"), dict) else {}
+        geometry = feature.get("geometry") if isinstance(feature.get("geometry"), dict) else {}
+        row = dict(properties)
+        fields.update(str(key) for key in row)
+        rings = geojson_rings(geometry)
+        point = geojson_point(geometry)
+        row["_parts"] = rings
+        row["_point"] = point
+        if rings:
+            shape_type = 5
+        elif point and shape_type == 0:
+            shape_type = 1
+        records.append(row)
+    if not records:
+        raise ValueError("GeoJSON has no usable features")
+    return ShapeLayer(path=path, shape_type=shape_type, fields=sorted(fields), records=records)
+
+
 def validate_map_layer(path: Path, expected_columns: tuple[str, ...] = ()) -> tuple[bool, str, ShapeLayer | None]:
+    if path.suffix.lower() == ".geojson":
+        try:
+            layer = read_geojson_layer(path)
+        except Exception as exc:
+            return False, f"open failed: {exc.__class__.__name__}: {exc}", None
+        field_keys = {field.lower() for field in layer.fields}
+        if expected_columns and not any(column.lower() in field_keys for column in expected_columns):
+            return False, f"missing expected name columns from {expected_columns}", None
+        return True, "ok", layer
     required = [path.with_suffix(ext) for ext in (".shp", ".dbf", ".shx", ".prj")]
     missing = [candidate.name for candidate in required if not candidate.exists()]
     if missing:
@@ -3089,45 +3150,67 @@ def validate_map_layer(path: Path, expected_columns: tuple[str, ...] = ()) -> tu
     return True, "ok", ShapeLayer(path=path, shape_type=shape_type, fields=fields, records=records)
 
 
-def find_best_cultural_layer(patterns: tuple[str, ...], expected_columns: tuple[str, ...], invalid: list[str], fallbacks: list[str]) -> ShapeLayer | None:
-    for folder in CULTURAL_FOLDER_ORDER:
-        for pattern in patterns:
-            candidate = MAPS_ROOT / folder / pattern
-            if not candidate.exists():
-                continue
-            valid, reason, layer = validate_map_layer(candidate, expected_columns)
-            if valid and layer:
-                if folder != "50m_cultural":
-                    fallbacks.append(f"Used {folder} fallback for {pattern}")
-                return layer
-            invalid.append(f"{candidate}: {reason}")
+def find_first_valid_layer(paths: Iterable[Path | None], expected_columns: tuple[str, ...], invalid: list[str], fallbacks: list[str]) -> ShapeLayer | None:
+    for candidate in paths:
+        if candidate is None or not candidate.exists():
+            continue
+        valid, reason, layer = validate_map_layer(candidate, expected_columns)
+        if valid and layer:
+            return layer
+        invalid.append(f"{candidate}: {reason}")
     return None
 
 
 def find_country_layer(invalid: list[str], fallbacks: list[str]) -> ShapeLayer | None:
-    return find_best_cultural_layer(COUNTRY_LAYER_PATTERNS, ("NAME", "NAME_LONG", "ADMIN", "SOVEREIGNT", "ISO_A3", "ADM0_A3"), invalid, fallbacks)
+    warnings: list[str] = []
+    world_path = world_adm0_geojson_path() if world_adm0_geojson_path().exists() else build_world_adm0_geojson(warnings)
+    fallbacks.extend(warnings)
+    layer = find_first_valid_layer([world_path], ("boundaryName", "boundaryISO", "shapeName", "shapeISO", "NAME", "ADMIN", "ISO_A3"), invalid, fallbacks)
+    if not layer:
+        fallbacks.append("World ADM0 drawable file unavailable; add WORLD_ADM0.geojson or WORLD_ADM0_INDEX.json to build it.")
+    return layer
 
 
 def find_admin1_layer(invalid: list[str], fallbacks: list[str]) -> ShapeLayer | None:
-    return find_best_cultural_layer(ADMIN1_LAYER_PATTERNS, ("name", "name_en", "region", "postal", "iso_3166_2", "admin"), invalid, fallbacks)
+    paths = [census_boundary_shapefile("states")]
+    paths.extend(geoboundaries_boundary_file(iso3, "ADM1") for iso3 in IMPORTANT_COUNTRY_ISO3)
+    return find_first_valid_layer(paths, ("NAME", "STUSPS", "shapeName", "shapeISO", "shapeGroup", "admin1"), invalid, fallbacks)
 
 
 def find_populated_places_layer(invalid: list[str], fallbacks: list[str]) -> ShapeLayer | None:
-    return find_best_cultural_layer(PLACE_LAYER_PATTERNS, ("NAME", "NAMEASCII", "ADM0NAME", "ADM1NAME"), invalid, fallbacks)
+    return find_census_layer("place", invalid)
 
 
 def find_census_layer(kind: str, invalid: list[str]) -> ShapeLayer | None:
-    census_root = MAPS_ROOT / "census"
-    if not census_root.exists():
-        return None
-    for path in sorted(census_root.rglob("*.shp")):
-        if kind not in path.name.lower() and kind not in str(path.parent).lower():
+    folders = {
+        "state": [census_boundary_dir("states")],
+        "county": [census_boundary_dir("counties")],
+        "place": [census_boundary_dir("places"), census_city_gazetteer_dir(), geonames_dir(), custom_gazetteer_dir()],
+    }.get(kind, [])
+    for folder in folders:
+        if not folder.exists():
             continue
-        valid, reason, layer = validate_map_layer(path, ("NAME", "STUSPS", "STATEFP", "COUNTYFP", "PLACEFP"))
-        if valid and layer:
-            return layer
-        invalid.append(f"{path}: {reason}")
+        paths = sorted(path for extension in ("*.geojson", "*.shp") for path in folder.rglob(extension))
+        for path in paths:
+            valid, reason, layer = validate_map_layer(path, ("NAME", "STUSPS", "STATEFP", "COUNTYFP", "PLACEFP", "shapeName", "shapeISO"))
+            if valid and layer:
+                return layer
+            invalid.append(f"{path}: {reason}")
     return None
+
+
+def find_country_admin_layer(iso3: str, invalid: list[str], fallbacks: list[str]) -> ShapeLayer | None:
+    if not iso3:
+        fallbacks.append("country-specific map skipped; missing ISO3 code")
+        return None
+    adm1_path = country_admin_boundary_file(iso3)
+    if not adm1_path:
+        fallbacks.append(f"country-specific map skipped for {iso3}; missing ADM1 boundary file")
+        return None
+    layer = find_first_valid_layer([adm1_path], ("shapeName", "shapeISO", "shapeGroup", "boundaryName", "boundaryISO", "NAME", "admin1"), invalid, fallbacks)
+    if layer and not geoboundaries_boundary_file(iso3, "ADM2"):
+        fallbacks.append(f"geoBoundaries {iso3} ADM2 missing; using ADM1 for country-specific map")
+    return layer
 
 
 def report_map_availability(discovery: MapDiscovery, slug: str, maps_generated: list[str], skipped: list[str]) -> Path:
@@ -3143,10 +3226,8 @@ def report_map_availability(discovery: MapDiscovery, slug: str, maps_generated: 
         "",
         f"Maps root path checked: {MAPS_ROOT}",
         f"GeoPandas validation: {geopandas_status}",
-        "Cultural folders found:",
-        *[f"- {path}" for path in discovery.cultural_folders],
-        "Physical/raster folders ignored:",
-        *[f"- {path}" for path in discovery.ignored_folders],
+        "Boundary folders checked:",
+        *[f"- {path}" for path in discovery.boundary_folders],
         "",
         f"Selected country layer: {discovery.country_layer.path if discovery.country_layer else 'none'}",
         f"Selected admin-1 layer: {discovery.admin1_layer.path if discovery.admin1_layer else 'none'}",
@@ -3161,6 +3242,8 @@ def report_map_availability(discovery: MapDiscovery, slug: str, maps_generated: 
         *[f"- {item}" for item in discovery.invalid_layers],
         "Fallback choices used:",
         *[f"- {item}" for item in discovery.fallback_choices],
+        "Missing map packages:",
+        *[f"- {item}" for item in discovery.missing_packages],
         "Maps generated:",
         *[f"- {item}" for item in maps_generated],
         "Maps skipped and why:",
@@ -3223,7 +3306,7 @@ def write_geography_map_validation(
         f"Census state layer available: {'yes' if discovery.census_state_layer else 'no'}",
         f"Census county layer available: {'yes' if discovery.census_county_layer else 'no'}",
         f"Census place layer available: {'yes' if discovery.census_place_layer else 'no'}",
-        f"Natural Earth fallback used: {'yes' if not (discovery.census_state_layer and discovery.census_county_layer and discovery.census_place_layer) else 'no'}",
+        "Natural Earth required: no",
         "physical layers used: no",
         "raster layers used: no",
         f"number of mapped terms: {mapped_count}",
@@ -3246,12 +3329,19 @@ def write_geography_map_validation(
 def build_map_discovery() -> MapDiscovery:
     invalid: list[str] = []
     fallbacks: list[str] = []
-    cultural_folders = [MAPS_ROOT / folder for folder in CULTURAL_FOLDER_ORDER if (MAPS_ROOT / folder).exists()]
-    ignored = [MAPS_ROOT / folder for folder in IGNORED_MAP_FOLDERS if (MAPS_ROOT / folder).exists()]
+    package_statuses = report_missing_map_packages()
+    missing_packages = [status.message for status in package_statuses if not status.present]
+    boundary_folders = [
+        MAPS_ROOT / "boundaries" / "census" / "USA",
+        MAPS_ROOT / "boundaries" / "geoboundaries",
+        MAPS_ROOT / "gazetteers" / "cities",
+        MAPS_ROOT / "institutions",
+    ]
     expected = [
-        MAPS_ROOT / "50m_cultural" / "ne_50m_admin_0_countries.shp",
-        MAPS_ROOT / "50m_cultural" / "ne_50m_admin_1_states_provinces_lakes.shp",
-        MAPS_ROOT / "50m_cultural" / "ne_50m_populated_places.shp",
+        census_boundary_dir("states"),
+        census_boundary_dir("counties"),
+        census_boundary_dir("places"),
+        geonames_dir(),
     ]
     return MapDiscovery(
         country_layer=find_country_layer(invalid, fallbacks),
@@ -3263,8 +3353,8 @@ def build_map_discovery() -> MapDiscovery:
         missing_expected=[path for path in expected if not path.exists()],
         invalid_layers=invalid,
         fallback_choices=fallbacks,
-        ignored_folders=ignored,
-        cultural_folders=cultural_folders,
+        missing_packages=missing_packages,
+        boundary_folders=boundary_folders,
     )
 
 
@@ -3351,13 +3441,13 @@ def match_records(layer: ShapeLayer | None, fields: tuple[str, ...]) -> dict[str
 
 
 def country_metadata(record: dict[str, object], index: int) -> dict[str, object]:
-    name = str(record_value(record, "NAME_LONG", "NAME", "ADMIN", "SOVEREIGNT")).strip()
+    name = str(record_value(record, "boundaryName", "NAME_LONG", "NAME", "ADMIN", "SOVEREIGNT")).strip()
     return {
         "country_key": map_norm(name),
         "country_index": index,
         "country": name,
         "iso_a2": str(record_value(record, "ISO_A2", "WB_A2")).strip(),
-        "iso_a3": str(record_value(record, "ISO_A3", "ADM0_A3", "WB_A3")).strip(),
+        "iso_a3": str(record_value(record, "boundaryISO", "ISO_A3", "ADM0_A3", "WB_A3")).strip().upper(),
         "continent": str(record_value(record, "CONTINENT")).strip(),
         "region_un": str(record_value(record, "REGION_UN")).strip(),
         "subregion": str(record_value(record, "SUBREGION")).strip(),
@@ -3372,7 +3462,7 @@ def build_country_metadata(layer: ShapeLayer | None) -> dict[int, dict[str, obje
 
 
 def record_country_key(record: dict[str, object]) -> str:
-    return map_norm(record_value(record, "ADMIN", "ADM0NAME", "adm0_name", "geonunit", "SOVEREIGNT", "COUNTRY"))
+    return map_norm(record_value(record, "boundaryName", "ADMIN", "ADM0NAME", "adm0_name", "geonunit", "SOVEREIGNT", "COUNTRY", "shapeGroup"))
 
 
 def admin1_record_key(record: dict[str, object]) -> str:
@@ -3706,7 +3796,7 @@ def generate_geography_heatmaps(slug: str, generated: list[Path]) -> tuple[int, 
     maps_generated: list[str] = []
     skipped: list[str] = []
     mapped_terms: set[int] = set()
-    country_lookup = match_records(discovery.country_layer, ("NAME", "NAME_LONG", "ADMIN", "ISO_A3", "ADM0_A3"))
+    country_lookup = match_records(discovery.country_layer, ("boundaryName", "boundaryISO", "NAME", "NAME_LONG", "ADMIN", "ISO_A3", "ADM0_A3"))
     country_meta = build_country_metadata(discovery.country_layer)
     admin1_layer = discovery.census_state_layer or discovery.admin1_layer
     admin1_lookup = match_records(admin1_layer, ("NAME", "name", "name_en", "region", "postal", "iso_3166_2", "STUSPS"))
@@ -3731,6 +3821,10 @@ def generate_geography_heatmaps(slug: str, generated: list[Path]) -> tuple[int, 
         return None
 
     def country_from_admin_record(record: dict[str, object]) -> int | None:
+        iso_key = str(record_value(record, "shapeGroup", "boundaryISO", "ISO_A3", "ADM0_A3")).upper()
+        for idx, metadata in country_meta.items():
+            if iso_key and iso_key == str(metadata.get("iso_a3", "")).upper():
+                return idx
         key = record_country_key(record)
         if key in country_lookup:
             return country_lookup[key]
@@ -3768,7 +3862,7 @@ def generate_geography_heatmaps(slug: str, generated: list[Path]) -> tuple[int, 
                 mapped_terms.add(idx)
                 matched = True
                 row_country_index = matched_country
-                matched_layer = "natural_earth_admin0"
+                matched_layer = "geoboundaries_admin"
                 matched_geometry_name = str(country_meta.get(matched_country, {}).get("country", key))
                 map_output_used = f"{slug}_geography_heatmap_world.png"
                 break
@@ -3786,7 +3880,7 @@ def generate_geography_heatmaps(slug: str, generated: list[Path]) -> tuple[int, 
                     row_country_index = admin_country
                 mapped_terms.add(idx)
                 matched = True
-                matched_layer = "census_admin1" if admin1_layer == discovery.census_state_layer else "natural_earth_admin1"
+                matched_layer = "census_admin1" if admin1_layer == discovery.census_state_layer else "geoboundaries_admin1"
                 matched_geometry_name = str(record_value(admin1_layer.records[admin_idx], "NAME", "name", "name_en", "region", "postal", "STUSPS")) if admin1_layer else key
                 map_output_used = f"{slug}_geography_heatmap_us.png" if row_country_index is not None and country_meta.get(row_country_index, {}).get("country_key") == "united states" else f"{slug}_geography_heatmap_world.png"
                 break
@@ -3834,7 +3928,7 @@ def generate_geography_heatmaps(slug: str, generated: list[Path]) -> tuple[int, 
                     )
                     mapped_terms.add(idx)
                     matched = True
-                    matched_layer = "natural_earth_populated_places"
+                    matched_layer = "local_place_gazetteer"
                     matched_geometry_name = str(record_value(place_record, "NAME", "NAMEASCII"))
                     map_output_used = f"{slug}_geography_heatmap_world.png"
         if not matched:
@@ -4034,22 +4128,35 @@ def generate_geography_heatmaps(slug: str, generated: list[Path]) -> tuple[int, 
     if discovery.country_layer and isinstance(plan.get("country_maps"), list):
         country_layer_original = {id(record): idx for idx, record in enumerate(discovery.country_layer.records)}
         admin_records_by_country: dict[str, list[dict[str, object]]] = defaultdict(list)
+        iso_to_country_key = {str(meta.get("iso_a3", "")).upper(): str(meta.get("country_key", "")) for meta in country_meta.values() if meta.get("iso_a3")}
         if admin1_layer:
             for record in admin1_layer.records:
-                key = record_country_key(record)
+                record_iso = str(record_value(record, "shapeGroup", "boundaryISO", "ISO_A3", "ADM0_A3")).upper()
+                key = iso_to_country_key.get(record_iso) or record_country_key(record)
                 if key:
                     admin_records_by_country[key].append(record)
         for country_row in plan["country_maps"]:
             country_key = str(country_row.get("country_key") or "")
             country_index = int(country_row.get("country_index"))
             country_name = str(country_row.get("country") or country_key).strip()
+            country_iso3 = str(country_meta.get(country_index, {}).get("iso_a3") or "").upper()
             output_key = re.sub(r"[^a-z0-9]+", "_", country_key).strip("_") or str(country_index)
-            country_records = admin_records_by_country.get(country_key) or [discovery.country_layer.records[country_index]]
+            local_admin_layer = find_country_admin_layer(country_iso3, discovery.invalid_layers, discovery.fallback_choices) if country_iso3 else None
+            country_records = local_admin_layer.records if local_admin_layer else admin_records_by_country.get(country_key) or [discovery.country_layer.records[country_index]]
             if country_key == "united states" and admin1_layer:
                 country_records = us_admin1_records(admin1_layer) or country_records
             local_counts: dict[int, int] = {}
             if country_records and country_records[0] in discovery.country_layer.records:
                 local_counts = {local_idx: country_counts[country_layer_original[id(record)]] for local_idx, record in enumerate(country_records) if country_layer_original[id(record)] in country_counts}
+            elif local_admin_layer:
+                for local_idx, record in enumerate(local_admin_layer.records):
+                    local_keys = record_name_keys(record, ("shapeName", "shapeISO", "name", "NAME", "admin1"))
+                    for key in local_keys:
+                        if key in admin1_lookup:
+                            source_idx = admin1_lookup[key]
+                            if source_idx in state_counts:
+                                local_counts[local_idx] = state_counts[source_idx]
+                                break
             elif admin1_layer:
                 admin_original = {id(record): idx for idx, record in enumerate(admin1_layer.records)}
                 local_counts = {local_idx: state_counts[admin_original[id(record)]] for local_idx, record in enumerate(country_records) if admin_original[id(record)] in state_counts}

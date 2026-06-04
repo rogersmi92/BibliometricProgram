@@ -6,18 +6,14 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
+from DansBib.pipeline_capabilities import LIVE_API_DATABASES
+
 
 APP_VERSION = "0.2.0"
 APP_CONFIG_DIR = "DansBibGUI"
 CONFIG_FILENAME = "settings.json"
 
-SOURCE_DEFAULTS = {
-    "pubmed": True,
-    "openalex": True,
-    "wos": True,
-    "scopus": True,
-    "covidence": False,
-}
+SOURCE_DEFAULTS = {source: True for source in LIVE_API_DATABASES}
 
 
 @dataclass

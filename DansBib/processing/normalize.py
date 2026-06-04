@@ -7,7 +7,10 @@ import re
 import string
 from typing import Any, Dict, List
 
-from processing.filters import FILTER_COLUMNS
+try:
+    from processing.filters import FILTER_COLUMNS
+except ModuleNotFoundError:  # pragma: no cover - package import path
+    from DansBib.processing.filters import FILTER_COLUMNS
 
 
 def normalize_doi(doi: Any) -> str:
