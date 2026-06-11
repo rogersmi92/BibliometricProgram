@@ -1,2 +1,3 @@
 # GUI launcher requirements.
 PySide6
+certifi>=2024.8.30

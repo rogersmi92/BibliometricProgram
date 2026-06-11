@@ -283,11 +283,10 @@ def derive_vos_outputs(dataset_path: Path) -> list[Path]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Derive VOSviewer network and overlay files from a core dataset.")
-    parser.add_argument("--core", type=Path, help="Path to the core dataset CSV. If omitted, auto-detects in data/outputs/.")
+    parser.add_argument("--core", type=Path, required=True, help="Path to the current core dataset CSV.")
     args = parser.parse_args()
 
-    dataset_path = args.core if args.core else detect_core_dataset()
-    derive_vos_outputs(dataset_path)
+    derive_vos_outputs(args.core)
 
 
 if __name__ == "__main__":

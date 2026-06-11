@@ -57,7 +57,7 @@ class MapProviderRegistryTests(unittest.TestCase):
         self.assertTrue(all("Natural Earth" not in status.label for status in statuses))
 
     def test_priority_country_registry_includes_added_countries(self) -> None:
-        for iso3 in ("AUS", "BRA", "ISR", "SGP"):
+        for iso3 in ("AUS", "BRA", "ISR", "SGP", "POL", "COL", "HRV", "TUR"):
             self.assertIn(iso3, map_providers.IMPORTANT_COUNTRY_ISO3)
 
     def test_priority_country_paths_include_expected_adm_geojson_files(self) -> None:
@@ -89,6 +89,50 @@ class MapProviderRegistryTests(unittest.TestCase):
                 self.assertIsNone(map_providers.geoboundaries_boundary_file("AUS", "ADM2"))
         finally:
             map_providers.MAPS_ROOT = original_root
+
+    def test_gbr_provider_prefers_ons_lad_before_geoboundaries(self) -> None:
+        original_root = map_providers.MAPS_ROOT
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                map_providers.MAPS_ROOT = Path(temp_dir)
+                adm2 = map_providers.geoboundaries_geojson_path("GBR", "ADM2")
+                adm2.parent.mkdir(parents=True)
+                adm2.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+                ons = map_providers.gbr_ons_dir() / "Local_Authority_Districts_December_2024_BGC.geojson"
+                ons.parent.mkdir(parents=True)
+                ons.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+
+                selected = map_providers.select_country_boundary_provider("GBR")
+
+                self.assertEqual(selected.provider, "ONS.gov.uk")
+                self.assertEqual(selected.admin_level, "ONS_LAD")
+                self.assertEqual(selected.path, ons)
+                self.assertFalse(selected.fallback_used)
+        finally:
+            map_providers.MAPS_ROOT = original_root
+
+    def test_gbr_provider_falls_back_to_adm2_when_ons_missing(self) -> None:
+        original_root = map_providers.MAPS_ROOT
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                map_providers.MAPS_ROOT = Path(temp_dir)
+                adm2 = map_providers.geoboundaries_geojson_path("GBR", "ADM2")
+                adm2.parent.mkdir(parents=True)
+                adm2.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+
+                selected = map_providers.select_country_boundary_provider("GBR")
+
+                self.assertEqual(selected.provider, "geoBoundaries")
+                self.assertEqual(selected.admin_level, "ADM2")
+                self.assertTrue(selected.fallback_used)
+        finally:
+            map_providers.MAPS_ROOT = original_root
+
+    def test_geoboundaries_api_url_uses_current_endpoint(self) -> None:
+        self.assertEqual(
+            map_providers.geoboundaries_api_url("tur", "adm2"),
+            "https://www.geoboundaries.org/api/current/gbOpen/TUR/ADM2/",
+        )
 
     def test_missing_world_adm0_warns_without_crashing(self) -> None:
         original_root = map_providers.MAPS_ROOT

@@ -12,8 +12,18 @@ from DansBib.pipeline_capabilities import LIVE_API_DATABASES
 APP_VERSION = "0.2.0"
 APP_CONFIG_DIR = "DansBibGUI"
 CONFIG_FILENAME = "settings.json"
+SECRETS_FILENAME = "secrets.json"
+KEYRING_SERVICE = "DansBibGUI"
 
 SOURCE_DEFAULTS = {source: True for source in LIVE_API_DATABASES}
+
+
+def certifi_available() -> bool:
+    try:
+        import certifi  # type: ignore
+    except ImportError:
+        return False
+    return True
 
 
 @dataclass
@@ -26,6 +36,14 @@ class AppConfig:
     default_start_year: int | None = None
     default_end_year: int | None = None
     api_settings_status: dict[str, str] = field(default_factory=dict)
+    enable_scopus_enrichment: bool = False
+    enable_openalex_enrichment: bool = True
+    scopus_base_url: str = "https://api.elsevier.com/content"
+    openalex_email: str = ""
+    use_system_proxy: bool = True
+    http_proxy: str = ""
+    https_proxy: str = ""
+    use_certifi_ca_bundle: bool = field(default_factory=certifi_available)
     pipeline_python: str = ""
     last_run_log: str = ""
 
@@ -95,6 +113,11 @@ def config_path() -> Path:
     return Path(env_path).expanduser() if env_path else user_config_dir() / CONFIG_FILENAME
 
 
+def secrets_path() -> Path:
+    env_path = os.getenv("DANSBIB_GUI_SECRETS")
+    return Path(env_path).expanduser() if env_path else user_config_dir() / "config" / SECRETS_FILENAME
+
+
 def load_config() -> AppConfig:
     path = config_path()
     if not path.exists():
@@ -117,6 +140,90 @@ def save_config(settings: AppConfig) -> Path:
         json.dump(asdict(materialized), handle, indent=2)
         handle.write("\n")
     return path
+
+
+def _keyring_module():
+    try:
+        import keyring  # type: ignore
+    except Exception:
+        return None
+    return keyring
+
+
+def _load_local_secrets() -> dict[str, str]:
+    path = secrets_path()
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return {str(key): str(value) for key, value in data.items() if value}
+
+
+def _save_local_secrets(secrets: dict[str, str]) -> Path:
+    path = secrets_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(secrets, indent=2) + "\n", encoding="utf-8")
+    try:
+        path.chmod(0o600)
+    except OSError:
+        pass
+    return path
+
+
+def get_secret(name: str) -> tuple[str, str]:
+    keyring = _keyring_module()
+    if keyring is not None:
+        try:
+            value = keyring.get_password(KEYRING_SERVICE, name)
+        except Exception:
+            value = None
+        if value:
+            return str(value), "system keychain"
+    local = _load_local_secrets().get(name, "")
+    if local:
+        return local, "local user config"
+    env_name = {
+        "scopus_api_key": "SCOPUS_API_KEY",
+        "scopus_inst_token": "SCOPUS_INST_TOKEN",
+    }.get(name, name.upper())
+    env_value = os.getenv(env_name, "")
+    if env_value:
+        return env_value, "environment variable"
+    return "", "not configured"
+
+
+def set_secret(name: str, value: str) -> str:
+    keyring = _keyring_module()
+    value = value.strip()
+    if keyring is not None:
+        try:
+            keyring.set_password(KEYRING_SERVICE, name, value)
+            return "system keychain"
+        except Exception:
+            pass
+    secrets = _load_local_secrets()
+    secrets[name] = value
+    _save_local_secrets(secrets)
+    return "local user config"
+
+
+def clear_secret(name: str) -> None:
+    keyring = _keyring_module()
+    if keyring is not None:
+        try:
+            keyring.delete_password(KEYRING_SERVICE, name)
+        except Exception:
+            pass
+    secrets = _load_local_secrets()
+    if name in secrets:
+        secrets.pop(name, None)
+        _save_local_secrets(secrets)
+
+
+def masked_secret(value: str) -> str:
+    return "••••••••••••••••" if value else ""
 
 
 def sys_platform_is_macos() -> bool:

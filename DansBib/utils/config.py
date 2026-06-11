@@ -3,15 +3,16 @@
 from __future__ import annotations
 
 import os
+from typing import Union
 
 try:
     from pipeline_capabilities import DEFAULT_DATABASES, RECOGNIZED_DATABASES, SCALING_PROFILES
 except ModuleNotFoundError:  # pragma: no cover - package import path
     from DansBib.pipeline_capabilities import DEFAULT_DATABASES, RECOGNIZED_DATABASES, SCALING_PROFILES
 
-OPENALEX_API_KEY = "wOElT0DimZRXLOV2l3Qd3i"
-SCOPUS_API_KEY = "c704eb588ffd3d9e3fa5971d92430c62"
-WOS_API_KEY = "a6a9bf726926d89d5f93242172c5fa2be833a134"
+OPENALEX_API_KEY = os.getenv("OPENALEX_API_KEY", "")
+SCOPUS_API_KEY = os.getenv("SCOPUS_API_KEY", "")
+WOS_API_KEY = os.getenv("WOS_API_KEY", "")
 SCALING_MODE = os.getenv("SCALING_MODE", "extreme").lower()
 OPENALEX_PAGE_SIZE = 25
 PUBMED_PAGE_SIZE = 100
@@ -44,3 +45,20 @@ def get_scopus_api_key() -> str | None:
 def get_wos_api_key() -> str | None:
     """Return the configured Web of Science API key from env or local config."""
     return os.getenv("WOS_API_KEY") or WOS_API_KEY
+
+
+def get_certifi_ca_bundle() -> str | None:
+    """Return the certifi CA path when available and enabled."""
+    disabled = os.getenv("DANSBIB_USE_CERTIFI", "1").strip().lower() in {"0", "false", "no", "off"}
+    if disabled:
+        return None
+    try:
+        import certifi  # type: ignore
+    except ImportError:
+        return None
+    return certifi.where()
+
+
+def get_requests_verify() -> Union[bool, str]:
+    """Return the requests verify setting, preferring certifi without disabling SSL."""
+    return get_certifi_ca_bundle() or True

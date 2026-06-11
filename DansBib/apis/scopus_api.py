@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 import time
 from typing import Any
 
@@ -14,7 +15,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as RequestsConne
 from urllib3.util import Retry
 
 from processing.filters import FILTER_COLUMNS
-from utils.config import SCOPUS_MAX_RESULTS, SCOPUS_PAGE_SIZE, get_scopus_api_key
+from utils.config import SCOPUS_MAX_RESULTS, SCOPUS_PAGE_SIZE, get_requests_verify, get_scopus_api_key
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +41,8 @@ _SCOPUS_TOTAL_ATTEMPTS = 2
 def build_scopus_query(base_query: str, filters: dict[str, bool | None] | None = None) -> str:
     """Translate supported flags into Scopus search syntax where possible."""
     active_filters = filters or {}
-    q = f"({base_query})"
+    translated = _translate_wos_query_to_scopus(base_query)
+    q = translated if translated.startswith("(") and translated.endswith(")") else f"({translated})"
 
     if active_filters.get("review") is True:
         q += " AND DOCTYPE(re)"
@@ -53,6 +55,25 @@ def build_scopus_query(base_query: str, filters: dict[str, bool | None] | None =
         q += " AND (OA(0))"
 
     return q
+
+
+def _translate_wos_query_to_scopus(query: str) -> str:
+    """Convert common Web of Science field tags into Scopus search syntax."""
+    text = str(query or "").strip()
+    replacements = {
+        "TS": "TITLE-ABS-KEY",
+        "TI": "TITLE",
+        "AB": "ABS",
+        "AK": "AUTHKEY",
+        "KP": "KEY",
+        "SO": "SRCTITLE",
+        "PY": "PUBYEAR",
+    }
+    for wos_tag, scopus_tag in replacements.items():
+        text = re.sub(rf"\b{wos_tag}\s*=", f"{scopus_tag}", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bNEAR/\d+\b", "W/5", text, flags=re.IGNORECASE)
+    text = re.sub(r"\bSAME\b", "AND", text, flags=re.IGNORECASE)
+    return text
 
 
 def check_pybliometrics_setup_once() -> tuple[bool, bool]:
@@ -78,6 +99,7 @@ def _build_scopus_session() -> Session:
     )
     adapter = HTTPAdapter(max_retries=retry)
     session = requests.Session()
+    session.verify = get_requests_verify()
     session.mount("http://", adapter)
     session.mount("https://", adapter)
     return session

@@ -11,7 +11,7 @@ import requests
 
 from processing.filters import FILTER_COLUMNS
 from processing.normalize import standardize_record
-from utils.config import PUBMED_MAX_RESULTS, PUBMED_PAGE_SIZE
+from utils.config import PUBMED_MAX_RESULTS, PUBMED_PAGE_SIZE, get_requests_verify
 
 LOGGER = logging.getLogger(__name__)
 SCHEMA_COLUMNS = ["title", "doi", "authors", "year", "citations", "source"]
@@ -167,6 +167,7 @@ def _fetch_pubmed_articles(id_list: list[str]) -> list[dict[str, str | int]]:
         PUBMED_EFETCH_URL,
         params={"db": "pubmed", "id": ",".join(id_list), "retmode": "xml"},
         timeout=30,
+        verify=get_requests_verify(),
     )
     fetch_response.raise_for_status()
     root = ElementTree.fromstring(fetch_response.content)
@@ -231,6 +232,7 @@ def query_pubmed(
                     "retmode": "json",
                 },
                 timeout=30,
+                verify=get_requests_verify(),
             )
             search_response.raise_for_status()
             search_payload = search_response.json()

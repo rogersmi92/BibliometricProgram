@@ -18,6 +18,9 @@ except ModuleNotFoundError:  # pragma: no cover - package import path
 
 LOGGER = logging.getLogger(__name__)
 SCHEMA_COLUMNS = ["title", "doi", "authors", "year", "citations", "source"]
+AFFILIATION_TAGS = ("AD", "C1", "AF")
+INSTITUTION_TAGS = ("C3",)
+IDENTIFIER_TAGS = ("UR", "L1", "L2", "L3", "LK", "AN", "UT", "N1")
 
 
 def _append_ris_value(record: dict[str, list[str]], tag: str, value: str) -> None:
@@ -122,9 +125,12 @@ def _parse_ris_file(path: str, source_db: str | None = None) -> pd.DataFrame:
                 "ris_source": detected_source,
                 "abstract": _first_ris_value(record, "AB", "N2"),
                 "keywords": "; ".join(record.get("KW", []) or record.get("M1", [])),
-                "institutions": "; ".join(dict.fromkeys(record.get("C3", []))),
+                "institutions": "; ".join(dict.fromkeys(value for tag in INSTITUTION_TAGS for value in record.get(tag, []))),
                 "countries": "",
-                "affiliations": "; ".join(dict.fromkeys(record.get("AD", []))),
+                "affiliations": "; ".join(dict.fromkeys(value for tag in AFFILIATION_TAGS for value in record.get(tag, []))),
+                "ris_fields_present": "; ".join(sorted(record)),
+                "ris_affiliation_fields_present": "; ".join(tag for tag in AFFILIATION_TAGS + INSTITUTION_TAGS if record.get(tag)),
+                "ris_identifier_blob": " ".join(value for tag in IDENTIFIER_TAGS for value in record.get(tag, [])),
                 "wos_uid": _first_ris_value(record, "AN", "UT"),
                 "source_db": source_db_value,
                 "ris_file": os.path.abspath(path),

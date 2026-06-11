@@ -10,7 +10,7 @@ import requests
 
 from processing.filters import FILTER_COLUMNS
 from processing.normalize import standardize_record
-from utils.config import OPENALEX_MAX_RESULTS, OPENALEX_PAGE_SIZE
+from utils.config import OPENALEX_MAX_RESULTS, OPENALEX_PAGE_SIZE, get_requests_verify
 
 LOGGER = logging.getLogger(__name__)
 OPENALEX_API_URL = "https://api.openalex.org/works"
@@ -52,7 +52,7 @@ def query_openalex(
             filter_param = _openalex_filter_param(filters)
             if filter_param:
                 params["filter"] = filter_param
-            response = requests.get(OPENALEX_API_URL, params=params, timeout=30)
+            response = requests.get(OPENALEX_API_URL, params=params, timeout=30, verify=get_requests_verify())
             response.raise_for_status()
             payload = response.json()
 

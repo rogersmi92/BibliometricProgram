@@ -34,6 +34,7 @@ from processing.reference_cache import (
     extract_reference_terms_from_cache,
     load_cache,
 )
+from utils.map_providers import geonames_dir
 
 
 USE_PROGRESS = False
@@ -41,6 +42,7 @@ CURRENT_STAGE = "startup"
 ROOT = Path(__file__).resolve().parent
 OUTPUTS_DIR = ROOT / "data" / "outputs"
 VISUALS_DIR = ROOT / "data" / "visuals"
+PROCESSED_DIR = ROOT / "data" / "processed"
 VOS_DIR = ROOT / "data" / "VOS"
 REFERENCE_DIR = ROOT / "data" / "reference"
 RXNORM_CACHE_PATH = REFERENCE_DIR / "drugs" / "rxnorm" / "rxnorm_cache.json"
@@ -138,8 +140,37 @@ COMMON_ENGLISH_WORDS = {
 }
 
 GEOGRAPHIC_PLACE_SUFFIXES = (" city", " town", " village", " cdp", " borough")
+GEONAMES_COLUMNS = (
+    "geonameid",
+    "name",
+    "asciiname",
+    "alternatenames",
+    "latitude",
+    "longitude",
+    "feature_class",
+    "feature_code",
+    "country_code",
+    "cc2",
+    "admin1_code",
+    "admin2_code",
+    "admin3_code",
+    "admin4_code",
+    "population",
+    "elevation",
+    "dem",
+    "timezone",
+    "modification_date",
+)
 VAGUE_GEOGRAPHY_TERMS = {
+    "administrative area",
+    "administrative region",
+    "axis cdp",
+    "cdp",
+    "census designated place",
     "middle city",
+    "place",
+    "standard village",
+    "the village",
     "urban",
     "rural",
     "region",
@@ -407,11 +438,132 @@ def cache_with_supplemental_aliases(
     return cache
 
 
+def safe_read_csv(path: Path) -> pd.DataFrame:
+    if not path.exists() or path.stat().st_size == 0:
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(path, dtype=str, keep_default_na=False)
+    except pd.errors.EmptyDataError:
+        return pd.DataFrame()
+
+
+def load_geonames_country_names(path: Path) -> dict[str, str]:
+    names: dict[str, str] = {}
+    if not path.exists():
+        return names
+    with path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
+        reader = csv.reader((line for line in handle if not line.startswith("#")), delimiter="\t")
+        for row in reader:
+            if len(row) >= 5:
+                names[row[0]] = row[4]
+    return names
+
+
+def load_geonames_admin_names(path: Path) -> dict[str, str]:
+    names: dict[str, str] = {}
+    if not path.exists():
+        return names
+    with path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
+        reader = csv.reader(handle, delimiter="\t")
+        for row in reader:
+            if len(row) >= 2:
+                names[row[0]] = row[1]
+    return names
+
+
+def geonames_city_entry(row: dict[str, str], term: str, country: str, admin1: str, admin2: str, ambiguous_count: int) -> dict[str, object]:
+    population = str(row.get("population") or "0").strip()
+    return {
+        "canonical_name": str(row.get("name") or row.get("asciiname") or term).strip(),
+        "resolved": True,
+        "source": "geonames_cities5000",
+        "source_reference": "geonames_cities5000",
+        "geo_type": "place",
+        "map_level": "point",
+        "place_kind": "populated_place",
+        "country": country,
+        "country_code": str(row.get("country_code") or "").strip(),
+        "admin1_code": str(row.get("admin1_code") or "").strip(),
+        "admin2_code": str(row.get("admin2_code") or "").strip(),
+        "admin1_name": admin1,
+        "admin2_name": admin2,
+        "state": admin1,
+        "latitude": str(row.get("latitude") or "").strip(),
+        "longitude": str(row.get("longitude") or "").strip(),
+        "population": population,
+        "ambiguity_flag": "yes" if ambiguous_count > 1 else "no",
+        "ambiguity_count": str(ambiguous_count),
+        "aliases": [],
+    }
+
+
+def safe_int_text(value: object) -> int:
+    try:
+        return int(str(value or "0").strip() or 0)
+    except ValueError:
+        return 0
+
+
+def load_geonames_city_cache() -> dict[str, dict[str, object]]:
+    base = geonames_dir()
+    cities_path = base / "cities5000.txt"
+    if not cities_path.exists() or cities_path.stat().st_size == 0:
+        return {}
+    country_names = load_geonames_country_names(base / "countryInfo.txt")
+    admin1_names = load_geonames_admin_names(base / "admin1CodesASCII.txt")
+    admin2_names = load_geonames_admin_names(base / "admin2Codes.txt")
+    rows: list[dict[str, str]] = []
+    with cities_path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
+        reader = csv.DictReader(handle, fieldnames=GEONAMES_COLUMNS, delimiter="\t")
+        for row in reader:
+            if not row.get("name") and not row.get("asciiname"):
+                continue
+            rows.append({key: str(value or "").strip() for key, value in row.items()})
+
+    owners: dict[str, list[dict[str, str]]] = {}
+    for row in rows:
+        names = {row.get("name", ""), row.get("asciiname", "")}
+        for name in names:
+            key = normalize_text(name)
+            if key:
+                owners.setdefault(key, []).append(row)
+
+    cache: dict[str, dict[str, object]] = {}
+    for row in rows:
+        country_code = row.get("country_code", "")
+        admin1_code = row.get("admin1_code", "")
+        admin2_code = row.get("admin2_code", "")
+        country = country_names.get(country_code, country_code)
+        admin1 = admin1_names.get(f"{country_code}.{admin1_code}", admin1_code)
+        admin2 = admin2_names.get(f"{country_code}.{admin1_code}.{admin2_code}", admin2_code)
+        aliases = {row.get("name", ""), row.get("asciiname", "")}
+        canonical = row.get("name") or row.get("asciiname") or ""
+        if canonical and country:
+            aliases.add(f"{canonical}, {country}")
+        if canonical and admin1:
+            aliases.add(f"{canonical}, {admin1}")
+        for raw_term in aliases:
+            term = normalize_text(raw_term)
+            if not term:
+                continue
+            ambiguous_count = len({(owner.get("country_code"), owner.get("admin1_code"), owner.get("admin2_code")) for owner in owners.get(normalize_text(raw_term), [])}) or 1
+            entry = geonames_city_entry(row, raw_term, country, admin1, admin2, ambiguous_count)
+            existing = cache.get(term)
+            if existing:
+                existing_population = safe_int_text(existing.get("population"))
+                current_population = safe_int_text(entry.get("population"))
+                if current_population <= existing_population:
+                    continue
+            cache[term] = entry
+    return cache
+
+
 def load_global_place_cache(
     csv_path: Path = GLOBAL_PLACE_NAMES_CSV_PATH,
     txt_path: Path = GLOBAL_PLACE_NAMES_TXT_PATH,
 ) -> dict[str, dict[str, object]]:
     cache: dict[str, dict[str, object]] = {}
+    cache.update(load_geonames_city_cache())
     if csv_path.exists():
         with csv_path.open("r", encoding="utf-8-sig", errors="replace", newline="") as handle:
             reader = csv.DictReader(handle)
@@ -435,17 +587,16 @@ def load_global_place_cache(
                     "longitude": str(row.get("longitude") or "").strip(),
                     "aliases": [],
                 }
-                cache[term] = entry
+                cache.setdefault(term, entry)
                 canonical_key = normalize_text(canonical)
                 if canonical_key and canonical_key != term:
                     alias_entry = dict(entry)
                     alias_entry["aliases"] = [str(row.get("term") or "").strip()]
-                    cache[canonical_key] = alias_entry
-        return cache
+                    cache.setdefault(canonical_key, alias_entry)
 
     if txt_path.exists():
         for term in load_term_file(txt_path):
-            cache[term] = {
+            cache.setdefault(term, {
                 "canonical_name": term.title(),
                 "resolved": True,
                 "source": "local_city_gazetteer",
@@ -459,7 +610,7 @@ def load_global_place_cache(
                 "latitude": "",
                 "longitude": "",
                 "aliases": [],
-            }
+            })
     return cache
 
 
@@ -472,12 +623,7 @@ def merge_global_place_cache(cache: dict[str, dict[str, object]]) -> tuple[dict[
 
 
 def count_terms_by_source(path: Path, source_name: str) -> int:
-    if not path.exists():
-        return 0
-    try:
-        df = pd.read_csv(path, dtype=str, keep_default_na=False)
-    except Exception:
-        return 0
+    df = safe_read_csv(path)
     if df.empty or "source" not in df.columns:
         return 0
     return int((df["source"].astype(str) == source_name).sum())
@@ -779,7 +925,7 @@ def extract_procedure_terms(
     edges = build_term_edges(per_record_terms)
 
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    VISUALS_DIR.mkdir(parents=True, exist_ok=True)
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     VOS_DIR.mkdir(parents=True, exist_ok=True)
     terms_path = OUTPUTS_DIR / f"{slug}_procedure_terms.csv"
     counts_path = OUTPUTS_DIR / f"{slug}_procedure_term_counts.csv"
@@ -792,7 +938,7 @@ def extract_procedure_terms(
         dataframe_to_write.to_csv(path, index=False)
 
     compat_counts = counts_df[["procedure_name", "count"]].copy() if not counts_df.empty else pd.DataFrame(columns=["procedure_name", "count"])
-    for out_dir in progress_iter((VISUALS_DIR, VOS_DIR), desc="Writing procedure compatibility outputs", total=2, unit="dirs"):
+    for out_dir in progress_iter((PROCESSED_DIR, VOS_DIR), desc="Writing procedure compatibility outputs", total=2, unit="dirs"):
         compat_counts.to_csv(out_dir / f"{slug}_interventions_procedures.csv", index=False)
         compat_counts.to_csv(out_dir / f"{slug}_keywords_procedures.csv", index=False)
         write_semicolon_network(edges, out_dir / f"{slug}_network_procedures.txt")
@@ -891,7 +1037,7 @@ def extract_drug_terms(
     edges = build_term_edges(per_record_terms)
 
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    VISUALS_DIR.mkdir(parents=True, exist_ok=True)
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     VOS_DIR.mkdir(parents=True, exist_ok=True)
     terms_path = OUTPUTS_DIR / f"{slug}_drug_terms.csv"
     counts_path = OUTPUTS_DIR / f"{slug}_drug_term_counts.csv"
@@ -904,7 +1050,7 @@ def extract_drug_terms(
         dataframe_to_write.to_csv(path, index=False)
 
     compat_counts = counts_df[["drug_name", "count", "tty"]].copy() if not counts_df.empty else pd.DataFrame(columns=["drug_name", "count", "tty"])
-    for out_dir in progress_iter((VISUALS_DIR, VOS_DIR), desc="Writing drug compatibility outputs", total=2, unit="dirs"):
+    for out_dir in progress_iter((PROCESSED_DIR, VOS_DIR), desc="Writing drug compatibility outputs", total=2, unit="dirs"):
         compat_counts.to_csv(out_dir / f"{slug}_interventions_drugs.csv", index=False)
         compat_counts.to_csv(out_dir / f"{slug}_keywords_drugs.csv", index=False)
         write_semicolon_network(edges, out_dir / f"{slug}_network_drugs.txt")
@@ -920,8 +1066,8 @@ def read_cleaned_domain_terms(slug: str, domain: str, name_column: str) -> tuple
         terms_path = OUTPUTS_DIR / f"{slug}_{domain}_terms.csv"
     if not counts_path.exists():
         counts_path = OUTPUTS_DIR / f"{slug}_{domain}_term_counts.csv"
-    terms = pd.read_csv(terms_path, dtype=str, keep_default_na=False) if terms_path.exists() else pd.DataFrame()
-    counts = pd.read_csv(counts_path, dtype=str, keep_default_na=False) if counts_path.exists() else pd.DataFrame()
+    terms = safe_read_csv(terms_path)
+    counts = safe_read_csv(counts_path)
     if not counts.empty and name_column not in counts.columns and "canonical_name" in counts.columns:
         counts[name_column] = counts["canonical_name"]
     if not terms.empty and name_column not in terms.columns and "canonical_name" in terms.columns:
@@ -981,7 +1127,7 @@ def write_combined_intervention_outputs(slug: str) -> list[Path]:
     edges = build_term_edges(list(per_record.values()))
 
     OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
-    VISUALS_DIR.mkdir(parents=True, exist_ok=True)
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     VOS_DIR.mkdir(parents=True, exist_ok=True)
     terms_path = OUTPUTS_DIR / f"{slug}_intervention_terms.csv"
     counts_path = OUTPUTS_DIR / f"{slug}_intervention_term_counts.csv"
@@ -990,7 +1136,7 @@ def write_combined_intervention_outputs(slug: str) -> list[Path]:
     generated.extend([terms_path, counts_path])
 
     compat = combined_counts[["intervention_name", "domain", "type", "count"]].copy() if not combined_counts.empty else pd.DataFrame(columns=["intervention_name", "domain", "type", "count"])
-    for out_dir in (VISUALS_DIR, VOS_DIR):
+    for out_dir in (PROCESSED_DIR, VOS_DIR):
         combined_path = out_dir / f"{slug}_interventions_combined.csv"
         network_path = out_dir / f"{slug}_keyword_network_interventions.txt"
         compat.to_csv(combined_path, index=False)
@@ -1250,6 +1396,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--demographics", action="store_true", help="Extract demographic terms.")
     parser.add_argument("--drugs", action="store_true", help="Extract drug terms.")
     parser.add_argument("--procedures", action="store_true", help="Extract procedure terms.")
+    parser.add_argument("--run-all-terms", action="store_true", help="Alias for --all.")
+    parser.add_argument("--run-geography", action="store_true", help="Alias for --geography.")
+    parser.add_argument("--run-demographics", action="store_true", help="Alias for --demographics.")
+    parser.add_argument("--run-drugs", action="store_true", help="Alias for --drugs.")
+    parser.add_argument("--run-procedures", action="store_true", help="Alias for --procedures.")
+    parser.add_argument("--run-keywords", action="store_true", help="Accepted for GUI orchestration; keyword extraction is handled by visualize_bibliometrics.py.")
+    parser.add_argument("--output-dir", type=Path, help="Directory for term extraction CSV outputs.")
+    parser.add_argument("--qa-dir", type=Path, help="Directory for QA reports and summaries.")
     parser.add_argument("--rebuild-caches", action="store_true", help="Rebuild geography and demographic caches before extraction.")
     parser.add_argument("--rebuild-geo-cache", action="store_true", help="Rebuild geography cache before extraction.")
     parser.add_argument("--rebuild-demographic-cache", action="store_true", help="Rebuild demographic cache before extraction.")
@@ -1263,7 +1417,7 @@ def parse_args() -> argparse.Namespace:
     parser.set_defaults(include_cdps=False)
     parser.add_argument("--clean-terms", action="store_true", default=True, help="Apply term ambiguity cleanup filters.")
     parser.add_argument("--no-clean-terms", dest="clean_terms", action="store_false", help="Disable term cleanup filters.")
-    parser.add_argument("--geo-scope", choices=("texas", "us", "global", "all"), default="us", help="Geographic matching scope.")
+    parser.add_argument("--geo-scope", choices=("texas", "us", "global", "all"), default="global", help="Geographic matching scope.")
     parser.add_argument("--use-stoplists", action="store_true", default=True, help="Use configurable stoplist files.")
     parser.add_argument("--no-stoplists", dest="use_stoplists", action="store_false", help="Ignore configurable stoplist files.")
     parser.add_argument("--strict-drug-filtering", action="store_true", help="Apply stricter RxNorm ambiguity filtering.")
@@ -1275,7 +1429,18 @@ def parse_args() -> argparse.Namespace:
     progress_group = parser.add_mutually_exclusive_group()
     progress_group.add_argument("--progress", dest="progress", action="store_true", default=None, help="Show progress indicators when stdout is interactive.")
     progress_group.add_argument("--no-progress", dest="progress", action="store_false", help="Disable progress indicators.")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.run_all_terms:
+        args.all = True
+    if args.run_geography:
+        args.geography = True
+    if args.run_demographics:
+        args.demographics = True
+    if args.run_drugs:
+        args.drugs = True
+    if args.run_procedures:
+        args.procedures = True
+    return args
 
 
 def selected_actions(args: argparse.Namespace) -> str:
@@ -1314,10 +1479,7 @@ def resolve_progress_setting(args: argparse.Namespace) -> bool:
 def count_detected_terms(path: Path) -> int:
     if not path.exists():
         return 0
-    try:
-        return len(pd.read_csv(path, dtype=str, keep_default_na=False))
-    except Exception:
-        return 0
+    return len(safe_read_csv(path))
 
 
 def row_term(row: pd.Series) -> str:
@@ -1370,6 +1532,8 @@ def suppression_reason(prefix: str, row: pd.Series, stoplist: set[str], keep_ter
             if state and state not in {"texas", "tx"} and geo_type not in {"state", "country"}:
                 return "geo_scope_texas"
         if geo_type == "place" and match_method == "alias":
+            if source_ref == "geonames_cities5000":
+                return ""
             place_base = term
             for suffix in GEOGRAPHIC_PLACE_SUFFIXES:
                 if place_base.endswith(suffix):
@@ -1382,7 +1546,7 @@ def suppression_reason(prefix: str, row: pd.Series, stoplist: set[str], keep_ter
             base_words = set(place_base.split())
             if is_single_word or place_base in stoplist or place_base in COMMON_ENGLISH_WORDS or base_words & COMMON_ENGLISH_WORDS:
                 return "ambiguous_place_alias"
-        if is_single_word and term in COMMON_ENGLISH_WORDS and source_ref != "census":
+        if is_single_word and term in COMMON_ENGLISH_WORDS and source_ref not in {"census", "geonames_cities5000"}:
             return "common_word_ambiguity"
         if confidence == "low" and args.strict_geo_filtering:
             return "low_confidence_text_match"
@@ -1437,8 +1601,8 @@ def cleanup_extraction_outputs(
     keep_terms: dict[str, set[str]],
 ) -> tuple[tuple[Path, Path], pd.DataFrame]:
     terms_path, counts_path = paths
-    terms_df = pd.read_csv(terms_path, dtype=str, keep_default_na=False) if terms_path.exists() else pd.DataFrame()
-    counts_df = pd.read_csv(counts_path, dtype=str, keep_default_na=False) if counts_path.exists() else pd.DataFrame()
+    terms_df = safe_read_csv(terms_path)
+    counts_df = safe_read_csv(counts_path)
     if prefix == "demographic":
         terms_df = add_demographic_grouping(terms_df)
         counts_df = add_demographic_grouping(counts_df)
@@ -1508,7 +1672,7 @@ def write_cleanup_qa(slug: str, suppressions: list[pd.DataFrame], args: argparse
     city_detected = count_terms_by_source(OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv", "geonames_cities5000")
     city_suppressed = 0
     if not qa_df.empty and {"domain", "term"}.issubset(qa_df.columns):
-        raw_terms = pd.read_csv(OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv", dtype=str, keep_default_na=False) if (OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv").exists() else pd.DataFrame()
+        raw_terms = safe_read_csv(OUTPUTS_DIR / f"{slug}_geographic_term_counts_raw.csv")
         if not raw_terms.empty and {"canonical_name", "source"} <= set(raw_terms.columns):
             city_terms = set(raw_terms[raw_terms["source"].isin({"geonames_cities5000", "local_city_gazetteer"})]["canonical_name"].astype(str))
             city_suppressed = len(qa_df[(qa_df["domain"] == "geographic") & (qa_df["term"].astype(str).isin(city_terms))])
@@ -1634,7 +1798,7 @@ def print_geographic_cache_report(cache: dict[str, dict[str, object]], supplemen
     print("Geographic cache loaded:", flush=True)
     print(f"- total terms: {len(cache)}", flush=True)
     print(f"- U.S. Census terms: {sources.get('us_census', 0) + sources.get('census_gazetteer', 0)}", flush=True)
-    print("- GeoNames terms: 0 (removed)", flush=True)
+    print(f"- GeoNames terms: {sources.get('geonames_cities5000', 0)}", flush=True)
     print(f"- supplemental aliases: {supplemental_aliases}", flush=True)
     print(f"- longest term length: {max(lengths) if lengths else 0}", flush=True)
     print(f"- shortest term length: {min(lengths) if lengths else 0}", flush=True)
@@ -1681,9 +1845,15 @@ def print_failure_summary(
 
 
 def main() -> None:
-    global CURRENT_STAGE, USE_PROGRESS
+    global CURRENT_STAGE, USE_PROGRESS, OUTPUTS_DIR, PROCESSED_DIR
     started_at = time.time()
     args = parse_args()
+    if args.output_dir:
+        OUTPUTS_DIR = args.output_dir.expanduser().resolve()
+        OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+    if args.qa_dir:
+        PROCESSED_DIR = args.qa_dir.expanduser().resolve()
+        PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     USE_PROGRESS = resolve_progress_setting(args)
     input_path: Path | None = None
     records_loaded: int | None = None
@@ -1755,7 +1925,21 @@ def main() -> None:
                     args.slug,
                     geo_cache,
                     "geographic",
-                    ("geo_type", "map_level", "place_kind", "state", "admin1_name", "country", "latitude", "longitude"),
+                    (
+                        "geo_type",
+                        "map_level",
+                        "place_kind",
+                        "state",
+                        "admin1_name",
+                        "admin2_name",
+                        "country",
+                        "country_code",
+                        "latitude",
+                        "longitude",
+                        "population",
+                        "ambiguity_flag",
+                        "ambiguity_count",
+                    ),
                     progress_fn=progress_iter,
                     heartbeat_seconds=args.heartbeat_seconds,
                     stage_timeout_seconds=args.stage_timeout_seconds,

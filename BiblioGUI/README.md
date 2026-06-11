@@ -83,6 +83,17 @@ The GUI shows a plain-English error. Full technical details are saved in the run
 - a live API source timed out or rejected access
 - a RIS file was moved or deleted
 
+For regional map diagnostics, this helper prints the most relevant lines from the latest pipeline log:
+
+```bash
+cd "/Users/roger.smith/Library/Application Support/DansBibGUI/logs"
+
+latest_log=$(ls -t pipeline_*.log | head -1)
+echo "Latest log: $latest_log"
+
+grep -nE "REGIONAL MAP DIAGNOSTIC|regional map|basemap|Europe|Sub-Saharan|East Asia|Latin America|North America|Middle East|skip reason|WARNING: .*points plotted|ADM0|qa_status|suspicious" "$latest_log" | tail -n 300
+```
+
 ## Developer Notes
 
 ### Folder Structure

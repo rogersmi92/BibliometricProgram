@@ -35,6 +35,7 @@ from pipeline_capabilities import (
 from processing.analysis import (
     prepare_analysis_dataset,
     run_citation_analysis,
+    run_citation_enrichment,
     run_collaboration_analysis,
     run_h_index_analysis,
     run_institutional_temporal_analysis,
@@ -51,7 +52,7 @@ from processing.reference_cache import (
     extract_geographic_terms,
 )
 from processing.ris_parser import load_ris_files
-from utils.config import DEFAULT_DATABASES, RECOGNIZED_DATABASES, get_scaling_mode, get_scopus_api_key, get_wos_api_key
+from utils.config import DEFAULT_DATABASES, RECOGNIZED_DATABASES, get_requests_verify, get_scaling_mode, get_scopus_api_key, get_wos_api_key
 from utils.runtime_paths import configure_matplotlib_cache
 
 LOGGER = logging.getLogger(__name__)
@@ -119,11 +120,15 @@ def _call_api_safe(
         df = func(query, filters=filters)
         if not isinstance(df, pd.DataFrame):
             LOGGER.warning("%s did not return a DataFrame; coercing to empty DataFrame.", db_key)
-            return pd.DataFrame(columns=SCHEMA_COLUMNS)
+            empty = pd.DataFrame(columns=SCHEMA_COLUMNS)
+            empty.attrs["source_error"] = "did not return a DataFrame"
+            return empty
         return df
     except Exception as exc:  # pragma: no cover - depends on network and API state
         LOGGER.warning("%s query failed: %s", db_key, exc)
-        return pd.DataFrame(columns=SCHEMA_COLUMNS)
+        empty = pd.DataFrame(columns=SCHEMA_COLUMNS)
+        empty.attrs["source_error"] = str(exc)
+        return empty
 
 
 def extract_year(date_value: object) -> int | None:
@@ -662,7 +667,7 @@ def _log_year_distribution(dataframe: pd.DataFrame, source_name: str) -> None:
 def _probe_endpoint(url: str, headers: dict[str, str] | None = None, params: dict[str, str] | None = None) -> dict[str, object]:
     """Probe an API endpoint with a short timeout and capture availability details."""
     try:
-        response = requests.get(url, headers=headers, params=params, timeout=(3, 5))
+        response = requests.get(url, headers=headers, params=params, timeout=(3, 5), verify=get_requests_verify())
         if response.status_code == 403:
             return {"available": False, "status_code": 403}
         return {"available": True, "status_code": response.status_code}
@@ -1240,6 +1245,13 @@ def run_pipeline(
     extract_demographics: bool = False,
     rebuild_geo_cache: bool = False,
     rebuild_demographic_cache: bool = False,
+    enrich_institutions: bool = False,
+    enrichment_source: str = "all",
+    openalex_email: str = "",
+    scopus_api_key: str = "",
+    scopus_inst_token: str = "",
+    institution_enrichment_cache: bool = True,
+    rebuild_institution_enrichment_cache: bool = False,
 ) -> tuple[pd.DataFrame, dict[str, int | str | dict[str, str]]]:
     """
     Query selected databases, normalize, deduplicate, compute metrics, and save results.
@@ -1281,6 +1293,17 @@ def run_pipeline(
     LOGGER.info("Databases: %s", databases)
     LOGGER.info("RIS files loaded: %s", [str(item.path) for item in ris_inputs])
     LOGGER.info("Scaling mode: %s", get_scaling_mode())
+    ris_only_mode = not databases and bool(ris_inputs)
+    LOGGER.info("RIS-only mode: %s", "yes" if ris_only_mode else "no")
+    LOGGER.info("Institution enrichment requested: %s", "yes" if enrich_institutions else "no")
+    if ris_only_mode and enrich_institutions:
+        LOGGER.info("RIS-only mode enabled. Institution enrichment still allowed because --enrich-institutions is enabled.")
+        LOGGER.info("Enrichment allowed despite RIS-only mode: yes")
+    elif ris_only_mode:
+        LOGGER.info("Enrichment allowed despite RIS-only mode: no")
+        LOGGER.info("Institution enrichment blocked reason: --enrich-institutions not enabled.")
+    else:
+        LOGGER.info("Enrichment allowed despite RIS-only mode: %s", "yes" if enrich_institutions else "not applicable")
 
     rebuilt_caches: dict[str, int] = {}
     if rebuild_geo_cache:
@@ -1305,6 +1328,11 @@ def run_pipeline(
 
     collected_frames: list[pd.DataFrame] = []
     attempted_databases: list[str] = []
+    source_status: dict[str, str] = {
+        db.lower(): "selected"
+        for db in databases
+        if db.lower() in LIVE_API_DATABASES
+    }
 
     for db in databases:
         db_key = db.lower()
@@ -1315,15 +1343,18 @@ def run_pipeline(
 
         if db_key == "scopus" and not network_status["scopus"]["available"]:
             LOGGER.info("Skipping Scopus due to network status")
+            source_status[db_key] = "skipped: network/API unavailable"
             continue
 
         if db_key == "wos" and network_status["wos"].get("status_code") == 403:
             LOGGER.warning("Skipping Web of Science: access forbidden (likely network restriction)")
+            source_status[db_key] = "skipped: access forbidden"
             continue
 
         func = db_map[db_key]
         db_query = _query_for_database(query, db_key)
         attempted_databases.append(db_key)
+        source_status[db_key] = "started"
         LOGGER.info("%s query started.", db_key)
         source_started_at = time.perf_counter()
         with _api_spinner(db_key):
@@ -1331,16 +1362,27 @@ def run_pipeline(
         LOGGER.info("%s query completed in %.1f seconds.", db_key, time.perf_counter() - source_started_at)
         print(f"{_display_db_name(db_key)} completed", file=sys.stderr, flush=True)
 
+        source_error = str(df.attrs.get("source_error") or "").strip()
+        if source_error:
+            source_status[db_key] = f"failed: {source_error}"
+            LOGGER.warning("SOURCE_STATUS: %s - %s", _display_db_name(db_key), source_status[db_key])
+            continue
+
         if df.empty:
+            source_status[db_key] = "completed: 0 records"
             LOGGER.info("%s returned 0 records.", db_key)
             continue
 
         # Ensure source column exists and annotate
         df = df.copy()
         df["source"] = db_key
+        source_status[db_key] = f"success: {len(df)} records"
         LOGGER.info("%s returned %d records.", db_key, len(df))
         _log_year_distribution(df, db_key)
         collected_frames.append(df)
+
+    for db_key in source_status:
+        LOGGER.info("SOURCE_STATUS: %s - %s", _display_db_name(db_key), source_status[db_key])
 
     if ris_inputs:
         ris_df = load_ris_files(ris_inputs)
@@ -1459,8 +1501,30 @@ def run_pipeline(
         LOGGER.info("QA-only mode enabled; final network and visualization outputs were not generated.")
     else:
         analysis_df = apply_country_extraction(prepare_analysis_dataset(deduped))
+        if enrich_institutions:
+            analysis_df = run_citation_enrichment(
+                analysis_df,
+                outputs_dir,
+                project_slug,
+                enrichment_source=enrichment_source,
+                openalex_email=openalex_email,
+                scopus_api_key=scopus_api_key,
+                scopus_inst_token=scopus_inst_token,
+            )
+            citation_available = _citation_available(analysis_df)
         run_citation_analysis(analysis_df, outputs_dir, project_slug, citation_available=citation_available)
-        run_institutional_temporal_analysis(analysis_df, outputs_dir, project_slug)
+        analysis_df = run_institutional_temporal_analysis(
+            analysis_df,
+            outputs_dir,
+            project_slug,
+            enrich_institutions=enrich_institutions,
+            enrichment_source=enrichment_source,
+            openalex_email=openalex_email,
+            scopus_api_key=scopus_api_key,
+            scopus_inst_token=scopus_inst_token,
+            institution_enrichment_cache=institution_enrichment_cache,
+            rebuild_institution_enrichment_cache=rebuild_institution_enrichment_cache,
+        )
         run_collaboration_analysis(analysis_df, outputs_dir, project_slug)
         network_files.extend(
             [
@@ -1473,7 +1537,7 @@ def run_pipeline(
             ]
         )
         if citation_available:
-            run_h_index_analysis(deduped, outputs_dir, project_slug)
+            run_h_index_analysis(analysis_df, outputs_dir, project_slug)
         else:
             LOGGER.warning("Citation counts unavailable in source export. H-index analysis was not generated.")
         run_publication_year_analysis(deduped, outputs_dir, project_slug)
@@ -1546,6 +1610,7 @@ def run_pipeline(
     metrics["duplicates_removed"] = duplicates_removed
     metrics["qa_failures"] = len(qa_failures)
     metrics["networks_generated"] = "yes" if networks_generated else "no"
+    metrics["source_status"] = source_status
     metrics["output_paths"] = {
         "raw_results": os.path.abspath(raw_output_path),
         "year_limited_records": os.path.abspath(output_path),
@@ -1627,6 +1692,31 @@ def build_argument_parser() -> argparse.ArgumentParser:
         "--extract-demographics",
         action="store_true",
         help="Extract descriptive demographic terms from imported records using the local demographic cache only.",
+    )
+    parser.add_argument(
+        "--enrich-institutions",
+        action="store_true",
+        help="Enrich missing institution and citation data using Scopus/OpenAlex when native RIS affiliations/citation counts are absent.",
+    )
+    parser.add_argument(
+        "--enrichment-source",
+        choices=("scopus", "openalex", "all"),
+        default="all",
+        help="Institution enrichment source priority to use when --enrich-institutions is enabled.",
+    )
+    parser.add_argument("--openalex-email", default="", help="Email to include with OpenAlex enrichment requests when enabled.")
+    parser.add_argument("--scopus-api-key", default="", help="Scopus API key for institution enrichment. Value is not logged.")
+    parser.add_argument("--scopus-inst-token", default="", help="Optional Scopus InstToken for institution enrichment. Value is not logged.")
+    parser.add_argument(
+        "--institution-enrichment-cache",
+        action="store_true",
+        default=True,
+        help="Use processed OpenAlex institution enrichment cache when enrichment is enabled.",
+    )
+    parser.add_argument(
+        "--rebuild-institution-enrichment-cache",
+        action="store_true",
+        help="Ignore existing institution enrichment cache and rebuild it when enrichment is enabled.",
     )
     return parser
 
@@ -1724,6 +1814,13 @@ def main() -> None:
         extract_demographics=args.extract_demographics,
         rebuild_geo_cache=args.rebuild_geo_cache,
         rebuild_demographic_cache=args.rebuild_demographic_cache,
+        enrich_institutions=args.enrich_institutions,
+        enrichment_source=args.enrichment_source,
+        openalex_email=args.openalex_email,
+        scopus_api_key=args.scopus_api_key,
+        scopus_inst_token=args.scopus_inst_token,
+        institution_enrichment_cache=args.institution_enrichment_cache,
+        rebuild_institution_enrichment_cache=args.rebuild_institution_enrichment_cache,
     )
     print(dataframe)
     print(metrics)

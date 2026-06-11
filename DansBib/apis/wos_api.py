@@ -11,7 +11,7 @@ import requests
 
 from processing.filters import FILTER_COLUMNS
 from processing.normalize import standardize_record
-from utils.config import WOS_MAX_RESULTS, WOS_PAGE_SIZE, get_wos_api_key
+from utils.config import WOS_MAX_RESULTS, WOS_PAGE_SIZE, get_requests_verify, get_wos_api_key
 
 LOGGER = logging.getLogger(__name__)
 WOS_API_URL = "https://api.clarivate.com/api/wos"
@@ -169,7 +169,7 @@ def query_wos(
                 "count": batch_size,
                 "firstRecord": first_record,
             }
-            response = requests.get(WOS_API_URL, params=params, headers=headers, timeout=30)
+            response = requests.get(WOS_API_URL, params=params, headers=headers, timeout=30, verify=get_requests_verify())
             response.raise_for_status()
             payload = response.json()
 

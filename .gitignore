@@ -27,6 +27,11 @@ DansBib/data/VOS/
 # Logs
 *.log
 
+# Local GUI/API credential fallbacks
+secrets.json
+*.secrets.json
+config/secrets.json
+
 # Large local/reference files too big for normal GitHub
 *.tif
 *.tiff

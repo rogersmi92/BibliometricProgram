@@ -109,16 +109,48 @@ CONCEPT_PROFILES = {
 
 SUPPORTED_EXTRACTION_FLAGS = (
     "extract_geography",
+    "extract_drugs",
+    "extract_procedures",
     "extract_demographics",
+    "extract_keywords",
     "rebuild_geo_cache",
     "rebuild_demographic_cache",
 )
 SUPPORTED_VISUALIZATION_OPTIONS = (
     "skip_rxnorm",
+    "generate_maps",
     "generate_visuals",
     "generate_vos_networks",
     "convert_csv_to_vos",
 )
+SUPPORTED_ANALYSIS_OPTIONS = {
+    "geography": "Run geography / GeoCensus extraction",
+    "drugs": "Run drug term extraction",
+    "procedures": "Run procedure term extraction",
+    "demographics": "Run demographic term extraction",
+    "keywords": "Run keyword extraction",
+    "maps": "Generate maps",
+    "standard_visuals": "Generate standard bibliometric visuals",
+    "vos_networks": "Generate VOS/network visuals",
+}
+SUPPORTED_MAP_OPTIONS = {
+    "world": "Generate world country heat map",
+    "us": "Generate U.S. maps",
+    "priority_adm1": "Generate priority-country ADM1 maps",
+    "priority_adm2": "Generate priority-country ADM2 maps when available",
+    "city_points": "Generate city point maps",
+    "institution_points": "Generate institution point maps when institution cache data exists",
+    "build_world_adm0": "Build WORLD_ADM0.geojson from WORLD_ADM0_INDEX.json if needed",
+    "check_map_status": "Check map data status before running",
+}
+SUPPORTED_CAPABILITY_GROUPS = {
+    "inputs": (*LIVE_API_DATABASES, *LOCAL_FILE_INPUT_TYPES),
+    "analysis": tuple(SUPPORTED_ANALYSIS_OPTIONS),
+    "geocensus": ("geography", "drugs", "procedures", "demographics"),
+    "maps": tuple(SUPPORTED_MAP_OPTIONS),
+    "visuals": ("maps", "standard_visuals", "vos_networks"),
+    "exports": ("png_visuals", "processed_reports", "vos_txt"),
+}
 SUPPORTED_FILTER_FLAGS = ("review", "early_access", "open_access")
 
 
