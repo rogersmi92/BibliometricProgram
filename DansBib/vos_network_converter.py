@@ -4,14 +4,15 @@ from __future__ import annotations
 
 import itertools
 import argparse
+import os
 import statistics
 from pathlib import Path
 
 import pandas as pd
 
 PROJECT_DIR = Path(__file__).resolve().parent
-OUTPUTS_DIR = PROJECT_DIR / "data" / "outputs"
-VOS_DIR = PROJECT_DIR / "data" / "VOS"
+OUTPUTS_DIR = Path(os.getenv("DANSBIB_OUTPUT_DIR", str(PROJECT_DIR / "data" / "outputs")))
+VOS_DIR = Path(os.getenv("DANSBIB_VOS_DIR", str(PROJECT_DIR / "data" / "VOS")))
 REQUIRED_CORE_COLUMNS = ("title", "authors", "year")
 DERIVED_ONLY_COLUMNS = (
     "h_index",

@@ -46,6 +46,13 @@ class AppConfig:
     use_certifi_ca_bundle: bool = field(default_factory=certifi_available)
     pipeline_python: str = ""
     last_run_log: str = ""
+    window_width: int = 0
+    window_height: int = 0
+    window_x: int | None = None
+    window_y: int | None = None
+    last_file_folder: str = ""
+    last_ris_folder: str = ""
+    last_csv_folder: str = ""
 
     @classmethod
     def from_dict(cls, values: dict[str, Any]) -> "AppConfig":

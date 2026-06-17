@@ -40,6 +40,3 @@ DansBib/data/reference/**/*.xml
 # Oversized local reference files, not committed to GitHub
 DansBib/data/reference/procedures/desc2026.xml
 DansBib/data/reference/demographics/mesh/desc2026.xml
-
-# Old map reference folder replaced by DansBib/data/reference/maps/
-DansBib/data/reference/Maps/

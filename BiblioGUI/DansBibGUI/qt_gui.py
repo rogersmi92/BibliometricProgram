@@ -32,6 +32,7 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QPushButton,
     QScrollArea,
+    QSizePolicy,
     QSpinBox,
     QTabWidget,
     QTextEdit,
@@ -56,9 +57,12 @@ from .utils.pipeline_runner import (
     list_ris_files,
     paths_from_config,
     run_pipeline,
+    run_preflight_check,
+    run_sample_ris_test,
     run_visualizations,
     run_vos_networks,
     run_vos_validator,
+    setup_checklist,
 )
 from .utils.query_builder import (
     BLOCK_LABELS,
@@ -99,9 +103,10 @@ class DansBibQtWindow(QMainWindow):
         self.ris_source_combos: dict[Path, QComboBox] = {}
         self.manual_ris_files: list[Path] = []
 
-        self.setWindowTitle("DansBib GUI")
-        self.resize(1260, 860)
+        self.setWindowTitle("DansBib Bibliometric Workflow")
+        self.setMinimumSize(560, 420)
         self._build_ui()
+        self._apply_initial_window_geometry()
         self._update_api_credentials_status()
         self._refresh_diagnostics()
         self._refresh_ris_files()
@@ -119,10 +124,13 @@ class DansBibQtWindow(QMainWindow):
         header.setObjectName("Header")
         header_layout = QHBoxLayout(header)
         header_layout.setContentsMargins(16, 12, 16, 12)
-        title = QLabel("DansBib Qt GUI Loaded")
+        title = QLabel("DansBib Bibliometric Workflow")
         title.setObjectName("Title")
-        title.setFont(QFont("Arial", 20, QFont.Weight.Bold))
-        subtitle = QLabel("Staff workflow for query creation, RIS selection, pipeline runs, outputs, and diagnostics")
+        title_font = QFont()
+        title_font.setPointSize(20)
+        title_font.setBold(True)
+        title.setFont(title_font)
+        subtitle = QLabel("Build a search, choose sources, run analysis, and review outputs")
         subtitle.setObjectName("Subtitle")
         title_box = QVBoxLayout()
         title_box.addWidget(title)
@@ -137,23 +145,67 @@ class DansBibQtWindow(QMainWindow):
         self.tabs.setDocumentMode(False)
         root_layout.addWidget(self.tabs, 1)
 
-        self.tabs.addTab(self._build_run_tab(), "Build & Run")
-        self.tabs.addTab(self._build_outputs_tab(), "Outputs & Logs")
-        self.tabs.addTab(self._build_setup_tab(), "Setup & Diagnostics")
+        self.tabs.addTab(self._build_run_tab(), "Build && Run")
+        self.tabs.addTab(self._build_outputs_tab(), "Outputs && Logs")
+        self.tabs.addTab(self._build_setup_tab(), "Setup && Diagnostics")
 
-    def _build_run_tab(self) -> QWidget:
+    def _apply_initial_window_geometry(self) -> None:
+        screen = QApplication.primaryScreen()
+        if screen is None:
+            self.resize(1100, 760)
+            return
+        available = screen.availableGeometry()
+        saved_width = int(self.settings.window_width or 0)
+        saved_height = int(self.settings.window_height or 0)
+        width = saved_width if saved_width else min(1260, max(self.minimumWidth(), int(available.width() * 0.88)))
+        height = saved_height if saved_height else min(860, max(self.minimumHeight(), int(available.height() * 0.88)))
+        width = min(width, max(self.minimumWidth(), available.width() - 40))
+        height = min(height, max(self.minimumHeight(), available.height() - 40))
+        self.resize(width, height)
+        saved_x = self.settings.window_x
+        saved_y = self.settings.window_y
+        if saved_x is not None and saved_y is not None and available.contains(saved_x, saved_y):
+            self.move(saved_x, saved_y)
+        else:
+            frame = self.frameGeometry()
+            frame.moveCenter(available.center())
+            self.move(frame.topLeft())
+
+    def closeEvent(self, event) -> None:  # noqa: N802 - Qt override
+        self._save_window_state()
+        super().closeEvent(event)
+
+    def _save_window_state(self) -> None:
+        geometry = self.geometry()
+        self.settings = replace(
+            self.settings,
+            window_width=geometry.width(),
+            window_height=geometry.height(),
+            window_x=geometry.x(),
+            window_y=geometry.y(),
+        )
+        save_config(self.settings)
+
+    def _scroll_page(self, page: QWidget) -> QScrollArea:
+        page.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        scroll.setWidget(page)
+        return scroll
+
+    def _build_run_tab(self) -> QWidget:
         page = QWidget()
         layout = QVBoxLayout(page)
         layout.setContentsMargins(14, 14, 14, 18)
         layout.setSpacing(14)
-        scroll.setWidget(page)
 
         query_box = QGroupBox("Step 1: Search Query")
         query_layout = QVBoxLayout(query_box)
         query_layout.setSpacing(8)
-        query_layout.addWidget(QLabel("Main research question or topic"))
+        query_layout.addWidget(QLabel("Research question or search topic"))
         self.query_text = QPlainTextEdit()
         self.query_text.setPlaceholderText("Example: telehealth cancer treatment in rural West Texas")
         self.query_text.setMinimumHeight(92)
@@ -161,8 +213,21 @@ class DansBibQtWindow(QMainWindow):
         query_layout.addWidget(self.query_text)
         self.query_error = QLabel("")
         self.query_error.setObjectName("ErrorText")
+        self.query_error.setWordWrap(True)
         query_layout.addWidget(self.query_error)
         layout.addWidget(query_box)
+
+        mode_box = QGroupBox("Run mode")
+        mode_layout = QVBoxLayout(mode_box)
+        self.run_mode_combo = QComboBox()
+        self.run_mode_combo.addItems(("RIS-only QA", "Local RIS + visuals", "Live database search", "Maps only"))
+        self.run_mode_combo.setToolTip("Choose a common librarian workflow; individual settings can still be adjusted below.")
+        mode_layout.addWidget(self.run_mode_combo)
+        self.run_mode_note = QLabel("")
+        self.run_mode_note.setWordWrap(True)
+        self.run_mode_note.setObjectName("StatusNote")
+        mode_layout.addWidget(self.run_mode_note)
+        layout.addWidget(mode_box)
 
         builder_box = QGroupBox("Guided Query Builder")
         builder_layout = QVBoxLayout(builder_box)
@@ -189,13 +254,17 @@ class DansBibQtWindow(QMainWindow):
         for row, key in enumerate(("geography", "topic", "intervention", "outcomes", "exclusion")):
             label = QLabel(BLOCK_LABELS[key])
             entry = QLineEdit()
+            entry.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
             entry.setPlaceholderText(self._example_for_block(key))
             entry.textChanged.connect(self._validate_run_state)
             field = QComboBox()
             field.addItems(FIELD_TARGETS)
             field.setCurrentText("All Fields" if key == "exclusion" else "Topic")
+            field.setMinimumContentsLength(8)
+            field.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
             field.currentTextChanged.connect(self._validate_run_state)
             clear_button = QPushButton("Clear")
+            clear_button.setMaximumWidth(72)
             clear_button.clicked.connect(entry.clear)
             grid.addWidget(label, row, 0)
             grid.addWidget(entry, row, 1)
@@ -240,50 +309,51 @@ class DansBibQtWindow(QMainWindow):
         layout.addWidget(builder_box)
 
         layout.addWidget(self._build_sources_section())
-        output_row = QHBoxLayout()
-        output_row.addWidget(self._build_analysis_box(), 1)
-        output_row.addWidget(self._build_map_box(), 1)
-        layout.addLayout(output_row)
+        layout.addWidget(self._build_analysis_box())
+        layout.addWidget(self._build_map_box())
         layout.addWidget(self._build_options_box())
 
-        run_box = QGroupBox("Step 4: Run Pipeline")
+        run_box = QGroupBox("Step 4: Review & Run")
         run_layout = QVBoxLayout(run_box)
         self.run_status_note = QLabel("")
         self.run_status_note.setObjectName("StatusNote")
         self.run_status_note.setWordWrap(True)
         run_layout.addWidget(self.run_status_note)
-        action_row = QHBoxLayout()
+        action_grid = QGridLayout()
         self.live_warning = QLabel("")
         self.live_warning.setObjectName("WarningText")
         self.live_warning.setWordWrap(True)
-        self.maps_button = QPushButton("Generate Maps Only")
+        self.maps_button = QPushButton("Maps Only")
         self.maps_button.clicked.connect(self._run_maps_only)
-        self.visuals_button = QPushButton("Generate Visuals Only")
+        self.visuals_button = QPushButton("Visuals Only")
         self.visuals_button.clicked.connect(self._run_visualizations)
         self.clear_generated_button = QPushButton("Clear Generated Files")
         self.clear_generated_button.clicked.connect(self._clear_generated_files_only)
         self.run_button = QPushButton("Run Full Pipeline")
         self.run_button.setObjectName("PrimaryButton")
         self.run_button.clicked.connect(self._run_pipeline)
-        action_row.addWidget(self.clear_generated_button)
-        action_row.addWidget(self.maps_button)
-        action_row.addWidget(self.visuals_button)
-        action_row.addStretch(1)
-        action_row.addWidget(self.run_button)
-        run_layout.addLayout(action_row)
+        action_grid.setColumnStretch(0, 1)
+        action_grid.setColumnStretch(1, 1)
+        action_grid.addWidget(self.run_button, 0, 0, 1, 2)
+        action_grid.addWidget(self.clear_generated_button, 1, 0)
+        action_grid.addWidget(self.maps_button, 1, 1)
+        action_grid.addWidget(self.visuals_button, 2, 0, 1, 2)
+        run_layout.addLayout(action_grid)
         run_layout.addWidget(self.live_warning)
         layout.addWidget(run_box)
-        return scroll
+        self.run_mode_combo.currentTextChanged.connect(self._apply_run_mode)
+        self._apply_run_mode(self.run_mode_combo.currentText())
+        return self._scroll_page(page)
 
     def _build_sources_section(self) -> QGroupBox:
         box = QGroupBox("Step 2: Sources")
-        layout = QHBoxLayout(box)
-        layout.addWidget(self._build_source_box(), 1)
-        layout.addWidget(self._build_ris_box(), 1)
+        layout = QVBoxLayout(box)
+        layout.addWidget(self._build_source_box())
+        layout.addWidget(self._build_ris_box())
         return box
 
     def _build_source_box(self) -> QGroupBox:
-        box = QGroupBox("Live API sources")
+        box = QGroupBox("Online database searches")
         layout = QVBoxLayout(box)
         for key in LIVE_API_SOURCES:
             check = QCheckBox(SOURCE_DISPLAY_LABELS[key])
@@ -295,7 +365,7 @@ class DansBibQtWindow(QMainWindow):
         return box
 
     def _build_ris_box(self) -> QGroupBox:
-        box = QGroupBox("RIS files")
+        box = QGroupBox("Local RIS files")
         layout = QVBoxLayout(box)
         path_row = QHBoxLayout()
         self.ris_folder_label = QLabel(str(self.settings.resolved_ris_input_folder()))
@@ -328,7 +398,7 @@ class DansBibQtWindow(QMainWindow):
         return box
 
     def _build_options_box(self) -> QGroupBox:
-        box = QGroupBox("Advanced/debug options")
+        box = QGroupBox("Optional settings")
         box.setCheckable(True)
         box.setChecked(False)
         layout = QVBoxLayout(box)
@@ -348,6 +418,8 @@ class DansBibQtWindow(QMainWindow):
         advanced_layout.addWidget(self.ris_only_check)
 
         advanced_form = QFormLayout()
+        advanced_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        advanced_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.scaling_combo = QComboBox()
         self.scaling_combo.addItems(SCALING_MODES)
         self.scaling_combo.setCurrentText("medium")
@@ -394,7 +466,7 @@ class DansBibQtWindow(QMainWindow):
         return box
 
     def _build_analysis_box(self) -> QGroupBox:
-        box = QGroupBox("Step 3: Main Outputs")
+        box = QGroupBox("Step 3: Outputs to Generate")
         box.setToolTip("Analysis Options")
         layout = QVBoxLayout(box)
         defaults = {
@@ -420,11 +492,14 @@ class DansBibQtWindow(QMainWindow):
         return box
 
     def _build_map_box(self) -> QGroupBox:
-        box = QGroupBox("Advanced map options")
+        box = QGroupBox("Optional map options")
         box.setToolTip("Map Options")
         box.setCheckable(True)
         box.setChecked(False)
         layout = QVBoxLayout(box)
+        self.map_options_panel = QWidget()
+        panel_layout = QVBoxLayout(self.map_options_panel)
+        panel_layout.setContentsMargins(0, 8, 0, 0)
         defaults = {
             "world": True,
             "us": True,
@@ -440,7 +515,7 @@ class DansBibQtWindow(QMainWindow):
             check.setChecked(defaults.get(key, False))
             check.stateChanged.connect(self._validate_run_state)
             self.map_checks[key] = check
-            layout.addWidget(check)
+            panel_layout.addWidget(check)
         self.label_point_maps_check = QCheckBox("Label top city/institution points")
         self.label_point_maps_check.setChecked(True)
         self.label_point_maps_check.stateChanged.connect(self._validate_run_state)
@@ -453,14 +528,14 @@ class DansBibQtWindow(QMainWindow):
         self.label_point_maps_spin.valueChanged.connect(self._validate_run_state)
         label_row.addWidget(self.label_point_maps_spin)
         label_row.addStretch(1)
-        layout.addLayout(label_row)
+        panel_layout.addLayout(label_row)
         self.enrich_institutions_check = QCheckBox("Enrich missing institution and citation data using Scopus/OpenAlex")
         self.enrich_institutions_check.setToolTip(
             "Uses DOI/EID lookups to retrieve affiliation/institution metadata and citation counts where available."
         )
         self.enrich_institutions_check.setChecked(False)
         self.enrich_institutions_check.stateChanged.connect(self._validate_run_state)
-        layout.addWidget(self.enrich_institutions_check)
+        panel_layout.addWidget(self.enrich_institutions_check)
         credential_row = QHBoxLayout()
         self.enrichment_status_label = QLabel("")
         self.enrichment_status_label.setObjectName("StatusNote")
@@ -469,13 +544,10 @@ class DansBibQtWindow(QMainWindow):
         self.configure_api_button = QPushButton("Configure API Credentials")
         self.configure_api_button.clicked.connect(self._show_api_credentials_tab)
         credential_row.addWidget(self.configure_api_button)
-        layout.addLayout(credential_row)
-        for idx in range(layout.count()):
-            item = layout.itemAt(idx)
-            widget = item.widget()
-            if widget:
-                widget.setVisible(False)
-        box.toggled.connect(lambda checked: [layout.itemAt(idx).widget().setVisible(checked) for idx in range(layout.count()) if layout.itemAt(idx).widget()])
+        panel_layout.addLayout(credential_row)
+        self.map_options_panel.setVisible(False)
+        box.toggled.connect(self.map_options_panel.setVisible)
+        layout.addWidget(self.map_options_panel)
         layout.addStretch(1)
         return box
 
@@ -499,7 +571,7 @@ class DansBibQtWindow(QMainWindow):
         progress_layout.addRow("Current step", self.step_progress)
         layout.addWidget(progress_box)
 
-        split = QHBoxLayout()
+        split = QVBoxLayout()
         results_box = QGroupBox("Actual output files")
         results_layout = QVBoxLayout(results_box)
         self.results_list = QListWidget()
@@ -531,7 +603,7 @@ class DansBibQtWindow(QMainWindow):
         split.addWidget(logs_box, 1)
         layout.addLayout(split, 1)
 
-        secondary = QHBoxLayout()
+        secondary = QGridLayout()
         clear_generated = QPushButton("Clear Generated Files")
         clear_generated.clicked.connect(self._clear_generated_files_only)
         visuals = QPushButton("Generate Visuals")
@@ -540,13 +612,14 @@ class DansBibQtWindow(QMainWindow):
         vos.clicked.connect(self._run_vos_networks)
         csv_to_vos = QPushButton("Convert CSV to VOS TXT")
         csv_to_vos.clicked.connect(self._run_vos_converter)
-        secondary.addWidget(clear_generated)
-        secondary.addWidget(visuals)
-        secondary.addWidget(vos)
-        secondary.addWidget(csv_to_vos)
-        secondary.addStretch(1)
+        secondary.setColumnStretch(0, 1)
+        secondary.setColumnStretch(1, 1)
+        secondary.addWidget(clear_generated, 0, 0)
+        secondary.addWidget(visuals, 0, 1)
+        secondary.addWidget(vos, 1, 0)
+        secondary.addWidget(csv_to_vos, 1, 1)
         layout.addLayout(secondary)
-        return page
+        return self._scroll_page(page)
 
     def _build_setup_tab(self) -> QWidget:
         page = QWidget()
@@ -554,8 +627,12 @@ class DansBibQtWindow(QMainWindow):
         layout.setContentsMargins(14, 14, 14, 18)
         layout.setSpacing(12)
 
+        layout.addWidget(self._build_setup_checklist_box())
+
         setup_box = QGroupBox("Folders and pipeline")
         form = QFormLayout(setup_box)
+        form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.dansbib_path = QLineEdit(str(self.settings.resolved_dansbib_path()))
         self.output_path = QLineEdit(str(self.settings.resolved_output_folder()))
         self.ris_path = QLineEdit(str(self.settings.resolved_ris_input_folder()))
@@ -571,7 +648,7 @@ class DansBibQtWindow(QMainWindow):
         form.addRow(save)
         layout.addWidget(setup_box)
 
-        api_box = QGroupBox("External Data Sources")
+        api_box = QGroupBox("API credentials and enrichment")
         api_layout = QVBoxLayout(api_box)
         self.enable_scopus_enrichment_check = QCheckBox("Enable Scopus enrichment")
         self.enable_scopus_enrichment_check.setChecked(bool(self.settings.enable_scopus_enrichment))
@@ -579,6 +656,8 @@ class DansBibQtWindow(QMainWindow):
         self.enable_openalex_enrichment_check.setChecked(bool(self.settings.enable_openalex_enrichment))
         api_layout.addWidget(self.enable_scopus_enrichment_check)
         scopus_form = QFormLayout()
+        scopus_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        scopus_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.scopus_api_key_edit = QLineEdit()
         self.scopus_api_key_edit.setEchoMode(QLineEdit.EchoMode.Password)
         self.scopus_inst_token_edit = QLineEdit()
@@ -588,27 +667,32 @@ class DansBibQtWindow(QMainWindow):
         scopus_form.addRow("Scopus InstToken", self.scopus_inst_token_edit)
         scopus_form.addRow("Scopus base URL", self.scopus_base_url_edit)
         api_layout.addLayout(scopus_form)
-        scopus_buttons = QHBoxLayout()
+        scopus_buttons = QGridLayout()
         save_scopus = QPushButton("Save")
         save_scopus.clicked.connect(self._save_api_credentials)
         test_scopus = QPushButton("Test Scopus Connection")
         test_scopus.clicked.connect(self._test_scopus_connection)
         clear_scopus = QPushButton("Clear Scopus Credentials")
         clear_scopus.clicked.connect(self._clear_scopus_credentials)
-        scopus_buttons.addWidget(save_scopus)
-        scopus_buttons.addWidget(test_scopus)
-        scopus_buttons.addWidget(clear_scopus)
-        scopus_buttons.addStretch(1)
+        scopus_buttons.setColumnStretch(0, 1)
+        scopus_buttons.setColumnStretch(1, 1)
+        scopus_buttons.addWidget(save_scopus, 0, 0)
+        scopus_buttons.addWidget(test_scopus, 0, 1)
+        scopus_buttons.addWidget(clear_scopus, 1, 0, 1, 2)
         api_layout.addLayout(scopus_buttons)
         self.enable_openalex_enrichment_check.stateChanged.connect(self._validate_run_state)
         self.enable_scopus_enrichment_check.stateChanged.connect(self._validate_run_state)
         api_layout.addWidget(self.enable_openalex_enrichment_check)
         openalex_form = QFormLayout()
+        openalex_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        openalex_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.openalex_email_edit = QLineEdit(self.settings.openalex_email)
         openalex_form.addRow("OpenAlex email", self.openalex_email_edit)
         api_layout.addLayout(openalex_form)
         proxy_box = QGroupBox("Advanced network settings")
         proxy_layout = QFormLayout(proxy_box)
+        proxy_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        proxy_layout.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.use_system_proxy_check = QCheckBox("Use system proxy settings")
         self.use_system_proxy_check.setChecked(bool(self.settings.use_system_proxy))
         self.http_proxy_edit = QLineEdit(self.settings.http_proxy)
@@ -625,7 +709,7 @@ class DansBibQtWindow(QMainWindow):
         proxy_layout.addRow(self.use_certifi_check)
         proxy_layout.addRow(certifi_help)
         api_layout.addWidget(proxy_box)
-        openalex_buttons = QHBoxLayout()
+        openalex_buttons = QGridLayout()
         save_openalex = QPushButton("Save")
         save_openalex.clicked.connect(self._save_api_credentials)
         test_openalex = QPushButton("Test OpenAlex Connection")
@@ -634,11 +718,12 @@ class DansBibQtWindow(QMainWindow):
         clear_openalex.clicked.connect(self._clear_openalex_settings)
         test_ssl = QPushButton("Test API SSL/Connectivity")
         test_ssl.clicked.connect(self._test_api_ssl_connectivity)
-        openalex_buttons.addWidget(save_openalex)
-        openalex_buttons.addWidget(test_openalex)
-        openalex_buttons.addWidget(test_ssl)
-        openalex_buttons.addWidget(clear_openalex)
-        openalex_buttons.addStretch(1)
+        openalex_buttons.setColumnStretch(0, 1)
+        openalex_buttons.setColumnStretch(1, 1)
+        openalex_buttons.addWidget(save_openalex, 0, 0)
+        openalex_buttons.addWidget(test_openalex, 0, 1)
+        openalex_buttons.addWidget(test_ssl, 1, 0)
+        openalex_buttons.addWidget(clear_openalex, 1, 1)
         api_layout.addLayout(openalex_buttons)
         self.api_credentials_status = QLabel("")
         self.api_credentials_status.setWordWrap(True)
@@ -660,7 +745,32 @@ class DansBibQtWindow(QMainWindow):
         diag_buttons.addStretch(1)
         diagnostics_layout.addLayout(diag_buttons)
         layout.addWidget(diagnostics_box, 1)
-        return page
+        self._refresh_setup_checklist()
+        return self._scroll_page(page)
+
+    def _build_setup_checklist_box(self) -> QGroupBox:
+        box = QGroupBox("First-run setup checklist")
+        layout = QVBoxLayout(box)
+        self.setup_checklist_rows: dict[str, QLabel] = {}
+        for item in ("Python path", "DansBib folder", "RIS folder", "Output folder", "API credentials", "Map data"):
+            label = QLabel("")
+            label.setWordWrap(True)
+            self.setup_checklist_rows[item] = label
+            layout.addWidget(label)
+        buttons = QGridLayout()
+        refresh = QPushButton("Refresh Checklist")
+        refresh.clicked.connect(self._refresh_setup_checklist)
+        preflight = QPushButton("Run Preflight Check")
+        preflight.clicked.connect(self._run_preflight_check)
+        sample = QPushButton("Run Sample RIS Test")
+        sample.clicked.connect(self._run_sample_ris_test)
+        buttons.setColumnStretch(0, 1)
+        buttons.setColumnStretch(1, 1)
+        buttons.addWidget(refresh, 0, 0)
+        buttons.addWidget(preflight, 0, 1)
+        buttons.addWidget(sample, 1, 0, 1, 2)
+        layout.addLayout(buttons)
+        return box
 
     def _path_picker_row(self, edit: QLineEdit, callback: Callable[[], None]) -> QWidget:
         row = QWidget()
@@ -671,6 +781,32 @@ class DansBibQtWindow(QMainWindow):
         button.clicked.connect(callback)
         layout.addWidget(button)
         return row
+
+    def _refresh_setup_checklist(self) -> None:
+        if not hasattr(self, "setup_checklist_rows"):
+            return
+        icons = {"ok": "OK", "warning": "Check", "error": "Fix"}
+        for check in setup_checklist(self.settings):
+            item = check["item"]
+            label = self.setup_checklist_rows.get(item)
+            if label is None:
+                continue
+            status = check.get("status", "warning")
+            label.setText(f"{icons.get(status, 'Check')}: {item}: {check.get('detail', '')}")
+
+    def _run_preflight_check(self) -> None:
+        self._start_task(lambda log: run_preflight_check(self.settings, log), "Running setup preflight...")
+
+    def _run_sample_ris_test(self) -> None:
+        answer = QMessageBox.question(
+            self,
+            "Run sample RIS test",
+            "This will run a small local RIS-only QA test and write results to a timestamped run folder. Continue?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+        )
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+        self._start_task(lambda log: run_sample_ris_test(self.settings, log), "Running sample RIS test...")
 
     def _apply_style(self) -> None:
         self.setStyleSheet(
@@ -703,6 +839,51 @@ class DansBibQtWindow(QMainWindow):
             "exclusion": "animal",
         }
         return examples[key]
+
+    def _apply_run_mode(self, mode: str) -> None:
+        if not hasattr(self, "ris_only_check"):
+            return
+        mode = mode or "RIS-only QA"
+        notes = {
+            "RIS-only QA": "Checks local RIS import, cleaning, year limits, deduplication, and QA summaries without live database searches.",
+            "Local RIS + visuals": "Uses selected local RIS files and generates the usual figures/maps without querying online databases.",
+            "Live database search": "Queries selected online databases, optionally combines selected RIS files, and generates outputs.",
+            "Maps only": "Regenerates map/visual outputs from existing geography outputs or the selected current dataset.",
+        }
+        self.run_mode_note.setText(notes.get(mode, ""))
+
+        if mode == "RIS-only QA":
+            self.ris_only_check.setChecked(True)
+            self.safe_local_check.setChecked(True)
+            self.qa_only_check.setChecked(True)
+            self.analysis_checks["geography"].setChecked(False)
+            self.analysis_checks["maps"].setChecked(False)
+            self.analysis_checks["standard_visuals"].setChecked(False)
+            self.analysis_checks["vos_networks"].setChecked(False)
+        elif mode == "Local RIS + visuals":
+            self.ris_only_check.setChecked(True)
+            self.safe_local_check.setChecked(True)
+            self.qa_only_check.setChecked(False)
+            self.analysis_checks["geography"].setChecked(True)
+            self.analysis_checks["maps"].setChecked(True)
+            self.analysis_checks["standard_visuals"].setChecked(True)
+            self.analysis_checks["vos_networks"].setChecked(False)
+        elif mode == "Live database search":
+            self.ris_only_check.setChecked(False)
+            self.safe_local_check.setChecked(False)
+            self.qa_only_check.setChecked(False)
+            self.analysis_checks["geography"].setChecked(True)
+            self.analysis_checks["maps"].setChecked(True)
+            self.analysis_checks["standard_visuals"].setChecked(True)
+        elif mode == "Maps only":
+            self.ris_only_check.setChecked(True)
+            self.safe_local_check.setChecked(True)
+            self.qa_only_check.setChecked(False)
+            self.analysis_checks["geography"].setChecked(False)
+            self.analysis_checks["maps"].setChecked(True)
+            self.analysis_checks["standard_visuals"].setChecked(True)
+            self.analysis_checks["vos_networks"].setChecked(False)
+        self._validate_run_state()
 
     def _apply_preset(self, name: str) -> None:
         preset = PRESETS.get(name, {})
@@ -828,6 +1009,7 @@ class DansBibQtWindow(QMainWindow):
         live_text = ", ".join(SOURCE_DISPLAY_LABELS.get(source, source) for source in live_sources) if live_sources else "off"
         enrichment_text = self._enrichment_status_text()
         input_mode = "RIS-only" if self.ris_only_check.isChecked() or self.safe_local_check.isChecked() else "live database search"
+        mode = self.run_mode_combo.currentText() if hasattr(self, "run_mode_combo") else input_mode
         enrichment_enabled = "yes" if self.enrich_institutions_check.isChecked() else "no"
         if hasattr(self, "enrichment_status_label"):
             extra = "\nRIS-only input selected. External DOI enrichment will still run." if self.ris_only_check.isChecked() and self.enrich_institutions_check.isChecked() else ""
@@ -838,6 +1020,7 @@ class DansBibQtWindow(QMainWindow):
             query = result.machine_query
         slug = self.slug_edit.text().strip() or self._slug_from_query(query)
         self.run_status_note.setText(
+            f"Run mode: {mode}\n"
             f"RIS: {ris_text}\n"
             f"Input mode: {input_mode}\n"
             f"Live API sources: {live_text}\n"
@@ -848,6 +1031,46 @@ class DansBibQtWindow(QMainWindow):
             f"Output slug: {slug}\n"
             "Previous outputs: choose Clear / Keep / Cancel when Run starts\n"
             f"Main output location: {self.settings.resolved_output_folder()}"
+        )
+
+    def _estimated_api_use(self, request: PipelineRequest) -> str:
+        calls = []
+        if request.sources:
+            calls.append("online database searches: " + ", ".join(SOURCE_DISPLAY_LABELS.get(source, source) for source in request.sources))
+        if request.enrich_institutions:
+            calls.append(f"institution/citation enrichment: {request.enrichment_source}")
+        if request.generate_maps and request.build_world_adm0 and request.map_world:
+            calls.append("map build may fetch geoBoundaries data if WORLD_ADM0 is missing")
+        return "; ".join(calls) if calls else "none expected"
+
+    def _pre_run_summary_text(self, request: PipelineRequest) -> str:
+        selected_ris = request.ris_inputs or [RisInput(path=path, source="unknown") for path in request.ris_files]
+        ris_lines = [f"- {Path(item.path).name} ({item.source})" for item in selected_ris[:8]]
+        if len(selected_ris) > 8:
+            ris_lines.append(f"- and {len(selected_ris) - 8} more")
+        outputs = []
+        if request.qa_only:
+            outputs.append("QA summaries")
+        if request.extract_geography:
+            outputs.append("geography extraction")
+        if request.generate_maps:
+            outputs.append("maps")
+        if request.generate_visuals:
+            outputs.append("figures")
+        if request.generate_vos_networks:
+            outputs.append("VOS/network files")
+        mode = self.run_mode_combo.currentText() if hasattr(self, "run_mode_combo") else "Custom"
+        return "\n".join(
+            [
+                f"Run mode: {mode}",
+                f"Query: {request.query[:220]}",
+                f"Live sources: {', '.join(request.sources) if request.sources else 'none'}",
+                "RIS files:",
+                *(ris_lines or ["- none"]),
+                f"Outputs: {', '.join(outputs) if outputs else 'core CSV/QA files'}",
+                f"Estimated external API use: {self._estimated_api_use(request)}",
+                "Run outputs will be written to a new timestamped run folder.",
+            ]
         )
 
     def _refresh_ris_files(self) -> None:
@@ -866,17 +1089,20 @@ class DansBibQtWindow(QMainWindow):
             row_layout = QHBoxLayout(row)
             row_layout.setContentsMargins(0, 0, 0, 0)
             check = QCheckBox(path.name)
+            check.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
             check.setToolTip(str(path))
             check.stateChanged.connect(self._validate_run_state)
             combo = QComboBox()
             for source in RIS_SOURCE_LABELS:
                 combo.addItem(SOURCE_DISPLAY_LABELS[source], source)
             combo.setCurrentIndex(combo.findData("unknown"))
+            combo.setMinimumContentsLength(9)
+            combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
             combo.currentIndexChanged.connect(self._validate_run_state)
             self.ris_checks[path] = check
             self.ris_source_combos[path] = combo
             row_layout.addWidget(check, 1)
-            row_layout.addWidget(combo)
+            row_layout.addWidget(combo, 0)
             self.ris_list_layout.addWidget(row)
         self.ris_list_layout.addStretch(1)
         self.ris_folder_label.setText(str(self.settings.resolved_ris_input_folder()))
@@ -937,11 +1163,20 @@ class DansBibQtWindow(QMainWindow):
         )
 
     def _run_pipeline(self) -> None:
-        if not self._confirm_run_combination():
+        request = self._request_from_ui()
+        if not self._confirm_run_combination(request):
             return
-        if not self._confirm_enrichment_run():
+        if not self._confirm_enrichment_run(request):
             return
-        live_sources = [source for source in self._selected_sources() if source in LIVE_API_SOURCES]
+        answer = QMessageBox.question(
+            self,
+            "Review run before starting",
+            self._pre_run_summary_text(request),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+        )
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+        live_sources = [source for source in request.sources if source in LIVE_API_SOURCES]
         if live_sources and not self.dry_run_check.isChecked():
             answer = QMessageBox.question(
                 self,
@@ -950,7 +1185,6 @@ class DansBibQtWindow(QMainWindow):
             )
             if answer != QMessageBox.StandardButton.Yes:
                 return
-        request = self._request_from_ui()
         request = self._request_clear_previous_outputs(request)
         if request is None:
             return
@@ -1135,11 +1369,13 @@ class DansBibQtWindow(QMainWindow):
         csv_path, _ = QFileDialog.getOpenFileName(
             self,
             "Select current core dataset",
-            str(self.settings.resolved_output_folder()),
+            self.settings.last_csv_folder or str(self.settings.resolved_output_folder()),
             "CSV files (*.csv)",
         )
         if not csv_path:
             return None
+        self.settings = replace(self.settings, last_csv_folder=str(Path(csv_path).parent))
+        save_config(self.settings)
         selected = Path(csv_path)
         if not self._is_valid_core_dataset(selected):
             QMessageBox.warning(
@@ -1165,9 +1401,11 @@ class DansBibQtWindow(QMainWindow):
         return {"title", "authors", "year"}.issubset({column.strip() for column in header})
 
     def _run_vos_converter(self) -> None:
-        csv_path, _ = QFileDialog.getOpenFileName(self, "Select CSV file", str(self.settings.resolved_output_folder()), "CSV files (*.csv)")
+        csv_path, _ = QFileDialog.getOpenFileName(self, "Select CSV file", self.settings.last_csv_folder or str(self.settings.resolved_output_folder()), "CSV files (*.csv)")
         if not csv_path:
             return
+        self.settings = replace(self.settings, last_csv_folder=str(Path(csv_path).parent))
+        save_config(self.settings)
         self._start_task(lambda log: run_vos_validator(csv_path, self.settings, log), "Converting CSV to VOS TXT...")
 
     def _start_task(self, task: Callable[[Callable[[str], None]], dict[str, object]], status: str) -> None:
@@ -1210,6 +1448,7 @@ class DansBibQtWindow(QMainWindow):
         self.active_thread = None
         self._validate_run_state()
         self._refresh_diagnostics()
+        self._refresh_setup_checklist()
 
     def _append_log(self, message: str) -> None:
         text = str(message)
@@ -1251,10 +1490,54 @@ class DansBibQtWindow(QMainWindow):
         if isinstance(source_status, dict) and source_status:
             for source, status in source_status.items():
                 self.results_list.addItem(f"Source status - {SOURCE_DISPLAY_LABELS.get(str(source), str(source))}: {status}")
-        for raw_path in result.get("output_files", []) if isinstance(result.get("output_files"), list) else []:
-            item = QListWidgetItem(str(raw_path))
-            item.setData(Qt.ItemDataRole.UserRole, str(raw_path))
-            self.results_list.addItem(item)
+        grouped = self._group_output_files(result.get("output_files", []))
+        for group_name in ("Main CSVs", "Maps", "Figures", "VOS/network files", "Manifests", "Logs", "Other"):
+            paths = grouped.get(group_name, [])
+            if not paths:
+                continue
+            header = QListWidgetItem(group_name)
+            header.setFlags(header.flags() & ~Qt.ItemFlag.ItemIsSelectable)
+            self.results_list.addItem(header)
+            for raw_path in paths:
+                path = Path(str(raw_path))
+                item = QListWidgetItem(f"  {path.name}")
+                item.setToolTip(str(path))
+                item.setData(Qt.ItemDataRole.UserRole, str(path))
+                self.results_list.addItem(item)
+
+    def _group_output_files(self, raw_files: object) -> dict[str, list[str]]:
+        groups = {
+            "Main CSVs": [],
+            "Maps": [],
+            "Figures": [],
+            "VOS/network files": [],
+            "Manifests": [],
+            "Logs": [],
+            "Other": [],
+        }
+        files = raw_files if isinstance(raw_files, list) else []
+        for raw_path in files:
+            path = Path(str(raw_path))
+            name = path.name.lower()
+            suffix = path.suffix.lower()
+            parts = {part.lower() for part in path.parts}
+            if suffix == ".json" and "manifest" in name:
+                groups["Manifests"].append(str(path))
+            elif suffix in {".log", ".txt"} and ("log" in name or "logs" in parts):
+                groups["Logs"].append(str(path))
+            elif "vos" in parts or "network" in name or name.endswith("_overlay.txt"):
+                groups["VOS/network files"].append(str(path))
+            elif suffix == ".png" and ("map" in name or "geography_heatmap" in name or "geography_points" in name):
+                groups["Maps"].append(str(path))
+            elif suffix == ".png":
+                groups["Figures"].append(str(path))
+            elif suffix == ".csv" and any(marker in name for marker in ("year_limited", "raw", "qa_summary", "deduplication", "excluded", "readme", "country", "institution", "term")):
+                groups["Main CSVs"].append(str(path))
+            else:
+                groups["Other"].append(str(path))
+        for key in groups:
+            groups[key] = sorted(set(groups[key]))
+        return groups
 
     def _open_selected_output(self) -> None:
         item = self.results_list.currentItem()
@@ -1294,9 +1577,11 @@ class DansBibQtWindow(QMainWindow):
             self._refresh_ris_files()
 
     def _add_ris_files(self) -> None:
-        paths, _ = QFileDialog.getOpenFileNames(self, "Select RIS files", str(self.settings.resolved_ris_input_folder()), "RIS files (*.ris)")
+        paths, _ = QFileDialog.getOpenFileNames(self, "Select RIS files", self.settings.last_ris_folder or str(self.settings.resolved_ris_input_folder()), "RIS files (*.ris)")
         if not paths:
             return
+        self.settings = replace(self.settings, last_ris_folder=str(Path(paths[0]).parent))
+        save_config(self.settings)
         for raw_path in paths:
             path = Path(raw_path)
             if path not in self.manual_ris_files:
@@ -1343,6 +1628,7 @@ class DansBibQtWindow(QMainWindow):
         self._update_api_credentials_status()
         self._refresh_ris_files()
         self._refresh_diagnostics()
+        self._refresh_setup_checklist()
         QMessageBox.information(self, "Settings saved", "Settings were saved successfully.")
 
     def _show_api_credentials_tab(self) -> None:
@@ -1407,6 +1693,7 @@ class DansBibQtWindow(QMainWindow):
         )
         save_config(self.settings)
         self._update_api_credentials_status()
+        self._refresh_setup_checklist()
         self._append_log("API credential settings saved. Secrets were not logged.")
         QMessageBox.information(self, "API Credentials", "\n".join(stored_messages) if stored_messages else "API settings saved.")
 

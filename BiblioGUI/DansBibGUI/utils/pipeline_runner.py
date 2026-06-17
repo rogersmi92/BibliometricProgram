@@ -198,6 +198,7 @@ class RuntimePaths:
     vos_dir: Path
     matplotlib_cache_dir: Path
     logs_dir: Path
+    run_dir: Path | None = None
 
 
 def paths_from_config(settings: AppConfig) -> RuntimePaths:
@@ -216,6 +217,47 @@ def paths_from_config(settings: AppConfig) -> RuntimePaths:
     )
 
 
+def paths_for_new_run(settings: AppConfig, slug: str, started_at: float | None = None) -> RuntimePaths:
+    base = paths_from_config(settings)
+    stamp = datetime.fromtimestamp(started_at or time.time()).strftime("%Y%m%d_%H%M%S")
+    safe_slug = re.sub(r"[^a-zA-Z0-9_.-]+", "_", slug).strip("_") or "run"
+    run_dir = base.outputs_dir / "runs" / f"{stamp}_{safe_slug[:60]}"
+    return RuntimePaths(
+        root=base.root,
+        data_dir=base.data_dir,
+        raw_dir=base.raw_dir,
+        outputs_dir=run_dir / "outputs",
+        processed_dir=run_dir / "processed",
+        visuals_dir=run_dir / "visuals",
+        vos_dir=run_dir / "VOS",
+        matplotlib_cache_dir=base.matplotlib_cache_dir,
+        logs_dir=run_dir / "logs",
+        run_dir=run_dir,
+    )
+
+
+def paths_for_core_dataset(settings: AppConfig, core_dataset: str | None) -> RuntimePaths:
+    base = paths_from_config(settings)
+    if not core_dataset:
+        return base
+    core_path = Path(core_dataset)
+    if core_path.parent.name == "outputs" and core_path.parent.parent.exists():
+        run_dir = core_path.parent.parent
+        return RuntimePaths(
+            root=base.root,
+            data_dir=base.data_dir,
+            raw_dir=base.raw_dir,
+            outputs_dir=run_dir / "outputs",
+            processed_dir=run_dir / "processed",
+            visuals_dir=run_dir / "visuals",
+            vos_dir=run_dir / "VOS",
+            matplotlib_cache_dir=base.matplotlib_cache_dir,
+            logs_dir=run_dir / "logs",
+            run_dir=run_dir,
+        )
+    return base
+
+
 def list_ris_files(settings: AppConfig) -> list[Path]:
     raw_dir = settings.resolved_ris_input_folder()
     return sorted(raw_dir.glob("*.ris")) if raw_dir.exists() else []
@@ -227,12 +269,18 @@ def create_run_log(settings: AppConfig, prefix: str = "run") -> Path:
     return logs_dir / f"{prefix}_{stamp}.log"
 
 
+def create_runtime_log(runtime: RuntimePaths, prefix: str = "run") -> Path:
+    logs_dir = ensure_folder(runtime.logs_dir)
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    return logs_dir / f"{prefix}_{stamp}.log"
+
+
 def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: LogCallback = None) -> dict[str, object]:
     started_at = time.time()
-    runtime = paths_from_config(settings)
-    log_path = request.log_path or create_run_log(settings, "pipeline")
-    _preflight(settings, runtime, log_path, log_callback)
     active_slug = _active_slug_for_request(request)
+    runtime = paths_from_config(settings) if request.dry_run else paths_for_new_run(settings, active_slug, started_at)
+    log_path = request.log_path or create_runtime_log(runtime, "pipeline")
+    _preflight(settings, runtime, log_path, log_callback)
     if request.clear_previous_outputs:
         cleanup = cleanup_generated_output_folders(
             runtime,
@@ -300,10 +348,17 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
     env["SCALING_MODE"] = request.scaling_mode if request.scaling_mode in SCALING_MODES else "medium"
     env["DANSBIB_RIS_RAW_DIR"] = str(runtime.raw_dir)
     env["DANSBIB_OUTPUT_DIR"] = str(runtime.outputs_dir)
+    env["DANSBIB_VISUALS_DIR"] = str(runtime.visuals_dir)
+    env["DANSBIB_PROCESSED_DIR"] = str(runtime.processed_dir)
+    env["DANSBIB_VOS_DIR"] = str(runtime.vos_dir)
+    if runtime.run_dir:
+        env["DANSBIB_RUN_DIR"] = str(runtime.run_dir)
     env["MPLCONFIGDIR"] = str(runtime.matplotlib_cache_dir)
     _apply_enrichment_credentials(request, settings, env, log_callback, log_path)
 
     _log(log_callback, log_path, f"DansBib root: {runtime.root}")
+    if runtime.run_dir:
+        _log(log_callback, log_path, f"Run folder: {runtime.run_dir}")
     _log(log_callback, log_path, f"Python executable: {command[0]}")
     _log(log_callback, log_path, f"Selected sources: {', '.join(sources) if sources else 'RIS/offline inputs only'}")
     _log(log_callback, log_path, f"RIS-only mode: {'yes' if request.ris_only_mode else 'no'}")
@@ -324,7 +379,7 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
         _log(
             log_callback,
             log_path,
-            "Configured output folder differs from DansBib/data/outputs. Current DansBib pipeline versions may still write to their internal data/outputs folder.",
+            "Using configured run output folder via DANSBIB_OUTPUT_DIR.",
         )
     _log(log_callback, log_path, f"Running DansBib command: {_format_command(command)}")
     dry_run_steps = _planned_post_main_commands(request, runtime, settings, "<core_dataset>")
@@ -338,6 +393,7 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
             "dry_run": True,
             "summary": {"rows": 0, "message": "Dry run completed. No pipeline command was executed."},
             "output_paths": {
+                "run_folder": str(runtime.run_dir or ""),
                 "output_folder": str(runtime.outputs_dir),
                 "visuals_folder": str(runtime.visuals_dir),
                 "vos_folder": str(runtime.vos_dir),
@@ -367,6 +423,16 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
     warnings = _run_post_main_sequence(request, runtime, settings, log_path, log_callback, core_dataset)
     output_files = _collect_output_files(started_at, output_paths, runtime)
     output_files.append(log_path)
+    gui_manifest = _write_gui_run_manifest(
+        runtime=runtime,
+        request=request,
+        started_at=started_at,
+        command=command,
+        output_paths=output_paths,
+        output_files=output_files,
+        warnings=warnings,
+    )
+    output_files.append(gui_manifest)
 
     return {
         "total_records": metrics.get("total_publications", summary.get("rows", 0)),
@@ -380,10 +446,13 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
         "warnings": warnings,
         "output_paths": {
             **output_paths,
+            "run_folder": str(runtime.run_dir or ""),
             "output_folder": str(runtime.outputs_dir),
             "visuals_folder": str(runtime.visuals_dir),
             "vos_folder": str(runtime.vos_dir),
+            "processed_folder": str(runtime.processed_dir),
             "log_file": str(log_path),
+            "gui_run_manifest": str(gui_manifest),
         },
         "output_files": [str(path) for path in output_files],
         "core_dataset": core_dataset,
@@ -392,8 +461,8 @@ def run_pipeline(request: PipelineRequest, settings: AppConfig, log_callback: Lo
 
 def run_visualizations(core_dataset: str | None, query: str, skip_rxnorm: bool, settings: AppConfig, log_callback: LogCallback = None) -> dict[str, object]:
     started_at = time.time()
-    runtime = paths_from_config(settings)
-    log_path = create_run_log(settings, "visualizations")
+    runtime = paths_for_core_dataset(settings, core_dataset)
+    log_path = create_runtime_log(runtime, "visualizations")
     _preflight(settings, runtime, log_path, log_callback)
     if not core_dataset:
         raise ValueError("Visualization generation requires an explicit current core dataset. No fallback dataset will be auto-selected.")
@@ -408,16 +477,24 @@ def run_visualizations(core_dataset: str | None, query: str, skip_rxnorm: bool, 
         command.append("--skip-rxnorm")
 
     env = _base_env()
+    env.update(_runtime_env(runtime))
     env["MPLCONFIGDIR"] = str(runtime.matplotlib_cache_dir)
     _log(log_callback, log_path, f"Running visualization command: {_format_command(command)}")
     _run_streamed(command, runtime, env=env, log_path=log_path, log_callback=log_callback)
-    return {"output_files": [str(path) for path in [*_recent_files(runtime.visuals_dir, started_at), log_path]]}
+    return {
+        "output_paths": {
+            "run_folder": str(runtime.run_dir or ""),
+            "visuals_folder": str(runtime.visuals_dir),
+            "log_file": str(log_path),
+        },
+        "output_files": [str(path) for path in [*_recent_files(runtime.visuals_dir, started_at), log_path]],
+    }
 
 
 def run_vos_networks(core_dataset: str | None, settings: AppConfig, log_callback: LogCallback = None) -> dict[str, object]:
     started_at = time.time()
-    runtime = paths_from_config(settings)
-    log_path = create_run_log(settings, "vos_networks")
+    runtime = paths_for_core_dataset(settings, core_dataset)
+    log_path = create_runtime_log(runtime, "vos_networks")
     _preflight(settings, runtime, log_path, log_callback)
     if not core_dataset:
         raise ValueError("VOS network generation requires an explicit current core dataset. No fallback dataset will be auto-selected.")
@@ -429,25 +506,41 @@ def run_vos_networks(core_dataset: str | None, settings: AppConfig, log_callback
     command.extend(["--core", str(core_path)])
 
     env = _base_env()
+    env.update(_runtime_env(runtime))
     _log(log_callback, log_path, f"VOS core dataset: {core_path}")
     _log(log_callback, log_path, f"VOS output slug: {slug}")
     _log(log_callback, log_path, f"Running VOS network command: {_format_command(command)}")
     _run_streamed(command, runtime, env=env, log_path=log_path, log_callback=log_callback)
-    return {"output_files": [str(path) for path in [*_recent_files(runtime.vos_dir, started_at), log_path]]}
+    return {
+        "output_paths": {
+            "run_folder": str(runtime.run_dir or ""),
+            "vos_folder": str(runtime.vos_dir),
+            "log_file": str(log_path),
+        },
+        "output_files": [str(path) for path in [*_recent_files(runtime.vos_dir, started_at), log_path]],
+    }
 
 
 def run_vos_validator(csv_path: str, settings: AppConfig, log_callback: LogCallback = None) -> dict[str, object]:
     started_at = time.time()
-    runtime = paths_from_config(settings)
-    log_path = create_run_log(settings, "vos_txt")
+    runtime = paths_for_core_dataset(settings, csv_path)
+    log_path = create_runtime_log(runtime, "vos_txt")
     _preflight(settings, runtime, log_path, log_callback)
     if not Path(csv_path).exists():
         raise FileNotFoundError(f"CSV file not found: {csv_path}")
     command = [_python_executable(settings), "vos_validator.py", csv_path]
     env = _base_env()
+    env.update(_runtime_env(runtime))
     _log(log_callback, log_path, f"Running VOS TXT converter command: {_format_command(command)}")
     _run_streamed(command, runtime, env=env, log_path=log_path, log_callback=log_callback)
-    return {"output_files": [str(path) for path in [*_recent_files(runtime.vos_dir, started_at), log_path]]}
+    return {
+        "output_paths": {
+            "run_folder": str(runtime.run_dir or ""),
+            "vos_folder": str(runtime.vos_dir),
+            "log_file": str(log_path),
+        },
+        "output_files": [str(path) for path in [*_recent_files(runtime.vos_dir, started_at), log_path]],
+    }
 
 
 def check_map_data_status(settings: AppConfig, log_callback: LogCallback = None) -> dict[str, object]:
@@ -465,6 +558,108 @@ def check_map_data_status(settings: AppConfig, log_callback: LogCallback = None)
             "log_file": str(log_path),
         },
     }
+
+
+def setup_checklist(settings: AppConfig) -> list[dict[str, str]]:
+    runtime = paths_from_config(settings)
+    scopus_key, _ = get_secret("scopus_api_key")
+    openalex_email = settings.openalex_email.strip()
+    map_statuses = report_missing_map_packages()
+    map_missing = [status for status in map_statuses if not status.present]
+    checks = [
+        {
+            "item": "Python path",
+            "status": "ok" if Path(_python_executable(settings)).exists() else "warning",
+            "detail": str(_python_executable(settings)),
+        },
+        {
+            "item": "DansBib folder",
+            "status": "ok" if runtime.root.exists() and (runtime.root / "main.py").exists() else "error",
+            "detail": str(runtime.root),
+        },
+        {
+            "item": "RIS folder",
+            "status": "ok" if runtime.raw_dir.exists() else "warning",
+            "detail": str(runtime.raw_dir),
+        },
+        {
+            "item": "Output folder",
+            "status": "ok" if runtime.outputs_dir.parent.exists() or runtime.outputs_dir.exists() else "warning",
+            "detail": str(runtime.outputs_dir),
+        },
+        {
+            "item": "API credentials",
+            "status": "ok" if scopus_key or openalex_email else "warning",
+            "detail": f"Scopus {'configured' if scopus_key else 'not configured'}; OpenAlex email {'configured' if openalex_email else 'not configured'}",
+        },
+        {
+            "item": "Map data",
+            "status": "ok" if not map_missing else "warning",
+            "detail": "all expected map packages present" if not map_missing else f"{len(map_missing)} map package(s) missing or incomplete",
+        },
+    ]
+    return checks
+
+
+def run_preflight_check(settings: AppConfig, log_callback: LogCallback = None) -> dict[str, object]:
+    runtime = paths_from_config(settings)
+    log_path = create_run_log(settings, "preflight")
+    _preflight(settings, runtime, log_path, log_callback)
+    command = [_python_executable(settings), "preflight.py", "--json"]
+    env = _base_env()
+    env.update(_runtime_env(runtime))
+    _log(log_callback, log_path, f"Running preflight command: {_format_command(command)}")
+    try:
+        lines = _run_streamed(command, runtime, env=env, log_path=log_path, log_callback=log_callback)
+    except RuntimeError as exc:
+        _log(log_callback, log_path, f"WARNING: Preflight reported setup issues: {exc}")
+        lines = []
+    summary = {"message": "Preflight completed. Review warnings for setup items that need attention."}
+    for line in reversed(lines):
+        if not line.strip().startswith("{"):
+            continue
+        try:
+            payload = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        summary = {
+            "message": payload.get("summary", "Preflight completed."),
+            "ok": payload.get("ok", False),
+            "errors": payload.get("errors", 0),
+            "warnings": payload.get("warnings", 0),
+        }
+        break
+    return {
+        "summary": summary,
+        "output_paths": {"log_file": str(log_path)},
+        "output_files": [str(log_path)],
+    }
+
+
+def run_sample_ris_test(settings: AppConfig, log_callback: LogCallback = None) -> dict[str, object]:
+    fixture = Path(__file__).resolve().parents[3] / "DansBib" / "tests" / "fixtures" / "sample_librarian_training.ris"
+    if not fixture.exists():
+        raise FileNotFoundError(f"Sample RIS fixture not found: {fixture}")
+    request = PipelineRequest(
+        query="telehealth cancer rural access",
+        sources=[],
+        filters={"review": None, "early_access": None, "open_access": None},
+        ris_files=[fixture],
+        include_ris=True,
+        scaling_mode="small",
+        ris_inputs=[RisInput(path=fixture, source="unknown")],
+        ris_only_mode=True,
+        safe_local_test=True,
+        slug="sample_ris_staff_test",
+        qa_only=True,
+        extract_geography=False,
+        extract_demographics=False,
+        generate_maps=False,
+        generate_visuals=False,
+        generate_vos_networks=False,
+        validate_outputs=False,
+    )
+    return run_pipeline(request, settings, log_callback)
 
 
 def cleanup_previous_run_files(
@@ -678,7 +873,13 @@ def _planned_post_main_commands(request: PipelineRequest, runtime: RuntimePaths,
 
 
 def _needs_geocensus(request: PipelineRequest) -> bool:
-    return True
+    return bool(
+        request.extract_geography
+        or request.extract_drugs
+        or request.extract_procedures
+        or request.extract_demographics
+        or request.generate_maps
+    )
 
 
 def _geocensus_command(request: PipelineRequest, runtime: RuntimePaths, settings: AppConfig, core_dataset: str) -> list[str]:
@@ -718,6 +919,7 @@ def _run_post_main_sequence(
 ) -> list[str]:
     warnings: list[str] = []
     env = _base_env()
+    env.update(_runtime_env(runtime))
     env["MPLCONFIGDIR"] = str(runtime.matplotlib_cache_dir)
 
     if request.check_map_status and (request.generate_maps or request.map_world):
@@ -920,6 +1122,97 @@ def _base_env() -> dict[str, str]:
     return env
 
 
+def _runtime_env(runtime: RuntimePaths) -> dict[str, str]:
+    env = {
+        "DANSBIB_RIS_RAW_DIR": str(runtime.raw_dir),
+        "DANSBIB_OUTPUT_DIR": str(runtime.outputs_dir),
+        "DANSBIB_VISUALS_DIR": str(runtime.visuals_dir),
+        "DANSBIB_PROCESSED_DIR": str(runtime.processed_dir),
+        "DANSBIB_VOS_DIR": str(runtime.vos_dir),
+        "MPLCONFIGDIR": str(runtime.matplotlib_cache_dir),
+    }
+    if runtime.run_dir:
+        env["DANSBIB_RUN_DIR"] = str(runtime.run_dir)
+    return env
+
+
+def _git_commit(runtime: RuntimePaths) -> str:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=runtime.root.parent,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except Exception:
+        return ""
+    return result.stdout.strip()
+
+
+def _package_versions() -> dict[str, str]:
+    packages = ("pandas", "requests", "PySide6", "matplotlib", "plotly", "networkx", "geopandas", "numpy")
+    versions: dict[str, str] = {}
+    for package in packages:
+        try:
+            import importlib.metadata
+
+            versions[package] = importlib.metadata.version(package)
+        except Exception:
+            versions[package] = "not installed"
+    return versions
+
+
+def _write_gui_run_manifest(
+    runtime: RuntimePaths,
+    request: PipelineRequest,
+    started_at: float,
+    command: list[str],
+    output_paths: dict[str, object],
+    output_files: list[Path],
+    warnings: list[str],
+) -> Path:
+    target_dir = runtime.run_dir or runtime.outputs_dir
+    target_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path = target_dir / "gui_run_manifest.json"
+    manifest = {
+        "schema_version": 1,
+        "run_started_at": datetime.fromtimestamp(started_at).isoformat(timespec="seconds"),
+        "run_finished_at": datetime.now().isoformat(timespec="seconds"),
+        "run_folder": str(runtime.run_dir or ""),
+        "request": {
+            "query": request.query,
+            "sources": request.sources,
+            "filters": request.filters,
+            "ris_files": [str(path) for path in request.ris_files],
+            "ris_inputs": [{"path": str(item.path), "source": item.source} for item in request.ris_inputs or []],
+            "ris_only_mode": request.ris_only_mode,
+            "safe_local_test": request.safe_local_test,
+            "scaling_mode": request.scaling_mode,
+            "start_year": request.start_year,
+            "end_year": request.end_year,
+            "qa_only": request.qa_only,
+            "generate_maps": request.generate_maps,
+            "generate_visuals": request.generate_visuals,
+            "generate_vos_networks": request.generate_vos_networks,
+            "enrich_institutions": request.enrich_institutions,
+        },
+        "command": command,
+        "output_paths": output_paths,
+        "output_files": [str(path) for path in output_files],
+        "warnings": warnings,
+        "environment": {
+            "python": sys.version.split()[0],
+            "python_executable": sys.executable,
+            "git_commit": _git_commit(runtime),
+            "package_versions": _package_versions(),
+        },
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2, default=str) + "\n", encoding="utf-8")
+    return manifest_path
+
+
 def _apply_enrichment_credentials(
     request: PipelineRequest,
     settings: AppConfig,
@@ -1049,7 +1342,7 @@ def _collect_output_files(started_at: float, output_paths: dict[str, object], ru
             path = Path(raw_path)
             if path.is_file():
                 files.append(path)
-    for folder in (runtime.outputs_dir, runtime.visuals_dir, runtime.vos_dir):
+    for folder in (runtime.outputs_dir, runtime.processed_dir, runtime.visuals_dir, runtime.vos_dir, runtime.logs_dir):
         files.extend(_recent_files(folder, started_at))
     return sorted(set(files), key=lambda path: path.stat().st_mtime if path.exists() else 0, reverse=True)
 

@@ -18,7 +18,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_DIR = ROOT / "data" / "reference"
 CACHE_DIR = ROOT / "data" / "cache"
-OUTPUTS_DIR = ROOT / "data" / "outputs"
+OUTPUTS_DIR = Path(os.getenv("DANSBIB_OUTPUT_DIR", str(ROOT / "data" / "outputs")))
 GEOGRAPHIC_CACHE_PATH = CACHE_DIR / "geographic_cache.json"
 DEMOGRAPHIC_CACHE_PATH = CACHE_DIR / "demographic_cache.json"
 

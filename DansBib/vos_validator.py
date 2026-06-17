@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import os
 import sys
+from pathlib import Path
 
 import pandas as pd
 
-OUTPUT_DIR = "/Users/roger.smith/Desktop/BibliometricProgram/DansBib/data/VOS"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+ROOT = Path(__file__).resolve().parent
+OUTPUT_DIR = Path(os.getenv("DANSBIB_VOS_DIR", str(ROOT / "data" / "VOS")))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def format_authors(val: object) -> str:
@@ -35,7 +37,7 @@ def convert_to_vos(file_path: str) -> None:
     print(f"\n📄 Processing: {base}")
 
     if "authors" in df.columns:
-        out_path = os.path.join(OUTPUT_DIR, f"{base}_authors.txt")
+        out_path = OUTPUT_DIR / f"{base}_authors.txt"
         with open(out_path, "w", encoding="utf-8") as handle:
             for val in df["authors"]:
                 handle.write(format_authors(val) + "\n")
@@ -44,7 +46,7 @@ def convert_to_vos(file_path: str) -> None:
         print("✘ No authors column — skipping authors file")
 
     if "keywords" in df.columns:
-        out_path = os.path.join(OUTPUT_DIR, f"{base}_keywords.txt")
+        out_path = OUTPUT_DIR / f"{base}_keywords.txt"
         with open(out_path, "w", encoding="utf-8") as handle:
             for val in df["keywords"]:
                 handle.write(format_keywords(val) + "\n")

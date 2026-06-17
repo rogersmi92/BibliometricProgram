@@ -5,9 +5,12 @@ from __future__ import annotations
 import argparse
 import glob
 import itertools
+import importlib.metadata
+import json
 import logging
 import os
 import re
+import subprocess
 import sys
 import threading
 import time
@@ -785,6 +788,20 @@ def clean_query(raw: str) -> str:
     return s
 
 
+def clean_search_input(raw: str) -> str:
+    """Clean plain-language searches while preserving structured database syntax."""
+    text = re.sub(r"\s+", " ", str(raw or "").strip())
+    if not text:
+        return ""
+    if re.search(r"\b(?:TS|TI|AB|AK|KP|SO|PY)\s*=", text, flags=re.IGNORECASE):
+        return text
+    if re.search(r"\b(?:AND|OR|NOT|NEAR/\d+|SAME)\b", text, flags=re.IGNORECASE):
+        return text
+    if any(char in text for char in ['"', "*"]):
+        return text
+    return clean_query(text)
+
+
 def _query_label(query: QueryInput) -> str:
     """Return a stable display/output label for a string query or per-source query map."""
     if isinstance(query, dict):
@@ -799,8 +816,75 @@ def _query_label(query: QueryInput) -> str:
 def _query_for_database(query: QueryInput, db_key: str) -> str:
     """Return the query text that should be sent to a specific database."""
     if isinstance(query, dict):
-        return str(query.get(db_key) or _query_label(query))
-    return query
+        raw_query = str(query.get(db_key) or _query_label(query))
+    else:
+        raw_query = query
+    return _translate_query_for_database(str(raw_query), db_key)
+
+
+def _strip_numbered_query_lines(query: str) -> str:
+    """Collapse guided-builder numbered lines into the final Boolean expression when possible."""
+    lines = [line.strip() for line in str(query or "").splitlines() if line.strip()]
+    if not lines:
+        return str(query or "").strip()
+    numbered: dict[str, str] = {}
+    for line in lines:
+        match = re.match(r"^#?(\d+)\s*[:=]\s*(.+)$", line)
+        if match:
+            numbered[match.group(1)] = match.group(2).strip()
+    if numbered:
+        return numbered.get(str(max(int(key) for key in numbered)), lines[-1])
+    return " ".join(lines)
+
+
+def _translate_query_for_database(query: str, db_key: str) -> str:
+    """Translate common WoS-style guided-builder syntax for a target source."""
+    text = _strip_numbered_query_lines(query)
+    text = re.sub(r"\s+", " ", text).strip()
+    if not text:
+        return text
+
+    target = db_key.lower().strip()
+    if target == "wos":
+        return text
+    if target == "scopus":
+        replacements = {
+            "TS": "TITLE-ABS-KEY",
+            "TI": "TITLE",
+            "AB": "ABS",
+            "AK": "AUTHKEY",
+            "KP": "KEY",
+            "SO": "SRCTITLE",
+            "PY": "PUBYEAR",
+        }
+        for wos_tag, scopus_tag in replacements.items():
+            text = re.sub(rf"\b{wos_tag}\s*=", f"{scopus_tag}", text, flags=re.IGNORECASE)
+        text = re.sub(r"\bNEAR/\d+\b", "W/5", text, flags=re.IGNORECASE)
+        text = re.sub(r"\bSAME\b", "AND", text, flags=re.IGNORECASE)
+        return text
+    if target == "pubmed":
+        replacements = {
+            "TS": "Title/Abstract",
+            "TI": "Title",
+            "AB": "Abstract",
+            "AK": "Title/Abstract",
+            "KP": "Title/Abstract",
+        }
+        for wos_tag, pubmed_field in replacements.items():
+            text = re.sub(
+                rf"\b{wos_tag}\s*=\s*\(([^()]*)\)",
+                lambda match: f"({match.group(1)})[{pubmed_field}]",
+                text,
+                flags=re.IGNORECASE,
+            )
+        text = re.sub(r"\bPY\s*=\s*\(([^()]*)\)", r"(\1)[Date - Publication]", text, flags=re.IGNORECASE)
+        return text
+    if target == "openalex":
+        text = re.sub(r"\b(?:TS|TI|AB|AK|KP|SO|PY)\s*=\s*", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"\bNEAR/\d+\b", " ", text, flags=re.IGNORECASE)
+        text = re.sub(r"\bSAME\b", "AND", text, flags=re.IGNORECASE)
+        return re.sub(r"\s+", " ", text).strip()
+    return text
 
 
 def _compile_concept_pattern(terms: list[str]) -> re.Pattern[str]:
@@ -1228,6 +1312,83 @@ def write_query_readme(
     return readme_path
 
 
+def _package_versions() -> dict[str, str]:
+    packages = [
+        "pandas",
+        "requests",
+        "pybliometrics",
+        "matplotlib",
+        "plotly",
+        "networkx",
+        "geopandas",
+        "numpy",
+        "rapidfuzz",
+    ]
+    versions: dict[str, str] = {}
+    for package in packages:
+        try:
+            versions[package] = importlib.metadata.version(package)
+        except importlib.metadata.PackageNotFoundError:
+            versions[package] = "not installed"
+    return versions
+
+
+def _git_commit() -> str:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=PROJECT_DIR,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except Exception:
+        return ""
+    return result.stdout.strip()
+
+
+def write_run_manifest(
+    outputs_dir: str,
+    slug: str,
+    run_started_at: datetime,
+    query: QueryInput,
+    original_query: str | None,
+    selected_databases: list[str],
+    attempted_databases: list[str],
+    filters: dict[str, bool | None],
+    ris_inputs: list[RisInput],
+    source_status: dict[str, str],
+    output_paths: dict[str, object],
+) -> str:
+    """Write machine-readable run provenance for reproducibility and staff handoff."""
+    manifest = {
+        "schema_version": 1,
+        "run_started_at": run_started_at.isoformat(timespec="seconds"),
+        "run_finished_at": datetime.now().isoformat(timespec="seconds"),
+        "project_slug": slug,
+        "query": query,
+        "original_query": original_query or "",
+        "selected_databases": selected_databases,
+        "attempted_databases": attempted_databases,
+        "filters": filters,
+        "ris_inputs": [{"path": str(item.path), "source": item.source} for item in ris_inputs],
+        "source_status": source_status,
+        "output_paths": output_paths,
+        "environment": {
+            "python": sys.version.split()[0],
+            "python_executable": sys.executable,
+            "git_commit": _git_commit(),
+            "package_versions": _package_versions(),
+        },
+    }
+    path = os.path.join(outputs_dir, f"{slug}_run_manifest.json")
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(manifest, handle, indent=2, default=str)
+        handle.write("\n")
+    return path
+
+
 def run_pipeline(
     query: QueryInput,
     databases: list[str] | None = None,
@@ -1259,6 +1420,7 @@ def run_pipeline(
     databases: list of live API sources among {"openalex", "pubmed", "scopus", "wos"}.
                If None, DEFAULT_DATABASES from utils.config is used.
     """
+    run_started_at = datetime.now()
     if databases is None:
         databases = DEFAULT_DATABASES
     ris_inputs = build_ris_inputs(ris_files, ris_file_sources)
@@ -1281,8 +1443,8 @@ def run_pipeline(
     if concept_profile and concept_profile not in CONCEPT_PROFILES:
         raise ValueError(f"Unknown concept profile: {concept_profile}")
 
-    outputs_dir = os.path.join("data", "outputs")
-    visuals_dir = os.path.join("data", "visuals")
+    outputs_dir = os.getenv("DANSBIB_OUTPUT_DIR", os.path.join("data", "outputs"))
+    visuals_dir = os.getenv("DANSBIB_VISUALS_DIR", os.path.join("data", "visuals"))
     os.makedirs(outputs_dir, exist_ok=True)
     os.makedirs(visuals_dir, exist_ok=True)
     _remove_stale_final_outputs(outputs_dir, project_slug)
@@ -1606,6 +1768,32 @@ def run_pipeline(
     LOGGER.info("QA summary saved to: %s", summary_txt)
     LOGGER.info("QA summary CSV saved to: %s", summary_csv)
     LOGGER.info("Query README saved to: %s", readme_path)
+    manifest_path = write_run_manifest(
+        outputs_dir=outputs_dir,
+        slug=project_slug,
+        run_started_at=run_started_at,
+        query=query,
+        original_query=original_query,
+        selected_databases=databases,
+        attempted_databases=list(dict.fromkeys(attempted_databases)),
+        filters=active_filters,
+        ris_inputs=ris_inputs,
+        source_status=source_status,
+        output_paths={
+            "raw_results": os.path.abspath(raw_output_path),
+            "year_limited_records": os.path.abspath(output_path),
+            "excluded_records": os.path.abspath(excluded_path),
+            "qa_summary": os.path.abspath(summary_txt),
+            "qa_summary_csv": os.path.abspath(summary_csv),
+            "publication_trend_files": [os.path.abspath(path) for path in publication_trend_files],
+            "reference_extraction_files": [os.path.abspath(path) for path in extraction_files],
+            "vosviewer_results": os.path.abspath(vosviewer_path) if networks_generated else "",
+            "query_readme": os.path.abspath(readme_path),
+            "output_folder": os.path.abspath(outputs_dir),
+            "visuals_folder": os.path.abspath(visuals_dir),
+        },
+    )
+    LOGGER.info("Run manifest saved to: %s", manifest_path)
 
     metrics["duplicates_removed"] = duplicates_removed
     metrics["qa_failures"] = len(qa_failures)
@@ -1621,6 +1809,7 @@ def run_pipeline(
         "reference_extraction_files": ";".join(os.path.abspath(path) for path in extraction_files),
         "vosviewer_results": os.path.abspath(vosviewer_path) if networks_generated else "",
         "query_readme": os.path.abspath(readme_path),
+        "run_manifest": os.path.abspath(manifest_path),
         "output_folder": os.path.abspath(outputs_dir),
     }
     return deduped, metrics
@@ -1783,7 +1972,7 @@ def main() -> None:
     # Handle query input: allow CLI, or interactive prompt if omitted/empty; ensure cleaned and non-empty.
     raw_query = args.query
     parsed_query, filters = parse_query_flags(raw_query) if raw_query is not None else ("", merge_filters(None))
-    cleaned = clean_query(parsed_query) if raw_query is not None else ""
+    cleaned = clean_search_input(parsed_query) if raw_query is not None else ""
 
     while not cleaned:
         try:
@@ -1792,7 +1981,7 @@ def main() -> None:
             LOGGER.error("No query provided; exiting.")
             return
         parsed_query, filters = parse_query_flags(raw_query)
-        cleaned = clean_query(parsed_query)
+        cleaned = clean_search_input(parsed_query)
 
     # Print cleaned query before running
     LOGGER.info("Running cleaned query: %s", cleaned)

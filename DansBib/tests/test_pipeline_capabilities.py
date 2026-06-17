@@ -78,6 +78,13 @@ class PipelineCapabilitiesTests(unittest.TestCase):
         for key in ("world", "us", "priority_adm1", "priority_adm2", "build_world_adm0", "check_map_status"):
             self.assertIn(key, MAP_OPTIONS)
 
+    def test_sample_librarian_ris_fixture_exists(self) -> None:
+        fixture = REPO_ROOT / "DansBib/tests/fixtures/sample_librarian_training.ris"
+        text = fixture.read_text(encoding="utf-8")
+        self.assertIn("TY  - JOUR", text)
+        self.assertIn("TI  - Telehealth Support for Rural Cancer Treatment Access", text)
+        self.assertIn("AD  - University of Texas", text)
+
     def test_cleanup_deletes_only_exact_current_slug_files(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             runtime = self._runtime_paths(Path(temp_dir))

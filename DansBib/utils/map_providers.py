@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,7 +16,7 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_DIR = ROOT / "data" / "reference"
 MAPS_ROOT = REFERENCE_DIR / "maps"
-PROCESSED_DIR = ROOT / "data" / "processed"
+PROCESSED_DIR = Path(os.getenv("DANSBIB_PROCESSED_DIR", str(ROOT / "data" / "processed")))
 
 IMPORTANT_COUNTRY_ISO3 = (
     "AUS",

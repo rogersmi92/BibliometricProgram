@@ -40,10 +40,10 @@ from utils.map_providers import geonames_dir
 USE_PROGRESS = False
 CURRENT_STAGE = "startup"
 ROOT = Path(__file__).resolve().parent
-OUTPUTS_DIR = ROOT / "data" / "outputs"
-VISUALS_DIR = ROOT / "data" / "visuals"
-PROCESSED_DIR = ROOT / "data" / "processed"
-VOS_DIR = ROOT / "data" / "VOS"
+OUTPUTS_DIR = Path(os.getenv("DANSBIB_OUTPUT_DIR", str(ROOT / "data" / "outputs")))
+VISUALS_DIR = Path(os.getenv("DANSBIB_VISUALS_DIR", str(ROOT / "data" / "visuals")))
+PROCESSED_DIR = Path(os.getenv("DANSBIB_PROCESSED_DIR", str(ROOT / "data" / "processed")))
+VOS_DIR = Path(os.getenv("DANSBIB_VOS_DIR", str(ROOT / "data" / "VOS")))
 REFERENCE_DIR = ROOT / "data" / "reference"
 RXNORM_CACHE_PATH = REFERENCE_DIR / "drugs" / "rxnorm" / "rxnorm_cache.json"
 SUPPLEMENTAL_ALIAS_PATH = REFERENCE_DIR / "supplemental_aliases.csv"

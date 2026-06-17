@@ -74,10 +74,10 @@ except ImportError as exc:  # pragma: no cover - user-facing startup guard
     ) from exc
 
 
-OUTPUTS_DIR = ROOT / "data" / "outputs"
-VOS_DIR = ROOT / "data" / "VOS"
-VISUALS_DIR = ROOT / "data" / "visuals"
-PROCESSED_DIR = ROOT / "data" / "processed"
+OUTPUTS_DIR = Path(os.getenv("DANSBIB_OUTPUT_DIR", str(ROOT / "data" / "outputs")))
+VOS_DIR = Path(os.getenv("DANSBIB_VOS_DIR", str(ROOT / "data" / "VOS")))
+VISUALS_DIR = Path(os.getenv("DANSBIB_VISUALS_DIR", str(ROOT / "data" / "visuals")))
+PROCESSED_DIR = Path(os.getenv("DANSBIB_PROCESSED_DIR", str(ROOT / "data" / "processed")))
 REFERENCE_DIR = ROOT / "data" / "reference"
 RXNORM_CACHE_PATH = REFERENCE_DIR / "rxnorm_cache.json"
 DEBUG = False
