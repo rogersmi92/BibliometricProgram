@@ -15,7 +15,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as RequestsConne
 from urllib3.util import Retry
 
 from processing.filters import FILTER_COLUMNS
-from utils.config import SCOPUS_MAX_RESULTS, SCOPUS_PAGE_SIZE, get_requests_verify, get_scopus_api_key
+from utils.config import SCOPUS_MAX_RESULTS, SCOPUS_PAGE_SIZE, get_requests_verify, get_scopus_api_key, get_scopus_inst_token
 
 logger = logging.getLogger(__name__)
 
@@ -115,6 +115,9 @@ def _execute_scopus_search(query: str, max_results: int, page_size: int) -> pd.D
         "X-ELS-APIKey": api_key,
         "Accept": "application/json",
     }
+    inst_token = get_scopus_inst_token()
+    if inst_token:
+        headers["X-ELS-Insttoken"] = inst_token
     records: list[dict[str, Any]] = []
     cursor = "*"
     page = 1

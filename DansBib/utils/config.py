@@ -12,6 +12,7 @@ except ModuleNotFoundError:  # pragma: no cover - package import path
 
 OPENALEX_API_KEY = os.getenv("OPENALEX_API_KEY", "")
 SCOPUS_API_KEY = os.getenv("SCOPUS_API_KEY", "")
+SCOPUS_INST_TOKEN = os.getenv("SCOPUS_INST_TOKEN", "")
 WOS_API_KEY = os.getenv("WOS_API_KEY", "")
 SCALING_MODE = os.getenv("SCALING_MODE", "extreme").lower()
 OPENALEX_PAGE_SIZE = 25
@@ -40,6 +41,11 @@ WOS_MAX_RESULTS = get_source_max_results("wos")
 def get_scopus_api_key() -> str | None:
     """Return the configured Scopus API key from env or local config."""
     return os.getenv("SCOPUS_API_KEY") or SCOPUS_API_KEY
+
+
+def get_scopus_inst_token() -> str | None:
+    """Return the configured Scopus institutional token from env or local config."""
+    return os.getenv("SCOPUS_INST_TOKEN") or SCOPUS_INST_TOKEN
 
 
 def get_wos_api_key() -> str | None:
